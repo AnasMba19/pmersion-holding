@@ -1,314 +1,166 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0B1D3A">
-  <meta name="description" content="PMersion. Le pilotage de projet entre dans une nouvelle dimension. Une plateforme pensée pour relier pilotage, données, collaboration et IA.">
-  <title>PMersion | Bientôt disponible</title>
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <style>
-    :root{
-      --navy:#0B1D3A;
-      --blue:#1967D2;
-      --blue-dark:#0D47A1;
-      --teal:#00A8B5;
-      --teal-dark:#008C99;
-      --gray:#667085;
-      --light:#F2F4F7;
-      --white:#FFFFFF;
-      --black:#111827;
-      --panel:rgba(11,29,58,.72);
-      --line:rgba(242,244,247,.16);
-    }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
-    body{
-      margin:0;
-      min-height:100vh;
-      color:var(--white);
-      background:
-        radial-gradient(circle at 50% 35%, rgba(25,103,210,.14), transparent 34%),
-        radial-gradient(circle at 70% 60%, rgba(0,168,181,.10), transparent 28%),
-        linear-gradient(145deg,var(--black) 0%,var(--navy) 52%,#07111f 100%);
-      font-family:Inter,"Aptos",Arial,sans-serif;
-      overflow-x:hidden;
-    }
-    button{font:inherit}
-    .scene{position:relative;min-height:100vh;overflow:hidden;isolation:isolate}
-    .scene::before{
-      content:"";
-      position:absolute;
-      width:38vw;height:38vw;min-width:360px;min-height:360px;
-      left:-21vw;top:14vh;border-radius:50%;
-      background:
-        radial-gradient(circle at 72% 45%,rgba(25,103,210,.22),transparent 8%),
-        radial-gradient(circle at 65% 50%,#10233f 0 39%,#07111f 62%,#040912 100%);
-      border:1px solid rgba(25,103,210,.25);
-      box-shadow:inset -36px 0 60px rgba(0,0,0,.55);
-      opacity:.88;
-      z-index:-4;
-    }
-    .scene::after{
-      content:"";
-      position:absolute;width:82px;height:82px;right:6vw;top:21vh;border-radius:50%;
-      background:radial-gradient(circle at 35% 35%,#162943 0,#07111f 60%,#02060b 100%);
-      border:1px solid rgba(102,112,133,.2);z-index:-4;
-    }
-    .stars,.orbits-bg{position:absolute;inset:0;pointer-events:none}
-    .stars{z-index:-5;background-image:
-      radial-gradient(circle at 12% 18%,rgba(255,255,255,.85) 0 1px,transparent 1.4px),
-      radial-gradient(circle at 24% 42%,rgba(255,255,255,.5) 0 1px,transparent 1.4px),
-      radial-gradient(circle at 53% 10%,rgba(255,255,255,.7) 0 1px,transparent 1.5px),
-      radial-gradient(circle at 77% 18%,rgba(255,255,255,.55) 0 1px,transparent 1.4px),
-      radial-gradient(circle at 88% 48%,rgba(255,255,255,.55) 0 1px,transparent 1.4px),
-      radial-gradient(circle at 64% 35%,rgba(255,255,255,.45) 0 1px,transparent 1.5px);
-      background-size:510px 420px,620px 470px,710px 530px,820px 610px,930px 690px,1050px 760px;
-      opacity:.48;
-      animation:starDrift 28s linear infinite alternate;
-    }
-    .orbits-bg::before,.orbits-bg::after{content:"";position:absolute;border:1px solid rgba(25,103,210,.16);border-radius:50%;transform:rotate(-12deg)}
-    .orbits-bg::before{width:58vw;height:58vw;left:10vw;top:-36vw}
-    .orbits-bg::after{width:64vw;height:64vw;right:-18vw;top:-38vw;border-color:rgba(0,168,181,.13)}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0B1D3A">
+<meta name="description" content="PMersion. Le pilotage de projet entre dans une nouvelle dimension.">
+<title>PMersion | Bientôt disponible</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+:root{
+  --navy:#0B1D3A; --blue:#1967D2; --blue-dark:#0D47A1; --teal:#00A8B5; --teal-dark:#008C99;
+  --gray:#667085; --light:#F2F4F7; --white:#FFFFFF; --black:#111827;
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:Inter,"Aptos",Arial,sans-serif;background:#0a1424;color:var(--white)}
+body{overflow-x:hidden}
+button{font:inherit}
+.scene{position:relative;min-height:100vh;overflow:hidden;background:
+  radial-gradient(circle at 50% 50%,rgba(25,103,210,.14),transparent 38%),
+  radial-gradient(circle at 68% 68%,rgba(0,168,181,.10),transparent 28%),
+  linear-gradient(145deg,#111827 0%,#0B1D3A 52%,#07111f 100%)}
+.scene:before{content:"";position:absolute;width:420px;height:420px;left:-235px;top:155px;border-radius:50%;background:radial-gradient(circle at 70% 40%,#19385f 0,#0b1a2e 48%,#050a11 78%);border:1px solid rgba(25,103,210,.24);box-shadow:inset -40px 0 85px rgba(0,0,0,.65);z-index:0}
+.scene:after{content:"";position:absolute;width:76px;height:76px;right:7vw;top:180px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#1b314d,#07111f 62%,#02060b);border:1px solid rgba(102,112,133,.2);z-index:0}
+.bg-orbit{position:absolute;border:1px solid rgba(25,103,210,.14);border-radius:50%;pointer-events:none;z-index:0}
+.bg1{width:720px;height:720px;left:100px;top:-500px}.bg2{width:810px;height:810px;right:-220px;top:-530px;border-color:rgba(0,168,181,.10)}
+.stars{position:absolute;inset:0;z-index:0;opacity:.35;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:220px 220px;animation:stars 28s linear infinite alternate}
+@keyframes stars{to{transform:translate3d(-16px,10px,0)}}
 
-    header{
-      width:min(1480px,calc(100% - 72px));
-      margin:0 auto;
-      padding:28px 0 12px;
-      display:flex;align-items:center;justify-content:space-between;gap:24px;
-      position:relative;z-index:8;
-    }
-    .brand-lockup{display:block;width:min(310px,34vw);min-width:210px;height:auto}
-    .notify-btn,.secondary-btn,.primary-btn{
-      border-radius:999px;border:1px solid transparent;cursor:pointer;
-      display:inline-flex;align-items:center;justify-content:center;gap:10px;
-      transition:transform .22s ease,border-color .22s ease,background .22s ease,color .22s ease;
-      text-decoration:none;
-    }
-    .notify-btn,.secondary-btn{color:var(--light);background:rgba(17,24,39,.34);border-color:rgba(242,244,247,.34)}
-    .notify-btn{padding:14px 22px;min-width:166px}
-    .notify-btn:hover,.secondary-btn:hover{border-color:var(--teal);background:rgba(0,168,181,.07);transform:translateY(-1px)}
-    .bell{width:20px;height:20px;stroke:var(--teal);fill:none;stroke-width:1.8}
+header{height:68px;width:min(1510px,calc(100% - 70px));margin:auto;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10}
+.header-logo{width:220px;height:auto;display:block}
+.notify{border:1px solid rgba(242,244,247,.35);background:rgba(11,29,58,.32);color:#fff;border-radius:999px;padding:12px 20px;display:flex;gap:10px;align-items:center;cursor:pointer}
+.notify svg{width:18px;height:18px;stroke:var(--teal);fill:none;stroke-width:1.9}
 
-    .hero{
-      width:min(1160px,92vw);margin:0 auto;text-align:center;padding:14px 0 0;position:relative;z-index:4;
-    }
-    .hero-symbol{width:128px;height:auto;margin:0 auto 2px;display:block;animation:float 6s ease-in-out infinite}
-    .brand-name{margin:0;font-size:clamp(3.2rem,7vw,6.3rem);line-height:.9;letter-spacing:.015em;font-weight:700;color:var(--white)}
-    h1{font-size:clamp(2rem,4.5vw,4.2rem);line-height:1.08;letter-spacing:-.035em;font-weight:400;max-width:900px;margin:25px auto 12px;color:var(--light)}
-    .lead{margin:0 auto;max-width:760px;font-size:clamp(1rem,1.9vw,1.3rem);line-height:1.6;color:#c8d2df}
-    .status{margin:6px 0 0;color:#7ea7df;font-size:.98rem}
-    .actions{display:flex;gap:14px;justify-content:center;align-items:center;margin:22px 0 8px;flex-wrap:wrap}
-    .primary-btn{padding:15px 31px;min-width:205px;color:var(--white);background:linear-gradient(100deg,var(--blue-dark),var(--blue) 62%,var(--teal));box-shadow:0 10px 26px rgba(25,103,210,.16)}
-    .primary-btn:hover{transform:translateY(-2px);filter:saturate(1.08)}
-    .secondary-btn{padding:14px 26px;min-width:205px}
-    .chev{font-size:1.2rem;line-height:1}
+.progress-shell{width:min(900px,74vw);margin:0 auto 8px;position:relative;z-index:9;background:rgba(17,24,39,.40);border:1px solid rgba(242,244,247,.14);border-radius:16px;padding:10px 15px 12px;backdrop-filter:blur(8px)}
+.progress-head{display:flex;align-items:center;justify-content:space-between;font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#dce7f3;margin-bottom:8px}
+.progress-head strong{color:var(--teal);font-size:.9rem}
+.progress-track{height:8px;border-radius:99px;background:rgba(102,112,133,.24);overflow:hidden;position:relative}
+.progress-fill{height:100%;width:50%;border-radius:99px;background:linear-gradient(90deg,var(--blue-dark),var(--blue),var(--teal));position:relative;box-shadow:0 0 16px rgba(0,168,181,.2)}
+.progress-fill:after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.42) 45%,transparent 70%);transform:translateX(-100%);animation:sweep 2.4s linear infinite}
+.progress-track:after{content:"";position:absolute;left:50%;top:-4px;width:2px;height:16px;background:#fff;opacity:.72}
+@keyframes sweep{to{transform:translateX(160%)}}
 
-    .sim-wrap{width:min(1180px,94vw);height:390px;margin:-2px auto 0;position:relative;z-index:3}
-    .sim-plane{position:absolute;left:50%;top:50%;width:min(930px,86vw);height:270px;transform:translate(-50%,-46%);perspective:900px}
-    .orbit{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotateX(66deg);border:1px solid rgba(25,103,210,.35);border-radius:50%}
-    .orbit.o1{width:330px;height:330px;border-color:rgba(0,168,181,.36);animation:spinOrbit 16s linear infinite}
-    .orbit.o2{width:520px;height:520px;border-style:dashed;animation:spinOrbitReverse 24s linear infinite}
-    .orbit.o3{width:760px;height:760px;border-color:rgba(0,168,181,.25);animation:spinOrbit 34s linear infinite}
-    .orbit.o4{width:920px;height:920px;border-color:rgba(102,112,133,.20)}
-    .core{
-      position:absolute;left:50%;top:50%;width:174px;height:174px;transform:translate(-50%,-50%);border-radius:50%;
-      display:grid;place-items:center;
-      background:radial-gradient(circle at 38% 30%,rgba(255,255,255,.14),rgba(11,29,58,.92) 55%,rgba(17,24,39,.98));
-      border:1px solid rgba(242,244,247,.45);
-      box-shadow:0 18px 45px rgba(0,0,0,.28);
-      z-index:4;
-    }
-    .core img{width:106px;height:auto;display:block}
-    .core-ring{position:absolute;inset:-19px;border:1px solid rgba(0,168,181,.28);border-radius:50%;animation:pulseRing 3.4s ease-in-out infinite}
+.hero{text-align:center;width:min(980px,92vw);margin:0 auto;position:relative;z-index:5;padding-top:2px}
+.hero-symbol{width:90px;height:auto;display:block;margin:0 auto 0;animation:float 5.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.brand{font-weight:700;letter-spacing:.02em;font-size:clamp(3.2rem,5.2vw,5.35rem);line-height:.94;margin:0;color:#fff}
+h1{font-weight:400;font-size:clamp(2rem,3.4vw,3.45rem);line-height:1.08;letter-spacing:-.035em;margin:15px auto 8px;color:var(--light);max-width:850px}
+.lead{margin:0 auto;max-width:780px;color:#c6d0dd;font-size:clamp(.95rem,1.35vw,1.18rem);line-height:1.55}
+.actions{display:flex;justify-content:center;gap:14px;margin:16px 0 2px}
+.btn{border-radius:999px;padding:13px 26px;min-width:190px;border:1px solid rgba(242,244,247,.35);cursor:pointer;font-weight:650;display:flex;align-items:center;justify-content:center;gap:10px;transition:.22s ease}
+.primary{color:#fff;border-color:transparent;background:linear-gradient(95deg,var(--blue-dark),var(--blue) 62%,var(--teal));box-shadow:0 10px 26px rgba(25,103,210,.16)}
+.secondary{color:#fff;background:rgba(17,24,39,.35)}
+.btn:hover{transform:translateY(-2px)}
 
-    .flow-line{position:absolute;left:50%;top:50%;width:78%;height:44%;transform:translate(-50%,-50%);border:1px dashed rgba(0,168,181,.5);border-radius:50%;z-index:1;animation:dash 18s linear infinite}
-    .particle{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--teal);z-index:2;box-shadow:0 0 0 4px rgba(0,168,181,.08)}
-    .p1{left:15%;top:51%;animation:particleA 8s ease-in-out infinite}.p2{right:17%;top:44%;background:var(--blue);animation:particleB 9s ease-in-out infinite}.p3{left:48%;bottom:12%;animation:particleC 10s ease-in-out infinite}
+.simulation{width:min(1250px,95vw);height:360px;margin:0 auto;position:relative;z-index:4}
+.sim-plane{position:absolute;left:50%;top:47%;width:960px;max-width:82vw;height:255px;transform:translate(-50%,-50%)}
+.orbit{position:absolute;left:50%;top:53%;transform:translate(-50%,-50%) rotateX(70deg);border-radius:50%;border:1px solid rgba(25,103,210,.30)}
+.o1{width:340px;height:340px;border-color:rgba(0,168,181,.36);animation:spin 16s linear infinite}.o2{width:520px;height:520px;border-style:dashed;animation:spinR 23s linear infinite}.o3{width:720px;height:720px;border-color:rgba(25,103,210,.24);animation:spin 32s linear infinite}.o4{width:900px;height:900px;border-color:rgba(102,112,133,.17)}
+@keyframes spin{to{transform:translate(-50%,-50%) rotateX(70deg) rotateZ(360deg)}}@keyframes spinR{to{transform:translate(-50%,-50%) rotateX(70deg) rotateZ(-360deg)}}
+.flow{position:absolute;left:50%;top:53%;width:760px;max-width:78vw;height:165px;transform:translate(-50%,-50%);border:1px dashed rgba(0,168,181,.42);border-radius:50%;animation:flowSpin 19s linear infinite}
+@keyframes flowSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.core{position:absolute;left:50%;top:53%;width:145px;height:145px;transform:translate(-50%,-50%);border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 36% 28%,rgba(255,255,255,.12),rgba(11,29,58,.95) 56%,rgba(17,24,39,.98));border:1px solid rgba(242,244,247,.4);box-shadow:0 18px 36px rgba(0,0,0,.30);z-index:4}
+.core:before{content:"";position:absolute;inset:-14px;border:1px solid rgba(0,168,181,.26);border-radius:50%;animation:pulse 3.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(.96);opacity:.45}50%{transform:scale(1.05);opacity:.9}}
+.core img{width:90px;height:auto}
+.sat{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px rgba(0,168,181,.38);z-index:3}.s1{left:15%;top:54%;animation:sat1 8s ease-in-out infinite}.s2{right:18%;top:44%;background:var(--blue);animation:sat2 9s ease-in-out infinite}.s3{left:46%;bottom:14%;animation:sat3 10s ease-in-out infinite}
+@keyframes sat1{50%{transform:translate(145px,-50px)}}@keyframes sat2{50%{transform:translate(-160px,60px)}}@keyframes sat3{50%{transform:translate(82px,-75px)}}
+.node{position:absolute;width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:rgba(11,29,58,.88);border:1px solid rgba(242,244,247,.33);z-index:6;cursor:pointer;transition:.22s ease;box-shadow:0 12px 28px rgba(0,0,0,.24)}
+.node:hover,.node.active{transform:scale(1.07);border-color:var(--teal);background:rgba(13,71,161,.32)}
+.node svg{width:31px;height:31px;stroke:var(--teal);fill:none;stroke-width:1.9}.node.active svg{stroke:#fff}
+.label{position:absolute;white-space:nowrap;font-size:.9rem;font-weight:600;color:#edf3f8}
+.plan{left:10%;top:22%}.plan .label{left:96px;top:34px}.coord{left:15%;bottom:0}.coord .label{left:96px;top:35px}.analyse{right:10%;top:22%}.analyse .label{right:96px;top:34px}.decide{right:15%;bottom:0}.decide .label{right:96px;top:35px}
+.info{position:absolute;right:0;top:52px;width:265px;border:1px solid rgba(25,103,210,.48);background:rgba(11,29,58,.74);backdrop-filter:blur(10px);padding:17px 18px;border-radius:15px;text-align:left;z-index:8}
+.info-title{font-weight:700;display:flex;gap:10px;align-items:center}.play{width:29px;height:29px;border-radius:50%;border:1px solid var(--teal);display:grid;place-items:center;color:var(--teal);font-size:.75rem}.info p{color:#bcc8d5;line-height:1.5;font-size:.84rem;margin:10px 0 0}.info small{display:block;color:var(--teal);margin-top:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.footer{height:34px;width:min(1510px,calc(100% - 70px));margin:auto;display:flex;gap:20px;align-items:center;color:#aeb9c7;font-size:.8rem;position:relative;z-index:5}.footer:after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(0,168,181,.65),rgba(25,103,210,.28),rgba(242,244,247,.10))}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,25px);opacity:0;pointer-events:none;background:#07111f;color:#fff;border:1px solid rgba(0,168,181,.45);padding:11px 17px;border-radius:999px;z-index:50;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.flash{animation:flash .65s ease}@keyframes flash{50%{transform:scale(1.11);border-color:#fff}}
 
-    .node{
-      position:absolute;width:128px;height:128px;border-radius:50%;display:grid;place-items:center;z-index:5;
-      color:var(--light);background:rgba(11,29,58,.84);border:1px solid rgba(242,244,247,.30);
-      box-shadow:0 14px 35px rgba(0,0,0,.22);cursor:pointer;transition:transform .24s ease,border-color .24s ease,background .24s ease;
-    }
-    .node:hover,.node.active{transform:scale(1.06);border-color:var(--teal);background:rgba(13,71,161,.24)}
-    .node svg{width:38px;height:38px;stroke:var(--teal);fill:none;stroke-width:1.8}
-    .node.active svg{stroke:var(--white)}
-    .node-label{position:absolute;white-space:nowrap;font-size:.96rem;font-weight:600;color:var(--light)}
-    .plan{left:9%;top:24%}.plan .node-label{left:112px;top:44px}
-    .coord{left:13%;bottom:2%}.coord .node-label{left:112px;top:47px}
-    .analyse{right:9%;top:24%}.analyse .node-label{right:111px;top:44px}
-    .decide{right:13%;bottom:2%}.decide .node-label{right:110px;top:47px}
-
-    .info-card{
-      position:absolute;right:0;top:84px;width:276px;padding:20px 20px 18px;text-align:left;border-radius:16px;
-      background:var(--panel);border:1px solid rgba(25,103,210,.45);backdrop-filter:blur(10px);z-index:7;
-    }
-    .info-title{display:flex;align-items:center;gap:11px;font-weight:700;color:var(--white);font-size:1.05rem}
-    .play{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--teal);color:var(--teal);font-size:.8rem}
-    .info-copy{margin:12px 0 0;color:#bbc8d7;font-size:.88rem;line-height:1.55}
-    .card-kicker{margin-top:12px;color:var(--teal);font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
-
-    .footer{width:min(1480px,calc(100% - 72px));margin:0 auto 22px;display:flex;align-items:center;gap:24px;color:#a9b7c7;font-size:.86rem;position:relative;z-index:6}
-    .footer::after{content:"";height:1px;flex:1;background:linear-gradient(90deg,rgba(0,168,181,.72),rgba(25,103,210,.3),rgba(242,244,247,.14))}
-
-    .toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,28px);opacity:0;pointer-events:none;background:#07111f;border:1px solid rgba(0,168,181,.45);color:var(--light);padding:12px 18px;border-radius:999px;z-index:30;transition:.25s ease;box-shadow:0 14px 30px rgba(0,0,0,.28)}
-    .toast.show{opacity:1;transform:translate(-50%,0)}
-
-    @keyframes starDrift{to{transform:translate3d(-12px,10px,0)}}
-    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
-    @keyframes spinOrbit{to{transform:translate(-50%,-50%) rotateX(66deg) rotateZ(360deg)}}
-    @keyframes spinOrbitReverse{to{transform:translate(-50%,-50%) rotateX(66deg) rotateZ(-360deg)}}
-    @keyframes pulseRing{0%,100%{transform:scale(.96);opacity:.42}50%{transform:scale(1.06);opacity:.85}}
-    @keyframes dash{to{transform:translate(-50%,-50%) rotate(360deg)}}
-    @keyframes particleA{0%,100%{transform:translate(0,0)}50%{transform:translate(150px,-62px)}}
-    @keyframes particleB{0%,100%{transform:translate(0,0)}50%{transform:translate(-170px,66px)}}
-    @keyframes particleC{0%,100%{transform:translate(0,0)}50%{transform:translate(72px,-88px)}}
-    @keyframes flash{0%{transform:scale(1)}40%{transform:scale(1.09);border-color:var(--white)}100%{transform:scale(1)}}
-    .node.sequence{animation:flash .65s ease}
-
-    @media(max-width:1000px){
-      .sim-wrap{height:430px}.info-card{right:3%;top:270px;width:260px}.plan{left:4%}.coord{left:8%}.analyse{right:4%}.decide{right:8%}
-      .node{width:108px;height:108px}.node svg{width:34px;height:34px}.plan .node-label,.coord .node-label{left:94px}.analyse .node-label,.decide .node-label{right:94px}
-    }
-    @media(max-width:760px){
-      header{width:calc(100% - 32px);padding-top:20px}.brand-lockup{width:210px}.notify-btn{min-width:auto;padding:11px 14px}.notify-btn span{display:none}
-      .hero{padding-top:8px}.hero-symbol{width:92px}.brand-name{font-size:clamp(2.7rem,13vw,4.6rem)}h1{font-size:clamp(1.8rem,8vw,3rem);margin-top:18px}.lead{font-size:.98rem;padding:0 8px}
-      .sim-wrap{height:520px;margin-top:5px}.sim-plane{width:94vw;height:400px;top:44%}.core{width:138px;height:138px}.core img{width:84px}
-      .orbit.o1{width:260px;height:260px}.orbit.o2{width:390px;height:390px}.orbit.o3{width:540px;height:540px}.orbit.o4{width:680px;height:680px}
-      .node{width:92px;height:92px}.node svg{width:30px;height:30px}.node-label{font-size:.82rem}.plan{left:1%;top:19%}.coord{left:4%;bottom:14%}.analyse{right:1%;top:19%}.decide{right:4%;bottom:14%}
-      .plan .node-label,.coord .node-label{left:72px;top:34px}.analyse .node-label,.decide .node-label{right:72px;top:34px}
-      .info-card{left:50%;right:auto;transform:translateX(-50%);top:auto;bottom:0;width:min(340px,90vw)}.footer{width:calc(100% - 32px);margin-bottom:18px}
-    }
-    @media(max-width:520px){
-      .brand-lockup{width:184px;min-width:0}.actions{gap:10px}.primary-btn,.secondary-btn{min-width:166px;padding-left:21px;padding-right:21px}
-      .sim-wrap{height:550px}.sim-plane{top:42%}.node{width:78px;height:78px}.node svg{width:26px;height:26px}.plan .node-label,.coord .node-label{left:58px}.analyse .node-label,.decide .node-label{right:58px}
-      .core{width:120px;height:120px}.core img{width:72px}.flow-line{width:92%}.footer{font-size:.78rem}.scene::before{left:-290px}
-    }
-    @media(prefers-reduced-motion:reduce){
-      *,*::before,*::after{animation:none!important;scroll-behavior:auto!important;transition:none!important}
-    }
-  </style>
+@media(max-height:780px) and (min-width:900px){header{height:58px}.progress-shell{padding:8px 13px 9px;margin-bottom:4px}.hero-symbol{width:70px}.brand{font-size:4.25rem}h1{font-size:2.65rem;margin-top:10px}.lead{font-size:1rem}.actions{margin:12px 0 0}.simulation{height:300px}.sim-plane{transform:translate(-50%,-53%) scale(.90)}.footer{height:28px}}
+@media(max-width:900px){header{width:calc(100% - 34px)}.progress-shell{width:calc(100% - 34px)}.header-logo{width:190px}.notify{padding:10px 14px}.notify span{display:none}.simulation{height:470px}.sim-plane{max-width:92vw}.info{top:300px;right:4%;width:245px}.node{width:76px;height:76px}.plan{left:3%}.coord{left:7%;bottom:10%}.analyse{right:3%}.decide{right:7%;bottom:10%}.plan .label,.coord .label{left:80px}.analyse .label,.decide .label{right:80px}.footer{width:calc(100% - 34px)}}
+@media(max-width:640px){.scene{overflow-y:auto}header{height:62px}.header-logo{width:165px}.progress-shell{margin-bottom:12px}.progress-head{font-size:.72rem}.brand{font-size:3.1rem}.hero-symbol{width:72px}h1{font-size:2.05rem}.lead{font-size:.94rem}.actions{flex-direction:column}.btn{width:230px}.simulation{height:560px;margin-top:6px}.sim-plane{width:100%;height:420px;top:47%}.core{width:118px;height:118px}.core img{width:72px}.orbit.o3,.orbit.o4{display:none}.flow{width:86vw;height:180px}.node{width:70px;height:70px}.node svg{width:27px}.plan{left:5%;top:18%}.analyse{right:5%;top:18%}.coord{left:9%;bottom:23%}.decide{right:9%;bottom:23%}.label{font-size:.75rem}.plan .label,.coord .label{left:74px}.analyse .label,.decide .label{right:74px}.info{left:50%;right:auto;top:auto;bottom:0;transform:translateX(-50%);width:min(330px,90vw)}.footer{margin-top:0}.footer:after{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
 </head>
 <body>
-  <div class="scene">
-    <div class="stars" aria-hidden="true"></div>
-    <div class="orbits-bg" aria-hidden="true"></div>
+<div class="scene">
+<div class="stars"></div><div class="bg-orbit bg1"></div><div class="bg-orbit bg2"></div>
+<header>
+  <img class="header-logo" src="pmersion-logo-horizontal-reverse.svg" alt="PMersion Project Management">
+  <button class="notify" data-notify aria-label="Être prévenu">
+    <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Être prévenu</span>
+  </button>
+</header>
 
-    <header>
-      <img class="brand-lockup" src="pmersion-logo-horizontal-reverse.svg" alt="PMersion Project Management">
-      <button class="notify-btn" type="button" data-notify>
-        <svg class="bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
-        <span>Être prévenu</span>
-      </button>
-    </header>
+<div class="progress-shell" aria-label="Progression de la préparation de PMersion : 50%">
+  <div class="progress-head"><span>PMersion est en préparation</span><strong>50%</strong></div>
+  <div class="progress-track"><div class="progress-fill"></div></div>
+</div>
 
-    <main>
-      <section class="hero" aria-labelledby="main-title">
-        <img class="hero-symbol" src="pmersion-symbol-color.svg" alt="">
-        <div class="brand-name">PMERSION</div>
-        <h1 id="main-title">Le pilotage de projet entre<br>dans une nouvelle dimension.</h1>
-        <p class="lead">Une plateforme pensée pour relier pilotage, données, collaboration et IA.</p>
-        <p class="status">Version en préparation.</p>
-        <div class="actions">
-          <button class="primary-btn" id="discover" type="button">Découvrir <span class="chev">›</span></button>
-          <button class="secondary-btn" type="button" data-notify>
-            <svg class="bell" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
-            Être prévenu
-          </button>
-        </div>
-      </section>
-
-      <section class="sim-wrap" aria-label="Aperçu interactif du flux PMersion">
-        <div class="sim-plane">
-          <div class="orbit o4" aria-hidden="true"></div>
-          <div class="orbit o3" aria-hidden="true"></div>
-          <div class="orbit o2" aria-hidden="true"></div>
-          <div class="orbit o1" aria-hidden="true"></div>
-          <div class="flow-line" aria-hidden="true"></div>
-          <span class="particle p1" aria-hidden="true"></span>
-          <span class="particle p2" aria-hidden="true"></span>
-          <span class="particle p3" aria-hidden="true"></span>
-
-          <div class="core" aria-hidden="true">
-            <div class="core-ring"></div>
-            <img src="pmersion-symbol-color.svg" alt="">
-          </div>
-
-          <button class="node plan active" type="button" data-stage="Planifier" data-copy="Structurez le projet, les jalons et les priorités avant d'activer le flux.">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-            <span class="node-label">Planifier</span>
-          </button>
-          <button class="node coord" type="button" data-stage="Coordonner" data-copy="Faites circuler l'information entre équipes, décisions et responsabilités.">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 20v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 10a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 20v-2a4 4 0 0 0-3-3.87M16 2.13a4 4 0 0 1 0 7.75"/></svg>
-            <span class="node-label">Coordonner</span>
-          </button>
-          <button class="node analyse" type="button" data-stage="Analyser" data-copy="Transformez les données projet en signaux utiles pour comprendre la situation.">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20V7"/></svg>
-            <span class="node-label">Analyser</span>
-          </button>
-          <button class="node decide" type="button" data-stage="Décider" data-copy="Consolidez les arbitrages et faites progresser le projet avec un cap clair.">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"/></svg>
-            <span class="node-label">Décider</span>
-          </button>
-        </div>
-
-        <aside class="info-card" aria-live="polite">
-          <div class="info-title"><span class="play">▶</span><span>Aperçu interactif</span></div>
-          <p class="info-copy" id="info-copy">Cliquez sur une étape pour lancer le flux et voir les données en mouvement.</p>
-          <div class="card-kicker" id="card-kicker">Planifier · étape active</div>
-        </aside>
-      </section>
-    </main>
-
-    <footer class="footer"><span>pmersion.com</span></footer>
+<section class="hero">
+  <img class="hero-symbol" src="pmersion-symbol-color.svg" alt="Symbole PMersion">
+  <div class="brand">PMERSION</div>
+  <h1>Le pilotage de projet entre<br>dans une nouvelle dimension.</h1>
+  <p class="lead">Une plateforme pensée pour relier pilotage, données, collaboration et IA.</p>
+  <div class="actions">
+    <button class="btn primary" id="discover">Découvrir <span>›</span></button>
+    <button class="btn secondary" data-notify>
+      <svg viewBox="0 0 24 24" width="18" height="18" stroke="#00A8B5" fill="none" stroke-width="1.9"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+      Être prévenu
+    </button>
   </div>
-  <div class="toast" id="toast" role="status" aria-live="polite">PMersion est encore en préparation. Les notifications arrivent bientôt.</div>
+</section>
 
-  <script>
-    const nodes = [...document.querySelectorAll('.node')];
-    const copy = document.getElementById('info-copy');
-    const kicker = document.getElementById('card-kicker');
-    const discover = document.getElementById('discover');
-    const toast = document.getElementById('toast');
-    let sequenceTimer = null;
+<section class="simulation" aria-label="Aperçu interactif du flux PMersion">
+  <div class="sim-plane">
+    <div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit o3"></div><div class="orbit o4"></div>
+    <div class="flow"></div>
+    <span class="sat s1"></span><span class="sat s2"></span><span class="sat s3"></span>
+    <div class="core"><img src="pmersion-symbol-color.svg" alt=""><span></span></div>
 
-    function activate(node){
-      nodes.forEach(n => n.classList.remove('active'));
-      node.classList.add('active');
-      copy.textContent = node.dataset.copy;
-      kicker.textContent = node.dataset.stage + ' · étape active';
-    }
+    <button class="node plan active" data-step="0" aria-label="Planifier">
+      <svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg><span class="label">Planifier</span>
+    </button>
+    <button class="node coord" data-step="1" aria-label="Coordonner">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-4 2.5-6 6-6s6 2 6 6M14 15c3.5 0 6 1.8 6 5"/></svg><span class="label">Coordonner</span>
+    </button>
+    <button class="node analyse" data-step="2" aria-label="Analyser">
+      <svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V5M19 20v-7"/></svg><span class="label">Analyser</span>
+    </button>
+    <button class="node decide" data-step="3" aria-label="Décider">
+      <svg viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></svg><span class="label">Décider</span>
+    </button>
+  </div>
 
-    nodes.forEach(node => node.addEventListener('click', () => {
-      clearInterval(sequenceTimer);
-      activate(node);
-    }));
+  <aside class="info">
+    <div class="info-title"><span class="play">▶</span><span>Aperçu interactif</span></div>
+    <p id="infoCopy">Cadrez le projet et posez les objectifs, jalons et priorités.</p>
+    <small id="infoKicker">01 · Planifier</small>
+  </aside>
+</section>
 
-    discover.addEventListener('click', () => {
-      clearInterval(sequenceTimer);
-      let index = 0;
-      const run = () => {
-        nodes.forEach(n => n.classList.remove('sequence'));
-        const node = nodes[index % nodes.length];
-        activate(node);
-        void node.offsetWidth;
-        node.classList.add('sequence');
-        index += 1;
-        if(index > nodes.length){
-          clearInterval(sequenceTimer);
-          copy.textContent = 'Le flux est lancé : planification, coordination, analyse et décision sont reliées dans une même expérience.';
-          kicker.textContent = 'Piloter · Décider · Progresser';
-        }
-      };
-      run();
-      sequenceTimer = setInterval(run, 760);
-    });
-
-    document.querySelectorAll('[data-notify]').forEach(button => button.addEventListener('click', () => {
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2800);
-    }));
-  </script>
-</body>
-</html>
+<div class="footer">pmersion.com</div>
+<div class="toast" id="toast">La fonctionnalité d'alerte arrive bientôt.</div>
+</div>
+<script>
+const nodes=[...document.querySelectorAll('.node')];
+const copy=[
+  ['Cadrez le projet et posez les objectifs, jalons et priorités.','01 · Planifier'],
+  ['Reliez équipes, décisions et responsabilités dans un même flux.','02 · Coordonner'],
+  ['Transformez les données du projet en signaux utiles au pilotage.','03 · Analyser'],
+  ['Arbitrez plus vite avec une vision claire des impacts et options.','04 · Décider']
+];
+let current=0,timer;
+function activate(i,flash=false){
+ current=i; nodes.forEach((n,j)=>n.classList.toggle('active',j===i));
+ document.getElementById('infoCopy').textContent=copy[i][0];
+ document.getElementById('infoKicker').textContent=copy[i][1];
+ if(flash){nodes[i].classList.remove('flash');void nodes[i].offsetWidth;nodes[i].classList.add('flash')}
+}
+nodes.forEach((n,i)=>n.addEventListener('click',()=>{clearInterval(timer);activate(i,true)}));
+document.getElementById('discover').addEventListener('click',()=>{clearInterval(timer);let i=0;activate(i,true);timer=setInterval(()=>{i++;if(i>=nodes.length){clearInterval(timer);return}activate(i,true)},900)});
+const toast=document.getElementById('toast');
+document.querySelectorAll('[data-notify]').forEach(b=>b.addEventListener('click',()=>{toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}));
+</script>
+</body></html>
