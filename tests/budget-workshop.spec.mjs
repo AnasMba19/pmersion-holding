@@ -68,10 +68,10 @@ test("savings produce a conditional note without changing the existing journey",
   await page.getByRole("heading", { level: 1 }).scrollIntoViewIfNeeded();
   await capture(page, info, "02-comparison");
   await noOverflow(page);
-  await page.getByRole("button", { name: /Préparer ma note/ }).click();
+  await page.getByRole("button", { name: /Retenir et préparer ma note/ }).click();
   await expect(page).toHaveTitle("Note d’arbitrage budget — PMersion");
   await expect(page.getByRole("article")).toContainText(amount(1_050_000));
-  await expect(page.getByRole("article")).toContainText("Non enregistrée");
+  await expect(page.getByRole("article")).toContainText("Version retenue");
   await capture(page, info, "03-note");
   await noOverflow(page);
   await page.emulateMedia({ media: "print" });
@@ -83,7 +83,7 @@ test("savings produce a conditional note without changing the existing journey",
   );
   expect(externalRequests).toEqual([]);
   await page.reload();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Une hypothèse d’abord.");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Un arbitrage explicite.");
   await page.getByRole("link", { name: "Le parcours", exact: true }).click();
   await expect(page.getByText("1 / 6 décisions réalisées", { exact: true })).toBeVisible();
 });
@@ -100,7 +100,7 @@ test("postponement is never counted as savings and switching strategy clears ass
   await expect(page.getByTestId("budget-forecast")).toHaveText(amount(1_090_000));
   await expect(page.getByTestId("budget-postponed")).toHaveText(amount(60_000));
   await expect(page.getByTestId("budget-variance")).toHaveText(`+${amount(90_000)}`);
-  await page.getByRole("button", { name: /Préparer ma note/ }).click();
+  await page.getByRole("button", { name: /Retenir et préparer ma note/ }).click();
   await expect(page.getByRole("article")).toContainText("Ce montant n’est pas une économie");
   await page.getByRole("link", { name: "Revenir à la comparaison" }).click();
   await expect(slider).toHaveValue("60000");
