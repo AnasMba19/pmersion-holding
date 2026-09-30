@@ -26,7 +26,7 @@ test("drafts persist and retained decisions form a common report, independently 
   await expect(
     page.getByText("Cette version est dans votre synthèse.", { exact: true }),
   ).toBeVisible();
-  await expect(page.getByRole("status")).toHaveText("Version retenue pour votre synthèse.");
+  await expect(page.locator(".workspace-save-status")).toHaveText("Version retenue pour votre synthèse.");
   await page.goto("/beta/#/atelier/budget?vue=comparer");
   await page.getByRole("slider").focus();
   await page.keyboard.press("End");
@@ -40,7 +40,7 @@ test("drafts persist and retained decisions form a common report, independently 
   await expect(
     page.getByText("Cette version est dans votre synthèse.", { exact: true }),
   ).toBeVisible();
-  await expect(page.getByRole("status")).toHaveText("Version retenue pour votre synthèse.");
+  await expect(page.locator(".workspace-save-status")).toHaveText("Version retenue pour votre synthèse.");
   await page.reload();
   await expect(page.getByTestId("planning-finish")).toHaveText("J56");
   await expect(
@@ -60,7 +60,7 @@ test("drafts persist and retained decisions form a common report, independently 
   await expect(
     page.getByText("Cette version est dans votre synthèse.", { exact: true }),
   ).toBeVisible();
-  await expect(page.getByRole("status")).toHaveText("Version retenue pour votre synthèse.");
+  await expect(page.locator(".workspace-save-status")).toHaveText("Version retenue pour votre synthèse.");
   await page.goto("/beta/#/atelier/synthese");
   await expect(page.getByTestId("synthesis-date")).toHaveText("J60");
 });
@@ -72,7 +72,7 @@ test("local dossier exports and reset preserves discovery and unrelated data", a
   await expect(
     page.getByText("Cette version est dans votre synthèse.", { exact: true }),
   ).toBeVisible();
-  await expect(page.getByRole("status")).toHaveText("Version retenue pour votre synthèse.");
+  await expect(page.locator(".workspace-save-status")).toHaveText("Version retenue pour votre synthèse.");
   await page.evaluate(() => {
     localStorage.setItem("unrelated-value", "keep");
   });
