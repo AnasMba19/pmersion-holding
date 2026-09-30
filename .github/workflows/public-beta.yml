@@ -19,7 +19,9 @@ jobs:
           node-version: 24.19.0
           cache: npm
       - run: npm ci
-      - run: npx playwright install --with-deps chromium
+      - name: Install browser dependencies
+        timeout-minutes: 3
+        run: npx playwright install --with-deps chromium
       - run: npm test
       - uses: actions/upload-artifact@v4
         if: always()
@@ -28,5 +30,12 @@ jobs:
           path: |
             test-results/
             playwright-report/
+          retention-days: 14
+          if-no-files-found: error
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-workspace-views-${{ github.sha }}
+          path: test-results/**/*.png
           retention-days: 14
           if-no-files-found: error

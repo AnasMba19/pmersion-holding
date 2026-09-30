@@ -2,9 +2,9 @@
 
 Public website: https://pmersion.com · Discovery app: https://pmersion.com/beta/
 
-The galaxy landing page opens an anonymous, browser-only project-management simulation:
+The product-focused landing page opens an anonymous, browser-only project-management simulation:
 six canonical Synapse decisions, explicit tradeoffs, consequences, historical review and a
-printable final summary. All project data is fictional. This beta does not certify skills,
+printable final summary. Four public workshops extend this journey: a budget dossier and printable note, a conditional schedule, supplier-risk observations, and an independent common-synthesis example. The workshops are temporary; the synthesis does not aggregate a visitor’s separate trials. All project data is fictional. This beta does not certify skills,
 manage real projects or expose the private connected workspace.
 
 ## Data
@@ -26,3 +26,5 @@ invalid storage, unavailable storage, route locks, cross-tab updates and reset i
 Run locally with `npm ci`, `npx playwright install chromium`, then `npm test`.
 
 Rollback: revert the beta publication commit. DNS and private environments are unaffected.
+
+Release 0.2.0 replaces the spatial theme with the project-dossier presentation and shares navigation across the public journey and all four workshops. Canonical laboratory engines perform all calculations; no tests or fixture server are shipped. Source revision and file hashes are recorded in beta/release.json.
