@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+
 const amount = (value) =>
   new Intl.NumberFormat("fr-FR", {
     style: "currency",
@@ -71,6 +72,7 @@ test("common synthesis includes actions once and keeps unknown cost and date inc
       external.push(request.url());
   });
   await page.goto("/beta/#/atelier/synthese");
+  await page.getByRole("button", { name: "Exemple guidé", exact: true }).click();
   await expect(page.getByTestId("synthesis-cost")).toHaveText(amount(1101000));
   await expect(page.getByTestId("synthesis-date")).toHaveText("J60");
   await page.getByRole("radio", { name: /Effets vérifiés/ }).check();
