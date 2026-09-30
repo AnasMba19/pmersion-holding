@@ -13,7 +13,9 @@ test('art direction stays usable through scroll motion and manual reduction',asy
  await expect.poll(()=>page.locator('#signature-scene').evaluate(e=>Number(e.style.getPropertyValue('--scene-progress')))).toBeGreaterThan(0);
  await page.screenshot({path:info.outputPath('art-02-signature.png'),animations:'disabled'});
  await page.locator('.gallery-composition').scrollIntoViewIfNeeded();
- await page.screenshot({path:info.outputPath('art-03-gallery.png'),animations:'disabled'});
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ await expect.poll(()=>page.evaluate(()=>document.getAnimations().filter(a=>a.playState==='running').length)).toBe(0);
+ await page.screenshot({path:info.outputPath('art-03-gallery.png')});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.getByRole('button',{name:'Réduire les animations',exact:true}).click();
  await expect(page.locator('html')).toHaveAttribute('data-motion','reduced');
