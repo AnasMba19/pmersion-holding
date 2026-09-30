@@ -1,17 +1,24 @@
 {
-  "mode": "public-discovery",
-  "version": "0.1.0",
+  "mode": "public-workspace",
+  "version": "0.2.0",
   "scenarioVersion": "synapse-discovery.2026-09-30",
-  "sourceCommit": "d4aa1361dc636a4e46a077b85893be19ad910747",
+  "sourceCommit": "ad18c9befe79cad7a9058eaf971c64b39d8514d6",
   "builtAt": "2026-09-30",
+  "features": [
+    "six-decision-journey",
+    "budget-dossier",
+    "conditional-schedule",
+    "risk-observations",
+    "independent-synthesis-example"
+  ],
   "files": {
-    "assets/index-a10VSAqb.js": "125bf0fbebd93e76ae2e4cc0234dfca7331026372c999f7c20f1550d1814effc",
-    "assets/index-dzQ8OhHT.css": "1b4f444b4650fccf58d44e49874dfba63bfb25634b94c5e5b4c340d5b8e691c1",
+    "assets/index-BdQbtk4N.js": "410c5ba25138649d690d79fd58af9587da48941b4786f8862ec8800860d5d7a2",
+    "assets/index-CK-j5Y1i.css": "19ec0381675e976e225f94b5f7dc007f74e95ff3cb28f0d4de2cea83fd8d21b6",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "index.html": "34ab38d7644edfb3d7683909fb1bda31a44b12ae21335b3b82e6173e3caf1d3d"
+    "index.html": "f84c3606f8f7b4dc199826e0dec06b316742211ed6a2c185ccfe8b1fee4f55a5"
   }
 }
