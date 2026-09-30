@@ -3,9 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="canonical" href="https://pmersion.com/">
+<meta property="og:title" content="PMersion — Simulation de gestion de projet en bêta">
+<meta property="og:description" content="Six décisions. Un projet. Votre trajectoire. Essayez la bêta découverte sans compte.">
+<meta property="og:url" content="https://pmersion.com/">
+<meta property="og:type" content="website">
 <meta name="theme-color" content="#0B1D3A">
-<meta name="description" content="PMersion. Plongez dans la galaxie du project management.">
-<title>PMersion | La galaxie du project management</title>
+<meta name="description" content="Essayez PMersion : six décisions de gestion de projet, leurs conséquences et votre bilan. Bêta découverte accessible sans compte.">
+<title>PMersion | Simulation de gestion de projet — Bêta</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <style>
 :root{
@@ -69,29 +74,28 @@ h1{margin:19px auto 10px;max-width:890px;font-size:clamp(2rem,3.55vw,3.9rem);lin
 @media(max-width:480px){
   header{height:62px}.header-logo{width:156px}.progress{margin-bottom:10px}.half-planet{width:56px;height:56px}.progress{padding:9px 12px}.hero-symbol{width:60px}.brand{font-size:2.55rem}.hero h1{font-size:1.84rem}.lead{font-size:.89rem}.actions{flex-direction:column;align-items:center}.btn{width:min(250px,86vw);max-width:none;flex:none}.sim{grid-template-columns:1fr 1fr;min-height:500px;padding-top:16px}.node{height:82px}.core{width:116px;height:116px}.core img{width:70px}.info{padding:15px}.progress small{max-width:125px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}.depth-stage{transform:none!important}}
+.public-scope{position:relative;z-index:30;text-align:center;color:#a9c2d8;font-size:.8rem;line-height:1.8;padding:0 20px 22px;margin:12px auto 0;max-width:900px}.public-scope a{color:#b4eaf0;text-underline-offset:4px}a:focus-visible{outline:3px solid #7adae3;outline-offset:4px}
 </style>
 </head>
 <body>
-<div class="scene" id="scene">
+<main class="scene" id="scene">
   <div class="space-layer space-back"></div><div class="space-layer space-mid"></div><div class="space-layer space-front"></div>
   <div class="galaxy g1"></div><div class="galaxy g2"></div><div class="big-planet"></div>
   <header>
     <img class="header-logo" src="pmersion-logo-horizontal-reverse.svg" alt="PMersion Project Management">
-    <button class="notify" data-notify aria-label="Être prévenu">
-      <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 10-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><span>Être prévenu</span>
-    </button>
+    <a class="notify" href="/beta/" style="text-decoration:none;min-height:44px">Ouvrir la bêta ↗</a>
   </header>
-  <div class="progress" aria-label="50% du site construit">
+  <div class="progress" aria-label="Bêta découverte disponible">
     <div class="half-planet" aria-hidden="true"></div>
-    <div><strong>50%</strong><span>du site construit</span><small>Le meilleur reste à venir.</small></div>
+    <div><strong>Bêta</strong><span>Accessible sans compte</span><small>Six décisions. Votre bilan.</small></div>
   </div>
   <section class="hero">
     <img class="hero-symbol" src="pmersion-symbol-color.svg" alt="Symbole PMersion">
     <div class="brand">PMERSION</div>
     <h1><span class="intro">Plongez dans la </span><span class="galaxy-word">galaxie</span><br><span class="pm-line">du project management.</span></h1>
-    <p class="lead">Une plateforme pensée pour relier pilotage, données, collaboration et IA.</p>
+    <p class="lead">Entraînez-vous aux décisions de gestion de projet : six situations, des compromis concrets et un bilan de votre trajectoire.</p>
     <div class="actions">
-      <a class="btn primary" href="https://pmersion-staging.pmersion-lab.workers.dev/" aria-label="Essayer la bêta PMersion">Essayer la bêta <span>›</span></a>
+      <a class="btn primary" href="/beta/" aria-label="Essayer la bêta PMersion">Essayer la bêta <span>›</span></a>
       <button class="btn secondary" id="discover">Découvrir <span>›</span></button>
     </div>
   </section>
@@ -124,8 +128,8 @@ h1{margin:19px auto 10px;max-width:890px;font-size:clamp(2rem,3.55vw,3.9rem);lin
     </aside>
   </section>
   <div class="footer"><span>pmersion.com</span><span class="footer-tag">Des projets d'aujourd'hui. Un monde de demain.</span></div>
-  <div class="toast" id="toast">La fonctionnalité d'alerte arrive bientôt.</div>
-</div>
+  <p class="public-scope">Bêta découverte · Un projet fictif · Conséquences prédéfinies · Progression sur votre navigateur<br><a href="/beta/#/donnees">Sauvegarde et données</a></p>
+</main>
 <script>
 const nodes=[...document.querySelectorAll('.node')];
 const copy=[
@@ -143,8 +147,6 @@ function activate(i,flash=false){
 }
 nodes.forEach((n,i)=>n.addEventListener('click',()=>{clearInterval(timer);activate(i,true)}));
 document.getElementById('discover').addEventListener('click',()=>{clearInterval(timer);let i=0;activate(i,true);timer=setInterval(()=>{i++;if(i>=nodes.length){clearInterval(timer);return}activate(i,true)},900)});
-const toast=document.getElementById('toast');
-document.querySelectorAll('[data-notify]').forEach(b=>b.addEventListener('click',()=>{toast.classList.add('show');setTimeout(()=>toast.classList.remove('show'),2200)}));
 const scene=document.getElementById('scene');
 if(matchMedia('(min-width: 851px) and (pointer:fine)').matches){
   scene.addEventListener('pointermove',e=>{
