@@ -9,7 +9,7 @@ for (const button of document.querySelectorAll('[data-preview],[data-stage],#hyp
 const set = (id,value) => { document.getElementById(id).textContent = value; };
 let preview = 'budget'; let verified = false;
 function pulse(element) {
- if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) element.animate([{opacity:.45,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:260,easing:'ease-out'});
+ if (document.documentElement.dataset.motion !== 'reduced' && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) element.animate([{opacity:.45,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:260,easing:'ease-out'});
 }
 function renderPreview() {
  const entry = previews[preview]; const report = snapshots.reports[verified ? 'verified' : 'prepare'];
