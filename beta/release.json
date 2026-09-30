@@ -2,7 +2,7 @@
   "mode": "public-workspace",
   "version": "0.3.0",
   "scenarioVersion": "synapse-discovery.2026-09-30",
-  "sourceCommit": "f4ad4c9ed2579bc7d40cb1d47c350b1ba8a1918e",
+  "sourceCommit": "994e0ece9debc3dac32c22325a0f28b12224bc21",
   "builtAt": "2026-09-30",
   "features": [
     "six-decision-journey",
@@ -14,12 +14,12 @@
     "method-and-sector-resources"
   ],
   "files": {
-    "index.html": "5b49159582146c6b1a81b6e8a0e28508057d50fc38050386febd4f66f2b80c54",
+    "index.html": "113ea27071c0005940629cd732c40ee5f439079498e8de884a4d2c115f57f25a",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/index-B0ZwrS27.css": "d659129ea67be84908a018ad4b5c518068a9ac139525f7ff35ce98b6b2bfd68e",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+    "assets/index-COtm4S9q.js": "eb90c1b0ed1c38dfa735b8783aa8e9aa13f70696685c91db1b043994e28fdc6c",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "assets/index-Lj1tcJqx.js": "1eaf557f5d6d91f7743613a354d0d9bf7fd05ade25f070a6021bd38a6328d215",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
   }
