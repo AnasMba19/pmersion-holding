@@ -174,3 +174,34 @@ test("method resources adapt questions to sector context and remain readable on 
   );
   await capture(page, info, "10-method");
 });
+
+test("dossier continuation leads through missing workshops and ends at the retained synthesis", async ({
+  page,
+}) => {
+  await page.goto("/beta/#/atelier/synthese");
+  await page.getByRole("link", { name: "Commencer par le budget", exact: false }).click();
+  await expect(page).toHaveURL(/atelier\/budget/);
+  await page.goto("/beta/#/atelier/budget?vue=comparer");
+  await page.getByRole("button", { name: /Retenir et préparer ma note/ }).click();
+  await page.getByRole("link", { name: "Continuer avec le planning", exact: false }).click();
+  await page.getByRole("button", { name: "Retenir pour la synthèse", exact: true }).click();
+  await page.getByRole("link", { name: "Continuer avec les risques", exact: false }).click();
+  await page.getByRole("button", { name: "Retenir pour la synthèse", exact: true }).click();
+  await page.getByRole("link", { name: "Ouvrir ma synthèse", exact: false }).click();
+  await expect(page.getByTestId("synthesis-cost")).toBeVisible();
+  await page.reload();
+  await expect(page.getByTestId("synthesis-cost")).toBeVisible();
+});
+
+test("continuation selects the first missing workshop after an out-of-order retained decision", async ({
+  page,
+}) => {
+  await page.goto("/beta/#/atelier/risques");
+  await page.getByRole("button", { name: "Retenir pour la synthèse", exact: true }).click();
+  await page.getByRole("link", { name: "Continuer avec le budget", exact: false }).click();
+  await expect(page).toHaveURL(/atelier\/budget/);
+  await page.goto("/beta/#/atelier/synthese");
+  await expect(
+    page.getByRole("link", { name: "Continuer avec le budget", exact: false }),
+  ).toBeVisible();
+});
