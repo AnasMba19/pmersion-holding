@@ -1,4 +1,5 @@
 import {test,expect} from '@playwright/test';
+test.use({video:{mode:'on',size:{width:1280,height:900}}});
 
 test('three alternatives expose independent canonical consequences and comparison',async({page},info)=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
@@ -36,8 +37,6 @@ test('three alternatives expose independent canonical consequences and compariso
  expect(errors).toEqual([]);
 });
 
-test.describe('recorded decision motion',()=>{
-test.use({video:{mode:'on',size:{width:1280,height:900}}});
 test('motion settles after interrupted decisions and manual reduction',async({page},info)=>{
  await page.emulateMedia({reducedMotion:'no-preference'});
  await page.goto('/');
@@ -52,6 +51,4 @@ test('motion settles after interrupted decisions and manual reduction',async({pa
  await page.locator('[data-decision-choice="recover"]').click();
  expect(await page.evaluate(()=>document.getAnimations().length)).toBe(0);
  await expect(page.locator('#decision-cost')).toHaveText('1 096 000 €');
-});
-
 });
