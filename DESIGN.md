@@ -29,11 +29,11 @@ components:
 
 # PMersion — Plan de projet vivant
 
-## Current candidate scope — 1 October 2026
+## Public 0.4.0 design contract — 1 October 2026
 
-Implementation candidate; browser CI, visual qualification and publication are pending. This
-document records the intended/current source direction, not a deployed revision or acceptance
-of its aesthetics. The prior Trajectoires release remains the published baseline until promotion.
+This contract describes the 0.4.0 release scope. The exact compiled source and asset hashes are
+in `beta/release.json`; the qualification and publication record is public PR #9. A design contract
+is not a claim of user acceptance or proof that the whole product roadmap is complete.
 
 The homepage and planning workshop now share a living project-plan presentation: five work
 packages, reference outlines, forecast bars, dependencies and the unchanged external target.
@@ -49,7 +49,7 @@ rules in the homepage controller. Motion remains finite, interruptible and reduc
 The associated application increment clarifies the next workshop action and browser-local saving.
 Three retained workshop contributions and six discovery choices are separate progress tracks;
 homepage trials save neither. Draft changes do not silently update retained synthesis versions.
-No cross-device synchronization or private Cloudflare publication is included in this candidate.
+No cross-device synchronization or private Cloudflare publication is included in this release.
 
 ## Overview
 
