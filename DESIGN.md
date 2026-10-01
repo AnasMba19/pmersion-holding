@@ -1,99 +1,99 @@
 ---
 version: alpha
-name: "PMersion — Dossier en mouvement"
+name: "PMersion — Trajectoires"
 colors:
   primary: "#185E48"
   ink: "#182D28"
   background: "#F4F5F2"
   surface: "#FFFFFF"
   sage: "#DCE7D9"
-  forest: "#143B30"
-  accent: "#C48536"
+  forest: "#183D33"
+  accent: "#D7F3B0"
 typography:
   body:
     fontFamily: "Manrope, Arial, sans-serif"
   display:
-    fontFamily: "Georgia, Times New Roman, serif"
+    fontFamily: "Manrope, Arial, sans-serif"
   utility:
     fontFamily: "ui-monospace, monospace"
 rounded:
-  DEFAULT: "2px"
+  DEFAULT: "14px"
 spacing:
-  mobileMargin: "20px"
-  desktopMargin: "52px"
+  mobileMargin: "16px"
+  desktopMargin: "40px"
 components:
   button: {}
   dossier: {}
   trajectory: {}
 ---
 
-# PMersion public art direction
+# PMersion — Trajectoires
 
 ## Overview
 
-Dossier en mouvement is the brand expression for the public homepage of a French project-management
-training simulation. The owner retained the sage/ink base but explicitly requested a stronger
-visual composition and movement across the site, beyond functional data transitions.
-
-The signature is a paper dossier and an articulated project trace: oversized typography, layered
-sheets, a three-part drawn trajectory and an asymmetric gallery. The public app remains the
-reading/workshop surface with its separate existing functional contract.
+Public French project-management training beta. The owner rejected the previous paper/serif
+marketing treatment as static and lacking immediate value. This revision is a playable opening:
+one fictional project, three independent decisions, visible consequences and a usable comparison.
+This is an implemented direction, not an owner-approved aesthetic or proof of market fit.
 
 ## Colors
 
-Runtime ownership: site.css owns the accepted base; visual.css owns the named marketing extension
-(--paper, --sage, --forest, --display, --motion-ease). This document mirrors them, not generates
-them. Forest and sage alternate with paper to change section silhouette. Ochre is a trace/accent,
-not a semantic warning or small body text color.
+site.css owns the accepted light sage/green base. visual.css owns the marketing extension:
+forest #183d33, mint #d7f3b0, muted stage #b6cdc1. Dark forest makes the interactive project distinct
+from the light reading sections. Gold shows remaining forecast cost, lilac added recovery cost.
+Neither color alone communicates a result: the adjacent numerical summary is authoritative.
 
 ## Typography
 
-Locally bundled Manrope carries the body and large sans title. System Georgia adds a restrained
-italic voice only to expressive display text; figures stay tabular sans. Body copy is enlarged
-from the earlier miniature marketing scale. Utility metadata is secondary. French accents remain
-literal and no third-party font request is added.
+Locally bundled Manrope throughout. Large compact sans headline with one green phrase. No italic
+serif, paper motif, stock customer logos, invented metrics or unrelated space imagery. Tabular
+figures, stable fixed chart axes and complete French labels. No remote font requests.
 
 ## Layout
 
-Desktop: wide title, offset dossier layers, three-word manifesto, large sage drawing, project
-journey, living example, forest asymmetric workshop gallery, calm reference/FAQ and final action.
-Mobile: native document flow, complete text and controls, stacked gallery, diagram scaled as a
-nonessential illustration. Navigation and actions never require hovering, dragging or animation.
+Full-width headline and interactive stage, followed by the decision lesson and native comparison.
+Then the evidence preview, six-step journey, combined project example, asymmetric workshop gallery,
+method, context references and scope/FAQ. Mobile uses normal scrolling and stacked controls.
+No horizontal page scrolling; only the labelled comparison region may scroll horizontally.
 
 ## Elevation & Depth
 
-Paper layers may rotate; all functional controls and numerical results stay horizontal. Decorative
-sheets use pointer-events:none and aria-hidden. Depth belongs to the brand composition rather than
-an artificial window system. No galaxy, ornamental cockpit, stock customer logos or invented stats.
+One contained stage, fine light rules, restrained shadows and 14–22px radii. Gallery changes scale
+and silhouette, with a large dark budget tile and smaller light planning/risk tiles. Avoid a wall
+of identical cards. Controls remain horizontal, readable and in document flow.
 
 ## Shapes
 
-Sheets have fine rules and nearly square corners. A broad SVG path bends between paper notes.
-The path is explicitly illustrative and never substitutes for numerical model output.
+Budget is a segmented cost bar; planning is a rail with a target and moving forecast marker.
+Payment deferral moves a labelled token without shrinking the total cost. Animation presents a
+change; the immediate text result is the source for understanding and assistive technology.
 
 ## Components
 
-Preserve native links/buttons/fieldset semantics and all existing IDs for the canonical previews.
-The static baseline disables JS-only controls until their owner initializes; real beta links work
-without script. motion.js owns visual enhancement, site.js owns values from dossier-data.js.
-Existing beta assets and browser-local retained decisions are not rewritten by presentation code.
+index.html owns the complete static baseline. decision-data.js is generated by the private source
+scripts/lab/home-decision-snapshots.mjs from the canonical project reconciliation adapter.
+decision.js selects independent snapshots; it writes no local storage or workshop state.
+The reference is 1M EUR, initial forecast 1.09M/J60, target J47. Verified savings: 1.05M/J60.
+Deferral: 1.09M/J60 and 60k postponed. Conditional recovery: 1.096M/J56 with 6k action cost.
+The fixed risk response adds no action cost. These are separate from the later living-dossier
+example whose initial 1.101M includes 11k actions. Do not mix those baselines.
+Native buttons expose pressed states; results use aria-live; comparison uses details/table.
+JS-only buttons start disabled. Existing beta links and the starting figures work without JS.
 
 ## Do's and Don'ts
 
-Respect OS reduced motion and a page-local manual reduction button. Content is visible by default;
-IntersectionObserver starts finite WAAPI reveals only for elements entering view. No hidden CSS
-startup state. Scroll position drives only decorative SVG progress and note posture through a
-bounded RAF; no continuous animation loop, scroll hijacking or autoplay audio. Manual reduction
-also suppresses existing value pulses and cancels running animations. Restore listeners on bfcache.
+Motion: a finite entrance, cost-segment transformation, date-marker travel, payment-token movement,
+selected-button response and short section reveals. Never auto-select a business decision.
+Respect OS and manual reduced motion; cancel running effects on reduction and page exit.
+No autoplay audio, scroll hijacking, infinite decorative loop or content hidden awaiting script.
+Quick repeated choices must settle on the last selected canonical result. No analytics added.
 
-Five references: Dopple Press (current split entry), Chiara Luzzana (typographic composition),
-Esther Jansma (geometric editorial identity), Fluffy/Jade Nargeot (showcase composition), Sarah
-Lupton (exploratory states). These are principles reinterpreted for PMersion; no assets/code copied.
-The old Wix Dopple description is not treated as the current site.
+Reference principles inherited from the five supplied sites: confident expressive typography,
+visual rhythm, interaction-led exploration and paced movement. No assets or code copied, no claim
+that PMersion is objectively superior to them. 12ui was attempted in the previous iteration but
+requires sign-in and returned no generated candidates. This implementation is bespoke.
 
-12ui CLI was installed and attempted; generation requires a connected account, and no candidates
-were returned. This design is a bespoke implementation, not a claimed 12ui-generated result.
-
-Verification: source syntax, CSS parsing, existing public beta browser regression, four viewport
-widths, scripts-disabled rendering, OS/manual reduced motion, real motion screenshots/video and
-live-domain inspection after release. Passing tests is not proof of superiority to the references.
+Verification: canonical snapshot generation, module/CSS syntax, four browser viewport widths,
+all three choices and non-cumulation, reset, reduced motion, no-script baseline, finite full motion,
+comparison and workshop links, recorded screenshots/video, existing beta regression and live QA.
+Automated checks establish behavior, not aesthetic acceptance or human learning outcomes.

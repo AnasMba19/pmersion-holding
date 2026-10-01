@@ -1,7 +1,7 @@
 import { expect, test } from "@playwright/test";
 test("homepage previews lead to the real workshops and remain keyboard operable", async ({page}, info) => {
   await page.goto("/");
-  await expect(page.getByRole("heading",{level:1})).toContainText("La gestion de projet");
+  await expect(page.getByRole("heading",{level:1})).toContainText("Un choix change");
   await expect(page.locator(".galaxy,.big-planet,.space-layer")).toHaveCount(0);
   await page.getByRole("button",{name:/02 Planning/}).focus();
   await page.keyboard.press("Enter");
@@ -53,7 +53,7 @@ test('homepage retains readable facts without JavaScript and supports finite mot
  const staticPage = await context.newPage();
  await staticPage.route('**/*.js',route=>route.abort());
  await staticPage.goto('/');
- await expect(staticPage.getByRole('heading',{level:1})).toContainText('La gestion de projet');
+ await expect(staticPage.getByRole('heading',{level:1})).toContainText('Un choix change');
  await expect(staticPage.locator('#living-cost')).toHaveText('1 101 000 €');
  await expect(staticPage.getByRole('link',{name:/Essayer la bêta PMersion/})).toHaveAttribute('href','/beta/');
 });
