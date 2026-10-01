@@ -2,20 +2,20 @@
   "mode": "public-workspace",
   "version": "0.5.0",
   "scenarioVersion": "synapse-discovery.2026-09-30",
-  "sourceCommit": "5124d69f7cff5abef241b4593b34151b6a2b845f",
+  "sourceCommit": "81a2a8009fec1925dad4950398ceeed59e65b367",
   "builtAt": "2026-10-01",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Source SHA supplied by the release operator; run from that reviewed checkout.",
   "files": {
     "assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
-    "assets/index-D_ZbiwQ0.js": "fa51eb9be29eef9e279fe0aa665f2f9910b7687bf6dbe581a2063b47d1ac1bf8",
-    "assets/index-Dieie7Bk.css": "f19518d8d237127fe959d584ade479e3c1d83affbc45bc6ff28f850077d5aaf8",
+    "assets/index-Beuc_LpU.js": "fa51eb9be29eef9e279fe0aa665f2f9910b7687bf6dbe581a2063b47d1ac1bf8",
+    "assets/index-DtukBxug.css": "4f216f944e02aafb39e44477922eea891bf4f9de6851c02236f9b7b25549a76b",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "index.html": "bdf25eef474e0488edc8758334e9bd15150ee9a34b076a366e06f05d2102f2ae"
+    "index.html": "d0f2712657aee7a27fc6183b59bc49d0afca669887912c28112e4316ead2ee84"
   },
   "sharedAssets": {
     "decision-data.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
@@ -24,14 +24,14 @@
     "project-plan.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
     "worlds.js": "e7b259acf96b9553521cac5cc6053bbbbf7508a6621669a3e427e8d6a61d13fe",
     "worlds.e7b259acf96b9553.js": "e7b259acf96b9553521cac5cc6053bbbbf7508a6621669a3e427e8d6a61d13fe",
-    "project-world.css": "412dad6130b7ae55aba0bdea0314b966cba2679a59d746b6768961a7c92f17d8",
-    "project-world.412dad6130b7ae55.css": "412dad6130b7ae55aba0bdea0314b966cba2679a59d746b6768961a7c92f17d8",
+    "project-world.css": "e8c519640bff49508d01a5992a7155770dab1c211c3e9221b82f615bc5d81a1b",
+    "project-world.e8c519640bff4950.css": "e8c519640bff49508d01a5992a7155770dab1c211c3e9221b82f615bc5d81a1b",
     "barlow-condensed-latin-600-normal.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
     "BARLOW-OFL.txt": "046ee27d8bddc6b6ee08eee53c96dbf3ec1f6df561644e018507dd8ffcb11d31",
     "decision-data.3765b110e6cc3f9f.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
     "project-plan.06416ee77cc91aba.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
     "decision.js": "7207230fcf24cb77102fdd6892b1968ee0fde932d5659d817ad5f242a1fa1664",
     "decision.7207230fcf24cb77.js": "7207230fcf24cb77102fdd6892b1968ee0fde932d5659d817ad5f242a1fa1664",
-    "index.html": "a8c26e0b6636e5c5b1ee18bf8da897a4740e33ac768d839447e7323759376679"
+    "index.html": "a1e4b4e424ba2160c5348c7dfcc072ce1d513a89347171c1d6c5e04c13c4dbe1"
   }
 }
