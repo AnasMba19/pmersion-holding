@@ -29,10 +29,10 @@ components:
 
 # PMersion — Plan de projet vivant
 
-## Public 0.4.0 design contract — 1 October 2026
+## Public 0.4.1 design contract — 1 October 2026
 
-This contract describes the 0.4.0 release scope. The exact compiled source and asset hashes are
-in `beta/release.json`; the qualification and publication record is public PR #9. A design contract
+This contract describes the 0.4.1 release scope. The exact compiled source and asset hashes are
+in `beta/release.json`; the qualification and publication record is public PR #9 and cache correction PR #10. A design contract
 is not a claim of user acceptance or proof that the whole product roadmap is complete.
 
 The homepage and planning workshop now share a living project-plan presentation: five work
@@ -122,3 +122,9 @@ Verification: canonical snapshot generation, module/CSS syntax, four browser vie
 all three choices and non-cumulation, reset, reduced motion, no-script baseline, finite full motion,
 comparison and workshop links, recorded screenshots/video, existing beta regression and live QA.
 Automated checks establish behavior, not aesthetic acceptance or human learning outcomes.
+
+## Immutable module delivery
+
+The release generator names the homepage data, shared renderer and controller by their content hash.
+Their imports must stay content-addressed: a browser with cached modules from an older release must
+not combine them with the current controller. Stable file copies remain only for compatibility.
