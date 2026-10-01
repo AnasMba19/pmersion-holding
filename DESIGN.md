@@ -1,5 +1,5 @@
 
-## Mondes de projet — 0.5.0 candidate, 1 October 2026
+## Mondes de projet — 0.5.0 release contract, 1 October 2026
 
 A physical project-model studio extends the accepted sage/forest/ink identity. Barlow Condensed
 600 is the display face for public titles; locally bundled Manrope remains body and control type.
@@ -22,8 +22,8 @@ Selection and model controls never alter or persist discovery/workshop choices.
 The homepage is progressively enhanced and server-generated static markup remains readable.
 Rotation/selection uses finite cancellable motion; manual/OS reduction stops it. The application
 uses the same typography/material palette, native route links, canonical Button and document
-details. Text and controls remain in normal flow on phones. Full visual and route qualification
-is required before publishing this candidate. Current production remains 0.4.1 until recorded.
+details. Text and controls remain in normal flow on phones. Visual and route qualification precedes publication. Release evidence and deployment status
+are recorded in https://github.com/AnasMba19/pmersion-holding/pull/11.
 
 Token map (runtime owners remain canonical): display → --font-project-display / Barlow Condensed;
 body → existing Manrope; scene ground/light/dark → project-world.css; sector accents → sectors.ts.
