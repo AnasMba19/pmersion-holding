@@ -1,0 +1,54 @@
+import {test,expect} from '@playwright/test';
+test.use({video:{mode:'on',size:{width:1280,height:900}}});
+
+test('three alternatives expose independent canonical consequences and comparison',async({page},info)=>{
+ const errors=[];page.on('pageerror',error=>errors.push(error.message));
+ await page.goto('/');
+ const originalStorage=await page.evaluate(()=>JSON.stringify(localStorage));
+ const choice=key=>page.locator(`[data-decision-choice="${key}"]`);
+ await choice('savings').click();
+ await expect(page.locator('#decision-cost')).toHaveText('1 050 000 €');
+ await expect(page.locator('#decision-finish')).toHaveText('J60');
+ await expect(choice('savings')).toHaveAttribute('aria-pressed','true');
+ await choice('defer').click();
+ await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');
+ await expect(page.locator('#decision-tradeoff')).toContainText('Coût évité : 0 €');
+ await expect(page.locator('#cash-marker text')).toContainText('60 000 € reportés');
+ await expect(choice('savings')).toHaveAttribute('aria-pressed','false');
+ await choice('recover').focus();await page.keyboard.press('Enter');
+ await expect(page.locator('#decision-cost')).toHaveText('1 096 000 €');
+ await expect(page.locator('#decision-finish')).toHaveText('J56');
+ await expect(page.locator('#decision-delay')).toHaveText('9 jours après la cible');
+ await expect(page.locator('#decision-next')).toHaveAttribute('href','/beta/#/atelier/planning');
+ expect(await page.locator('#finish-marker').evaluate(e=>e.transform.baseVal.getItem(0).matrix.e)).toBeCloseTo(498,5);
+ await expect(page.locator('#decision-caution')).toContainText('supposés vérifiés');
+ await page.locator('.decision-comparison summary').click();
+ await expect(page.locator('#decision-comparison-body tr')).toHaveCount(4);
+ await expect(page.locator('tr[data-choice="recover"]')).toHaveAttribute('data-selected','true');
+ await page.locator('.decision-theatre').screenshot({path:info.outputPath('trajectoires-recovery.png')});
+ await page.locator('.decision-learning').screenshot({path:info.outputPath('trajectoires-lesson.png')});
+ await page.locator('#decision-reset').click();
+ await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');
+ await expect(page.locator('#decision-finish')).toHaveText('J60');
+ await expect(page.locator('[data-decision-choice][aria-pressed="true"]')).toHaveCount(0);
+ expect(await page.evaluate(()=>JSON.stringify(localStorage))).toBe(originalStorage);
+ expect(await page.evaluate(()=>document.getAnimations().length)).toBe(0);
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ expect(errors).toEqual([]);
+});
+
+test('motion settles after interrupted decisions and manual reduction',async({page},info)=>{
+ await page.emulateMedia({reducedMotion:'no-preference'});
+ await page.goto('/');
+ await page.locator('[data-decision-choice="recover"]').click();
+ await page.locator('[data-decision-choice="defer"]').click();
+ await page.locator('[data-decision-choice="savings"]').click();
+ await expect(page.locator('#decision-cost')).toHaveText('1 050 000 €');
+ await expect.poll(()=>page.evaluate(()=>document.getAnimations().filter(a=>a.playState==='running').length)).toBe(0);
+ await expect(page.locator('#finish-marker')).toHaveAttribute('transform','translate(531 245)');
+ await page.locator('.decision-theatre').screenshot({path:info.outputPath('trajectoires-savings.png')});
+ await page.getByRole('button',{name:'Réduire les animations',exact:true}).click();
+ await page.locator('[data-decision-choice="recover"]').click();
+ expect(await page.evaluate(()=>document.getAnimations().length)).toBe(0);
+ await expect(page.locator('#decision-cost')).toHaveText('1 096 000 €');
+});

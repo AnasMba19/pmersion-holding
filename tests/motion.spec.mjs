@@ -28,7 +28,7 @@ test('static art direction exposes complete content with scripts disabled',async
  const context=await browser.newContext({javaScriptEnabled:false,viewport:info.project.use.viewport});
  const page=await context.newPage();
  await page.goto('http://127.0.0.1:4180/');
- await expect(page.getByRole('heading',{level:1})).toContainText('La gestion de projet');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Un choix change');
  await expect(page.locator('#signature-title')).toBeVisible();
  await expect(page.locator('#living-cost')).toHaveText('1 101 000 €');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);

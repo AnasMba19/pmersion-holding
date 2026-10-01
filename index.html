@@ -5,53 +5,53 @@
 <title>PMersion — Entraînez vos décisions de gestion de projet</title>
 <meta name="description" content="Entraînez-vous à piloter un projet : six situations, quatre ateliers interactifs et les conséquences de vos décisions. Bêta PMersion gratuite, sans compte.">
 <link rel="canonical" href="https://pmersion.com/">
-<meta property="og:title" content="PMersion — La gestion de projet se pratique."><meta property="og:description" content="Un budget qui dérive. Un jalon menacé. À vous de décider. Découvrez la bêta, sans compte."><meta property="og:url" content="https://pmersion.com/"><meta property="og:type" content="website"><meta name="theme-color" content="#185e48">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site.css?v=20260930-04"><link rel="stylesheet" href="visual.css?v=20260930-04"><script src="site.js?v=20260930-04" type="module"></script><script src="motion.js?v=20260930-04" type="module"></script>
+<meta property="og:title" content="PMersion — Un choix change la suite."><meta property="og:description" content="Un budget qui dérive. Un jalon menacé. À vous de décider. Découvrez la bêta, sans compte."><meta property="og:url" content="https://pmersion.com/"><meta property="og:type" content="website"><meta name="theme-color" content="#185e48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="site.css?v=20261001-01"><link rel="stylesheet" href="visual.css?v=20261001-01"><script src="site.js?v=20260930-04" type="module"></script><script src="motion.js?v=20261001-01" type="module"></script>
+<script type="module" src="decision.js?v=20261001-01"></script>
 </head>
 <body>
 <a class="skip" href="#main">Aller au contenu</a>
 <header class="site-header wrap"><a href="/" aria-label="PMersion — accueil"><img src="pmersion-logo-primary.svg" width="180" height="50" alt="PMersion"></a><nav aria-label="Navigation principale"><a href="#experience">L’expérience</a><a href="#ateliers">Les ateliers</a><a href="/beta/#/reperes">Les repères</a><a href="#questions">La bêta</a></nav><a class="header-cta" href="/beta/">Ouvrir la bêta <span aria-hidden="true">↗</span></a></header>
 <main id="main">
-<section class="hero wrap" aria-labelledby="hero-title">
-  <div class="hero-copy" data-reveal><p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>SIMULATION DE GESTION DE PROJET</p><h1 id="hero-title"><span>La gestion </span><span>de projet </span><em>se pratique.</em></h1><p class="hero-lead">Un budget qui dérive. Un jalon menacé.<br>Un comité qui attend votre recommandation.</p><p class="hero-description">Prenez les commandes de Synapse. Explorez les faits, arbitrez et comprenez les conséquences de vos décisions.</p><div class="hero-actions"><a class="button primary" href="/beta/">Essayer la bêta PMersion <span aria-hidden="true">→</span></a><a class="text-link" href="#ateliers">Explorer les ateliers <span aria-hidden="true">↓</span></a></div><p class="access"><span aria-hidden="true">✓</span> Accessible sans compte <span>·</span> Gratuit pendant cette bêta</p></div>
-  <div class="hero-stage" data-reveal data-reveal-delay="140">
-    <div class="paper-layer paper-back" aria-hidden="true"><span>SYNAPSE / PLANNING</span><div class="paper-gantt"><i></i><i></i><i></i></div></div>
-    <div class="paper-layer paper-middle" aria-hidden="true"><span>LES FAITS AVANT LE CHOIX</span><svg viewBox="0 0 400 160"><path d="M0 130H80Q110 130 110 100V60Q110 30 140 30H260Q290 30 290 60V100Q290 130 320 130H400" fill="none" stroke="currentColor" stroke-width="4"/></svg></div>
-    <div class="hero-dossier" aria-label="Aperçu d’un dossier de simulation">
+<section class="decision-experience wrap" aria-labelledby="hero-title">
+<div class="decision-intro"><div><p class="eyebrow">PMERSION / LE TERRAIN D’ENTRAÎNEMENT DES CHEFS DE PROJET</p><h1 id="hero-title">Un choix change<br><span>la suite.</span></h1></div><div class="decision-promise"><p>Un projet sous tension.<br>Trois façons de réagir.</p><p>Choisissez. Regardez ce qui bouge.<br>Comprenez ce que vous engagez.</p><a href="/beta/" class="text-link">Essayer la bêta PMersion <span aria-hidden="true">↗</span></a></div></div>
+<section class="decision-theatre" id="signature-scene" aria-labelledby="signature-title" data-decision="initial">
+<div class="theatre-top"><span><b class="signal-dot" aria-hidden="true"></b> SYNAPSE / PROJET FICTIF</span><span>Accessible sans compte</span></div>
+<div class="theatre-context"><h2 id="signature-title">Le comité attend votre arbitrage.</h2><p>90 000 € de dépassement prévus. Une livraison à J60, pour une cible à J47.</p></div>
+<div class="choice-heading"><span>À vous de décider</span><button type="button" id="decision-reset" disabled>Revenir au départ ↺</button></div>
+<div class="decision-choices" role="group" aria-label="Choisir un arbitrage"><button type="button" data-decision-choice="savings" aria-pressed="false" disabled><span class="choice-icon" aria-hidden="true">−€</span><span><strong>Économiser 40 000 €</strong><small>Des économies effectivement vérifiées</small></span><b aria-hidden="true">↗</b></button><button type="button" data-decision-choice="defer" aria-pressed="false" disabled><span class="choice-icon" aria-hidden="true">€→</span><span><strong>Reporter 60 000 €</strong><small>Décaler un paiement, sans annuler la dépense</small></span><b aria-hidden="true">↗</b></button><button type="button" data-decision-choice="recover" aria-pressed="false" disabled><span class="choice-icon" aria-hidden="true">−4j</span><span><strong>Récupérer quatre jours</strong><small>Une action à 6 000 €, sous conditions</small></span><b aria-hidden="true">↗</b></button></div>
+<div class="theatre-body"><div class="decision-visual">
+<p class="chart-mobile-legend">La barre relie le réalisé, les engagements et le reste à prévoir. Le repère blanc marque le budget approuvé.</p>
+<svg id="decision-chart" viewBox="0 0 780 365" aria-hidden="true">
+<defs><linearGradient id="actual-tone" x2="0" y2="1"><stop stop-color="#d9efe3"/><stop offset="1" stop-color="#9bb9aa"/></linearGradient><linearGradient id="committed-tone" x2="0" y2="1"><stop stop-color="#85cbaa"/><stop offset="1" stop-color="#51977a"/></linearGradient><linearGradient id="remaining-tone" x2="0" y2="1"><stop stop-color="#ffe4a6"/><stop offset="1" stop-color="#d5b071"/></linearGradient></defs>
+<text x="36" y="26" class="chart-section">COÛT FINAL PRÉVU</text><text x="744" y="26" text-anchor="end" class="chart-unit">Échelle 0 → 1,2 M€</text>
+<rect x="36" y="58" width="660" height="59" rx="9" class="chart-track"/>
+<g id="budget-shape"><rect x="36" y="58" width="154" height="59" rx="7" fill="url(#actual-tone)"/><rect x="190" y="58" width="231" height="59" rx="7" fill="url(#committed-tone)"/><rect id="decision-remaining" x="421" y="58" width="214.5" height="59" rx="7" fill="url(#remaining-tone)"/><rect id="decision-action" x="635.5" y="58" width="0" height="59" rx="3" fill="#c5b8f0"/></g>
+<line x1="586" x2="586" y1="48" y2="125" class="approved-line"/><text x="586" y="145" text-anchor="middle" class="chart-small">Budget approuvé : 1 M€</text>
+<text x="55" y="94" class="segment-label">Réalisé</text><text x="220" y="94" class="segment-label">Engagé</text><text x="447" y="94" class="segment-label">À prévoir</text>
+<text x="36" y="187" class="chart-section">DATE DE FIN PRÉVUE</text><text x="744" y="187" text-anchor="end" class="chart-unit">Jours ouvrés du scénario</text>
+<line x1="36" y1="245" x2="696" y2="245" class="time-track"/><line x1="36" y1="245" x2="531" y2="245" class="baseline-rail"/>
+<path id="decision-route" d="M36 245H531" class="selected-rail"/>
+<line x1="423.75" y1="214" x2="423.75" y2="269" class="target-line"/><text x="423.75" y="207" text-anchor="middle" class="chart-target">Cible J47</text>
+<g id="finish-marker" transform="translate(531 245)"><circle r="12" fill="#d7f3b0"/><circle r="4" fill="#183d33"/><text id="finish-marker-label" y="41" text-anchor="middle" class="chart-finish">J60</text></g>
+<text x="36" y="282" class="chart-small">J0</text><text x="696" y="282" text-anchor="end" class="chart-small">J80</text>
+<g id="cash-marker" transform="translate(36 333)"><rect x="0" y="-16" width="208" height="31" rx="15" fill="#315448"/><text x="104" y="4" text-anchor="middle" class="cash-caption">Pas de paiement reporté</text></g>
+
+</svg>
+</div><div class="decision-results" aria-live="polite" aria-atomic="true"><p id="decision-label">Situation de départ</p><div><span>Coût final prévu</span><strong id="decision-cost">1 090 000 €</strong><small id="decision-cost-delta">+90 000 € au budget approuvé</small></div><div><span>Fin prévue</span><strong id="decision-finish">J60</strong><small id="decision-delay">13 jours après la cible</small></div><p class="decision-tradeoff" id="decision-tradeoff">Le budget et le délai attendent un arbitrage.</p></div></div>
+
+</section>
+<div class="decision-learning"><div><span class="learning-symbol" aria-hidden="true">↳</span><div><p class="eyebrow">CE QUE VOTRE CHOIX CHANGE</p><h3 id="decision-lesson">Trois options. Aucun compromis invisible.</h3><p id="decision-caution">Une économie, un report de paiement et un gain de délai ne produisent pas le même effet. Testez les trois.</p></div></div><a href="/beta/#/atelier/budget" id="decision-next">Approfondir dans l’atelier <span aria-hidden="true">↗</span></a></div>
+<details class="decision-comparison"><summary>Comparer les trois arbitrages <span aria-hidden="true">+</span></summary><div class="compare-scroll" tabindex="0" role="region" aria-label="Comparaison des arbitrages"><table><caption>Essais indépendants à partir du même projet fictif.</caption><thead><tr><th>Votre choix</th><th>Coût final</th><th>Fin prévue</th><th>Compromis</th></tr></thead><tbody id="decision-comparison-body"><tr><th>Situation de départ</th><td>1 090 000 €</td><td>J60</td><td>90 000 € de dépassement ; 13 jours de retard.</td></tr></tbody></table></div></details>
+<div class="decision-foot"><span>Essais indépendants, non cumulés. Ils ne modifient pas votre dossier d’ateliers.</span><button type="button" id="motion-toggle" class="motion-toggle" aria-pressed="false" disabled>Réduire les animations</button></div>
+</section>
+<section class="preview-lab wrap section"><div class="section-head"><p class="eyebrow">LES PIÈCES DERRIÈRE LES CHIFFRES</p><h2>Ne croyez pas<br>une promesse.<br><span>Vérifiez ses effets.</span></h2><p>Dans les ateliers, vous examinez les hypothèses, leurs conditions et les limites qui restent. Ici, explorez un premier aperçu par dimension.</p><a class="text-link" href="/beta/#/atelier/budget">Ouvrir les pièces du budget ↗</a></div>    <div class="hero-dossier" aria-label="Aperçu d’un dossier de simulation">
     <div class="dossier-top"><span><b>S</b> SYNAPSE <span class="dossier-divider">/</span> DOSSIER DE DÉCISION</span><span class="dossier-pill">Projet fictif</span></div>
     <div class="dossier-tabs" role="group" aria-label="Explorer un aperçu"><button type="button" aria-pressed="true" data-preview="budget" disabled>01 <span>Budget</span></button><button type="button" aria-pressed="false" data-preview="planning" disabled>02 <span>Planning</span></button><button type="button" aria-pressed="false" data-preview="risques" disabled>03 <span>Risques</span></button></div>
     <div class="dossier-content" id="preview" aria-live="polite"><p class="eyebrow" id="preview-kicker">LE POINT D’ARBITRAGE</p><h2 id="preview-title">90 000 € d’écart.<br>Quelle option défendre ?</h2><div class="preview-summary"><div><span id="metric-label">Coût final prévu</span><strong id="metric-value">1 090 000 <small>€</small></strong></div><span class="variance" id="metric-variance">+9 %</span></div><div class="preview-effect" aria-hidden="true"><span id="effect-fill" style="width:90.83%"></span><i id="effect-reference" style="left:83.33%"></i></div><p class="effect-caption" id="effect-caption">La référence approuvée reste à 1 000 000 €.</p><button class="hypothesis-button" id="hypothesis-toggle" type="button" disabled aria-pressed="false"><span aria-hidden="true">＋</span><span id="hypothesis-label">Tester 40 000 € d’économies vérifiées</span></button><div class="preview-ledger"><div><span id="row-one-label">Budget approuvé</span><strong id="row-one-value">1 000 000 €</strong></div><div><span id="row-two-label">Économies possibles, à vérifier</span><strong id="row-two-value">40 000 €</strong></div></div><div class="preview-signal"><span aria-hidden="true">↳</span><p id="preview-insight">Reporter une dépense ne réduit pas son coût. L’arbitrage commence par cette distinction.</p></div><a id="preview-link" class="preview-link" href="/beta/#/atelier/budget">Ouvrir le dossier budget <span aria-hidden="true">↗</span></a></div>
     <div class="dossier-bottom"><span>DONNÉES SIMULÉES</span><span>Votre décision, ses conséquences.</span></div>
   </div>
-    <span class="stage-caption">LE PROJET EST FICTIF.<br>VOTRE RAISONNEMENT COMPTE.</span>
-  </div>
-  <div class="hero-bottom"><a href="#signature-scene" class="scroll-cue">Explorer le mouvement du projet <span aria-hidden="true">↓</span></a><button type="button" id="motion-toggle" class="motion-toggle" aria-pressed="false" disabled>Réduire les animations</button></div>
-</section>
-<div class="manifesto" aria-hidden="true"><span data-reveal>Observer.</span><span data-reveal data-reveal-delay="80">Arbitrer.</span><span data-reveal data-reveal-delay="160">Assumer.</span></div>
-<div class="proof-strip wrap"><p>Pour celles et ceux qui veulent<br><strong>mieux piloter, en pratiquant.</strong></p><div><strong>06</strong><span>moments de décision</span></div><div><strong>04</strong><span>ateliers interactifs</span></div><div><strong>01</strong><span>projet fil conducteur</span></div></div>
-
-<section id="signature-scene" class="signature-scene" aria-labelledby="signature-title">
-  <div class="signature-layout wrap">
-    <div class="signature-copy" data-reveal><p class="eyebrow">UNE DÉCISION NE RESTE JAMAIS SEULE</p><h2 id="signature-title">Changez un choix.<br><em>Suivez sa trace.</em></h2><p>Les faits éclairent votre décision. Votre décision change la trajectoire. Prenez le temps de comprendre ce qui les relie.</p><a class="text-link" href="/beta/">Entrer dans le projet <span aria-hidden="true">↗</span></a></div>
-    <div class="project-drawing" aria-hidden="true">
-      <div class="drawing-caption"><span>SYNAPSE / TRAJECTOIRE</span><span>UNE SIMULATION</span></div>
-      <svg viewBox="0 0 720 520" class="project-ribbon">
-        <defs><pattern id="drawing-grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="currentColor" stroke-opacity=".09"/></pattern></defs>
-        <rect width="720" height="520" fill="url(#drawing-grid)"/>
-        <path class="trajectory-base" d="M30 365H150Q195 365 195 320V145Q195 95 245 95H450Q500 95 500 145V355Q500 405 550 405H685"/>
-        <path class="trajectory-line" pathLength="1" d="M30 365H150Q195 365 195 320V145Q195 95 245 95H450Q500 95 500 145V355Q500 405 550 405H685"/>
-        <path class="trajectory-secondary" d="M30 395H130Q225 395 225 300V165Q225 125 265 125H430Q470 125 470 165V365Q470 435 550 435H685"/>
-        <circle cx="195" cy="265" r="12"/><circle cx="355" cy="95" r="12"/><circle cx="500" cy="315" r="12"/>
-        <path class="ribbon-arrow" d="m665 385 20 20-20 20"/>
-      </svg>
-      <div class="drawing-note note-facts"><span>01 / OBSERVER</span><strong>Les faits.</strong><div class="note-lines"><i></i><i></i><i></i></div></div>
-      <div class="drawing-note note-choice"><span>02 / ARBITRER</span><strong>Votre choix.</strong><b>↗</b></div>
-      <div class="drawing-note note-effect"><span>03 / COMPRENDRE</span><strong>Ses effets.</strong><div class="note-columns"><i></i><i></i><i></i></div></div>
-      <div class="drawing-footer"><span>FAITS → DÉCISION → CONSÉQUENCES</span><span>EXPLORER · COMPARER · RECOMMENCER</span></div>
-    </div>
-  </div>
-</section>
-<section class="experience wrap section" id="experience"><div class="section-head" data-reveal><p class="eyebrow">01 / L’EXPÉRIENCE</p><h2>Le projet avance.<br>Vos décisions comptent.</h2><p>Chaque situation vous place face à un compromis. Votre parcours relie les choix, leurs effets et les questions à poser au comité.</p></div><div class="journey">
+</section><section class="experience wrap section" id="experience"><div class="section-head" data-reveal><p class="eyebrow">01 / L’EXPÉRIENCE</p><h2>Le projet avance.<br>Vos décisions comptent.</h2><p>Chaque situation vous place face à un compromis. Votre parcours relie les choix, leurs effets et les questions à poser au comité.</p></div><div class="journey">
 <article data-reveal><span>01</span><div><h3>Cadrer le mandat</h3><p>Clarifier le périmètre et les responsabilités avant d’engager le projet.</p></div><b aria-hidden="true">↗</b></article>
 <article data-reveal><span>02</span><div><h3>Arbitrer le budget</h3><p>Distinguer la référence approuvée du coût réellement prévu.</p></div><b aria-hidden="true">↗</b></article>
 <article data-reveal><span>03</span><div><h3>Récupérer un jalon</h3><p>Examiner le chemin critique et les conditions d’un gain de délai.</p></div><b aria-hidden="true">↗</b></article>
