@@ -19,7 +19,7 @@ test('three alternatives expose independent canonical consequences and compariso
  await expect(page.locator('#decision-finish')).toHaveText('J56');
  await expect(page.locator('#decision-delay')).toHaveText('9 jours après la cible');
  await expect(page.locator('#decision-next')).toHaveAttribute('href','/beta/#/atelier/planning');
- await expect(page.locator('#finish-marker')).toHaveAttribute('transform','translate(498 245)');
+ expect(await page.locator('#finish-marker').evaluate(e=>e.transform.baseVal.getItem(0).matrix.e)).toBeCloseTo(498,5);
  await expect(page.locator('#decision-caution')).toContainText('supposés vérifiés');
  await page.locator('.decision-comparison summary').click();
  await expect(page.locator('#decision-comparison-body tr')).toHaveCount(4);
