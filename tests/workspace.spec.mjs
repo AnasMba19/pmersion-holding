@@ -166,8 +166,8 @@ test("method resources adapt questions to sector context and remain readable on 
   await expect(
     page.getByRole("heading", { name: "Quel coût final est défendable aujourd’hui ?" }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Construction", exact: true }).click();
-  await expect(page.getByRole("heading", { name: /libérer le lot suivant/ })).toBeVisible();
+  await page.getByRole("button", { name: "Construction et architecture", exact: true }).click();
+  await expect(page.getByRole("heading", { name: /Quel livrable bloque réellement le lot suivant/ })).toBeVisible();
   await expect(page.getByRole("link", { name: /ISO 21502/ })).toHaveAttribute(
     "href",
     "https://www.iso.org/standard/74947.html",
