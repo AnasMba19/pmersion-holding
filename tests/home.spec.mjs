@@ -16,6 +16,8 @@ test('the project plan leads to the real planning workshop with matching consequ
  await page.getByLabel('Interfaces techniques validées',{exact:true}).check();
  await page.getByLabel('Récupération effectivement vérifiée',{exact:true}).check();
  await expect(page.getByTestId('planning-finish')).toHaveText('J56');
+ await page.getByRole('button',{name:'Voir le plan ↓',exact:true}).click();
+ await expect(page.getByRole('heading',{name:'Une date, avec ses conditions.',exact:true})).toBeFocused();
  await expect(page.locator('.project-plan')).toBeVisible();
  await page.screenshot({path:info.outputPath('plan-vivant-workshop.png'),fullPage:true});
 });

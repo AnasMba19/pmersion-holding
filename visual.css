@@ -12,3 +12,17 @@
 html[data-motion=reduced]{scroll-behavior:auto}html[data-motion=reduced] *,html[data-motion=reduced] *::before,html[data-motion=reduced] *::after{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
 @media(forced-colors:active){.decision-theatre,.decision-choices>button{border:1px solid CanvasText}.decision-results{border-color:CanvasText}}
+
+/* Render review: expose the choice before its consequences. */
+.access-note{display:block;color:var(--muted);font-size:10px;line-height:1.6;margin-top:12px;grid-column:1/-1}
+.choice-heading{margin-top:22px}
+.decision-choices{border-bottom:1px solid #c7d4c5}
+.atelier:first-child .mini-budget{height:150px;padding-top:15px}
+.atelier:first-child .mini-budget>div{margin-bottom:22px;font-size:11px}
+.atelier:first-child .mini-budget i{height:15px}
+.atelier-insight{border-top:1px solid #a9bca6;padding-top:24px;margin:12px 0 28px}
+.atelier-insight small{font:10px/1.5 ui-monospace,monospace;letter-spacing:.08em;color:var(--green)}
+.atelier-insight p{font-size:38px;font-weight:550;line-height:1.1;letter-spacing:-.04em;margin:16px 0}
+.atelier-insight em{font-style:normal;color:var(--green)}
+@media(max-width:850px){.decision-results{order:-1}.atelier-insight{width:100%;margin-bottom:8px}.atelier-insight p{font-size:30px}.atelier-insight br{display:none}.atelier-insight br::after{content:' '}}
+@media(max-width:540px){.access-note{margin-top:0;font-size:10px}.choice-heading{margin-top:14px}.decision-choices>button{min-height:92px}.atelier:first-child .mini-budget{height:125px}.atelier-insight p{font-size:28px}}
