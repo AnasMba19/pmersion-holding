@@ -32,3 +32,15 @@ test('one homepage demonstration retains readable facts without JavaScript',asyn
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await context.close();
 });
+
+test('legacy unversioned module responses cannot mix with the current release', async ({page}) => {
+ const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+ await page.route('**/decision-data.js', route => route.fulfill({contentType:'application/javascript',body:'throw new Error("legacy module loaded")'}));
+ await page.route('**/project-plan.js', route => route.fulfill({contentType:'application/javascript',body:'throw new Error("legacy renderer loaded")'}));
+ await page.goto('/');
+ await page.locator('[data-decision-choice=recover]').click();
+ await expect(page.locator('#decision-finish')).toHaveText('J56');
+ await expect(page.locator('[data-plan-task="acceptance"] .project-plan__date')).toHaveText('J51 → J56');
+ await expect(page.locator('[data-plan-finish-label]')).toHaveText('Fin J56');
+ expect(errors).toEqual([]);
+});

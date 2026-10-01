@@ -1,8 +1,8 @@
 {
   "mode": "public-workspace",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "scenarioVersion": "synapse-discovery.2026-09-30",
-  "sourceCommit": "b2ed3236bbf65e2b5f8f077a3d9f4c02a6ef11fd",
+  "sourceCommit": "10e2ec62356468832ee19c4eedd9f8e3430f5eb2",
   "builtAt": "2026-10-01",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Source SHA supplied by the release operator; run from that reviewed checkout.",
@@ -21,6 +21,10 @@
     "dossier-data.js": "3eca4d8b417b2d3d707207d6e6e1083180863ea29e950852862817be69e4e0a4",
     "project-plan.css": "afb4ec7783457762c6cef561193d81aaf538a26328b2e4e6aa715779c35748b4",
     "project-plan.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
-    "index.html": "48a40a6a14b9746105569cfab248bb55075ab6731b55975bd483601451e0dd56"
+    "decision-data.3765b110e6cc3f9f.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
+    "project-plan.06416ee77cc91aba.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
+    "decision.js": "9e9002eb16bd9cce8f485cc79a4bf6d81c7ccd5e3af973df2f401110d1c3a112",
+    "decision.9e9002eb16bd9cce.js": "9e9002eb16bd9cce8f485cc79a4bf6d81c7ccd5e3af973df2f401110d1c3a112",
+    "index.html": "6f6e98d87833ae247e5cebb8820c71af90a1ef32fdfb91b38dc07e7195657ba7"
   }
 }
