@@ -13,14 +13,14 @@ test('three alternatives expose independent canonical consequences and compariso
  await choice('defer').click();
  await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');
  await expect(page.locator('#decision-tradeoff')).toContainText('Coût évité : 0 €');
- await expect(page.locator('#cash-marker text')).toContainText('60 000 € reportés');
+ await expect(page.locator('#cash-marker')).toContainText('60 000 € reportés');
  await expect(choice('savings')).toHaveAttribute('aria-pressed','false');
  await choice('recover').focus();await page.keyboard.press('Enter');
  await expect(page.locator('#decision-cost')).toHaveText('1 096 000 €');
  await expect(page.locator('#decision-finish')).toHaveText('J56');
  await expect(page.locator('#decision-delay')).toHaveText('9 jours après la cible');
  await expect(page.locator('#decision-next')).toHaveAttribute('href','/beta/#/atelier/planning');
- expect(await page.locator('#finish-marker').evaluate(e=>e.transform.baseVal.getItem(0).matrix.e)).toBeCloseTo(498,5);
+ await expect(page.locator('[data-plan-task="acceptance"] .project-plan__date')).toContainText('J51 → J56');
  await expect(page.locator('#decision-caution')).toContainText('supposés vérifiés');
  await page.locator('.decision-comparison summary').click();
  await expect(page.locator('#decision-comparison-body tr')).toHaveCount(4);
@@ -45,7 +45,7 @@ test('motion settles after interrupted decisions and manual reduction',async({pa
  await page.locator('[data-decision-choice="savings"]').click();
  await expect(page.locator('#decision-cost')).toHaveText('1 050 000 €');
  await expect.poll(()=>page.evaluate(()=>document.getAnimations().filter(a=>a.playState==='running').length)).toBe(0);
- await expect(page.locator('#finish-marker')).toHaveAttribute('transform','translate(531 245)');
+ await expect(page.locator('[data-plan-task="acceptance"] .project-plan__date')).toContainText('J55 → J60');
  await page.locator('.decision-theatre').screenshot({path:info.outputPath('trajectoires-savings.png')});
  await page.getByRole('button',{name:'Réduire les animations',exact:true}).click();
  await page.locator('[data-decision-choice="recover"]').click();

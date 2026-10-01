@@ -1,26 +1,26 @@
 {
   "mode": "public-workspace",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "scenarioVersion": "synapse-discovery.2026-09-30",
-  "sourceCommit": "994e0ece9debc3dac32c22325a0f28b12224bc21",
-  "builtAt": "2026-09-30",
-  "features": [
-    "six-decision-journey",
-    "local-workshop-drafts",
-    "retained-decision-history",
-    "visitor-reconciled-synthesis",
-    "guided-synthesis-example",
-    "json-export-scoped-reset",
-    "method-and-sector-resources"
-  ],
+  "sourceCommit": "b2ed3236bbf65e2b5f8f077a3d9f4c02a6ef11fd",
+  "builtAt": "2026-10-01",
+  "generator": "scripts/build-public-release.mjs",
+  "provenance": "Source SHA supplied by the release operator; run from that reviewed checkout.",
   "files": {
-    "index.html": "113ea27071c0005940629cd732c40ee5f439079498e8de884a4d2c115f57f25a",
-    "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
-    "assets/index-B0ZwrS27.css": "d659129ea67be84908a018ad4b5c518068a9ac139525f7ff35ce98b6b2bfd68e",
-    "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
-    "assets/index-COtm4S9q.js": "eb90c1b0ed1c38dfa735b8783aa8e9aa13f70696685c91db1b043994e28fdc6c",
-    "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
+    "assets/index-B4sG7FRW.js": "1ba3216f0e96c797e2f215f48e1ed5804e9ccaf4b887e56deafbb4345d2a0a66",
+    "assets/index-BMjTEJ5D.css": "3a52eb9ad09b7d8498d0963e791c5665b2e9bfaafc18ad66111f2abc2e49df15",
+    "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
-    "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914"
+    "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
+    "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
+    "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
+    "index.html": "9d728dfa229cc7ced03cabd477cc0d6f1a1df4266102a977a6a0d01f530ddde7"
+  },
+  "sharedAssets": {
+    "decision-data.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
+    "dossier-data.js": "3eca4d8b417b2d3d707207d6e6e1083180863ea29e950852862817be69e4e0a4",
+    "project-plan.css": "afb4ec7783457762c6cef561193d81aaf538a26328b2e4e6aa715779c35748b4",
+    "project-plan.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
+    "index.html": "48a40a6a14b9746105569cfab248bb55075ab6731b55975bd483601451e0dd56"
   }
 }

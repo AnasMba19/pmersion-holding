@@ -17,6 +17,69 @@ export const decisionBasis = {
 };
 export const decisions = {
   "initial": {
+    "plan": {
+      "baseline": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 30
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 30,
+            "finish": 40
+          },
+          {
+            "id": "acceptance",
+            "start": 40,
+            "finish": 45
+          }
+        ],
+        "finishWorkingDay": 45
+      },
+      "forecast": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 45
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 45,
+            "finish": 55
+          },
+          {
+            "id": "acceptance",
+            "start": 55,
+            "finish": 60
+          }
+        ],
+        "finishWorkingDay": 60
+      },
+      "externalTargetWorkingDay": 47
+    },
     "cost": 1090000,
     "finish": 60,
     "target": 47,
@@ -30,6 +93,69 @@ export const decisions = {
     "route": "/beta/#/atelier/budget"
   },
   "savings": {
+    "plan": {
+      "baseline": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 30
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 30,
+            "finish": 40
+          },
+          {
+            "id": "acceptance",
+            "start": 40,
+            "finish": 45
+          }
+        ],
+        "finishWorkingDay": 45
+      },
+      "forecast": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 45
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 45,
+            "finish": 55
+          },
+          {
+            "id": "acceptance",
+            "start": 55,
+            "finish": 60
+          }
+        ],
+        "finishWorkingDay": 60
+      },
+      "externalTargetWorkingDay": 47
+    },
     "cost": 1050000,
     "finish": 60,
     "target": 47,
@@ -43,6 +169,69 @@ export const decisions = {
     "route": "/beta/#/atelier/budget"
   },
   "defer": {
+    "plan": {
+      "baseline": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 30
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 30,
+            "finish": 40
+          },
+          {
+            "id": "acceptance",
+            "start": 40,
+            "finish": 45
+          }
+        ],
+        "finishWorkingDay": 45
+      },
+      "forecast": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 45
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 45,
+            "finish": 55
+          },
+          {
+            "id": "acceptance",
+            "start": 55,
+            "finish": 60
+          }
+        ],
+        "finishWorkingDay": 60
+      },
+      "externalTargetWorkingDay": 47
+    },
     "cost": 1090000,
     "finish": 60,
     "target": 47,
@@ -56,6 +245,69 @@ export const decisions = {
     "route": "/beta/#/atelier/budget"
   },
   "recover": {
+    "plan": {
+      "baseline": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 30
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 30,
+            "finish": 40
+          },
+          {
+            "id": "acceptance",
+            "start": 40,
+            "finish": 45
+          }
+        ],
+        "finishWorkingDay": 45
+      },
+      "forecast": {
+        "tasks": [
+          {
+            "id": "design",
+            "start": 0,
+            "finish": 10
+          },
+          {
+            "id": "supplier",
+            "start": 10,
+            "finish": 45
+          },
+          {
+            "id": "preparation",
+            "start": 10,
+            "finish": 25
+          },
+          {
+            "id": "integration",
+            "start": 45,
+            "finish": 51
+          },
+          {
+            "id": "acceptance",
+            "start": 51,
+            "finish": 56
+          }
+        ],
+        "finishWorkingDay": 56
+      },
+      "externalTargetWorkingDay": 47
+    },
     "cost": 1096000,
     "finish": 56,
     "target": 47,

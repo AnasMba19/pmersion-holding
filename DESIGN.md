@@ -1,6 +1,6 @@
 ---
 version: alpha
-name: "PMersion — Trajectoires"
+name: "PMersion — Plan de projet vivant"
 colors:
   primary: "#185E48"
   ink: "#182D28"
@@ -27,7 +27,29 @@ components:
   trajectory: {}
 ---
 
-# PMersion — Trajectoires
+# PMersion — Plan de projet vivant
+
+## Public 0.4.0 design contract — 1 October 2026
+
+This contract describes the 0.4.0 release scope. The exact compiled source and asset hashes are
+in `beta/release.json`; the qualification and publication record is public PR #9. A design contract
+is not a claim of user acceptance or proof that the whole product roadmap is complete.
+
+The homepage and planning workshop now share a living project-plan presentation: five work
+packages, reference outlines, forecast bars, dependencies and the unchanged external target.
+SVG depth and movement follow real fictional schedule data. Large Manrope, sage/forest/ink and
+immediate readable results connect the expressive homepage to the working application.
+
+The source owner is `pmersion/packages/ui/project-plan.ts` with `project-plan.css`; this static
+repository receives generated `project-plan.js` and `project-plan.css`. The planning workshop uses
+the same renderer through `ProjectPlan.tsx`. Canonical models supply the dates; the renderer does
+not recalculate business results. Do not introduce independent geometry or alternative schedule
+rules in the homepage controller. Motion remains finite, interruptible and reduced-motion aware.
+
+The associated application increment clarifies the next workshop action and browser-local saving.
+Three retained workshop contributions and six discovery choices are separate progress tracks;
+homepage trials save neither. Draft changes do not silently update retained synthesis versions.
+No cross-device synchronization or private Cloudflare publication is included in this release.
 
 ## Overview
 
@@ -64,9 +86,12 @@ of identical cards. Controls remain horizontal, readable and in document flow.
 
 ## Shapes
 
-Budget is a segmented cost bar; planning is a rail with a target and moving forecast marker.
-Payment deferral moves a labelled token without shrinking the total cost. Animation presents a
-change; the immediate text result is the source for understanding and assistive technology.
+The shared project plan replaces the previous hero's cost-bar and milestone-rail composition.
+Baseline outlines, forecast work-package bars and dependency connectors express schedule changes.
+The fixed target stays visible; the finish marker follows the canonical forecast. Budget and
+payment consequences remain explicit numerical text, without implying a schedule change when
+the selected alternative changes only cost or payment timing. The supplementary SVG never
+replaces the immediate text result, readable HTML legend or the workshop's detailed task table.
 
 ## Components
 
@@ -82,7 +107,7 @@ JS-only buttons start disabled. Existing beta links and the starting figures wor
 
 ## Do's and Don'ts
 
-Motion: a finite entrance, cost-segment transformation, date-marker travel, payment-token movement,
+Motion: a finite entrance, schedule-geometry transitions, forecast-marker travel,
 selected-button response and short section reveals. Never auto-select a business decision.
 Respect OS and manual reduced motion; cancel running effects on reduction and page exit.
 No autoplay audio, scroll hijacking, infinite decorative loop or content hidden awaiting script.

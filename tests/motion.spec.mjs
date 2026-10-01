@@ -19,8 +19,8 @@ test('art direction stays usable through scroll motion and manual reduction',asy
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.getByRole('button',{name:'Réduire les animations',exact:true}).click();
  await expect(page.locator('html')).toHaveAttribute('data-motion','reduced');
- await page.getByRole('button',{name:/Tester 40 000/}).click();
- await expect(page.locator('#metric-value')).toHaveText('1 050 000 €');
+ await page.locator('[data-decision-choice=savings]').click();
+ await expect(page.locator('#decision-cost')).toHaveText('1 050 000 €');
  expect(await page.evaluate(()=>document.getAnimations().length)).toBe(0);
  await expect(page.getByRole('button',{name:'Activer les animations',exact:true})).toHaveAttribute('aria-pressed','true');
 });
@@ -28,9 +28,10 @@ test('static art direction exposes complete content with scripts disabled',async
  const context=await browser.newContext({javaScriptEnabled:false,viewport:info.project.use.viewport});
  const page=await context.newPage();
  await page.goto('http://127.0.0.1:4180/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Un choix change');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Vos décisions');
  await expect(page.locator('#signature-title')).toBeVisible();
- await expect(page.locator('#living-cost')).toHaveText('1 101 000 €');
+ await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');
+ await expect(page.locator('#home-project-plan svg')).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await context.close();
 });
