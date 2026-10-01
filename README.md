@@ -1,30 +1,37 @@
-# PMersion — public discovery beta
+# PMersion — public project-learning beta
 
-Public website: https://pmersion.com · Discovery app: https://pmersion.com/beta/
+Public website: https://pmersion.com · Application: https://pmersion.com/beta/
 
-The product-focused landing page opens an anonymous, browser-only project-management simulation:
-six canonical Synapse decisions, explicit tradeoffs, consequences, historical review and a
-printable final summary. Four public workshops extend this journey: a budget dossier and printable note, a conditional schedule, supplier-risk observations, and an independent common-synthesis example. The workshops are temporary; the synthesis does not aggregate a visitor’s separate trials. All project data is fictional. This beta does not certify skills,
-manage real projects or expose the private connected workspace.
+Six discovery decisions and budget, planning, risk and synthesis workshops use the shared Synapse
+engines. The homepage exposes a real decision demo and a studio of original projected 3D models.
+Six sector pages add contextual questions and 18 original fictional documents: construction,
+nuclear, robotics, SI/data, industry and services/health. These introductions are explicitly
+separate from complete sector simulations; their numeric workshop links open transversal Synapse.
 
-## Data
+## Local data
 
-No account, analytics, email collection or application backend calls. A single versioned
-localStorage key stores only decision codes and content version for this browser. Progress
-can be cleared with explicit confirmation. Hosting still receives normal technical requests.
+No account, email collection, analytics or application API is used. The discovery key stores the
+six decision codes; `pmersion.public-workspace.v1` stores workshop drafts, explicitly retained
+versions and history. Retained budget/planning/risk versions feed the visitor’s common synthesis.
+Export and explicit scoped reset preserve the other progress keys. There is no cross-device sync.
+Sector choice, model rotation and layer separation are presentation state, never persisted work.
+Hosting receives normal technical requests. All project data is fictional.
 
-## Source and publication
+## Source and design
 
-`beta/` is the production build from `apps/public-beta` in the private PMersion source
-repository. `beta/release.json` identifies the source revision. Scenario rules are shared with
-the private app; this is a dedicated public entry, never the browser test harness. No source
-maps, credentials, cloud identities or databases are deployed here.
+`beta/` is the compiled `apps/public-beta` app; `beta/release.json` records exact source and hashes.
+The source catalogue and SVG geometry are shared by homepage, context pages and method resources.
+Public titles use locally hosted Barlow Condensed; Manrope remains body/control type. The font’s
+OFL license is included. Generated world JS/CSS and decision modules use immutable content URLs.
+Old hashed assets remain for previously cached pages. No source maps or credentials are shipped.
 
-GitHub Pages publishes main using the existing CNAME. Public Beta Verification tests the
-actual compiled bundle on phones, tablet and desktop before merge. It also checks reload,
-invalid storage, unavailable storage, route locks, cross-tab updates and reset isolation.
-Run locally with `npm ci`, `npx playwright install chromium`, then `npm test`.
+## Verification and publication
 
-Rollback: revert the beta publication commit. DNS and private environments are unaffected.
+GitHub Pages publishes main with the existing CNAME. The browser workflow tests the compiled
+bundle at 390/430/768/1280 px, including keyboard, model controls, direct routes, storage isolation,
+reduced motion, workshop calculations, export and reset. Screenshots require visual review before
+merge; CI alone does not establish aesthetic acceptance or learning outcomes. Release 0.5.0 is
+tracked in https://github.com/AnasMba19/pmersion-holding/pull/11.
 
-Release 0.2.0 replaces the spatial theme with the project-dossier presentation and shares navigation across the public journey and all four workshops. Canonical laboratory engines perform all calculations; no tests or fixture server are shipped. Source revision and file hashes are recorded in beta/release.json.
+Run locally: `npm ci`, `npx playwright install chromium`, `npm test`.
+Rollback: revert the release commit; private connected environments and DNS remain separate.

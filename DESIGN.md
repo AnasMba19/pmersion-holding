@@ -1,3 +1,34 @@
+
+## Mondes de projet — 0.5.0 release contract, 1 October 2026
+
+A physical project-model studio extends the accepted sage/forest/ink identity. Barlow Condensed
+600 is the display face for public titles; locally bundled Manrope remains body and control type.
+The type treatment is an industrial drawing signature, not a body-font replacement. The OFL
+license ships with the display asset. Private authenticated screens retain their existing theme.
+
+Canonical public owners: `packages/content/sectors.ts` owns six context briefs and accents;
+`packages/ui/sector-scene.ts` projects original three-dimensional geometry to SVG;
+`packages/ui/sector-home.ts` owns the generated homepage studio; `project-world.css` owns public
+presentation. Vite adapts CSS/fonts for the React app; the release generator copies the same
+owners and uses content-addressed world JS/CSS on the homepage. No WebGL dependency or continuous
+animation loop is added. Four discrete viewing angles and separated layers work by buttons.
+
+Construction, nuclear, robotics, SI/data, industry and services/health have distinct silhouettes,
+questions and three original fictional documents each. They are contextual introductions, not
+sector-certified simulators. The nuclear installation is a stylised project scene, not an EPR2
+or SMR engineering model. Numeric exercises explicitly open the transversal Synapse case.
+Selection and model controls never alter or persist discovery/workshop choices.
+
+The homepage is progressively enhanced and server-generated static markup remains readable.
+Rotation/selection uses finite cancellable motion; manual/OS reduction stops it. The application
+uses the same typography/material palette, native route links, canonical Button and document
+details. Text and controls remain in normal flow on phones. Visual and route qualification precedes publication. Release evidence and deployment status
+are recorded in https://github.com/AnasMba19/pmersion-holding/pull/11.
+
+Token map (runtime owners remain canonical): display → --font-project-display / Barlow Condensed;
+body → existing Manrope; scene ground/light/dark → project-world.css; sector accents → sectors.ts.
+The earlier contracts below preserve the public/private release history.
+
 ---
 version: alpha
 name: "PMersion — Plan de projet vivant"
