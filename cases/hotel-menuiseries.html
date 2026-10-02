@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Cas PMersion : hôtel de 120 chambres, menuiseries extérieures, retard fournisseur de quatre semaines.">
+<title>PMersion · Cas hôtel · Menuiseries extérieures</title>
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="./hotel-menuiseries.css">
+</head>
+<body>
+<div class="case-page">
+<div class="case-wrap">
+<header class="case-header">
+  <a class="case-brand" href="../" aria-label="Retour à PMersion">
+    <img src="../pmersion-logo-primary.svg" alt="PMersion">
+  </a>
+  <div class="case-status" aria-label="Statut du cas">
+    <span class="case-chip">CAS PROFOND · CONSTRUCTION</span>
+    <span class="case-chip case-chip--alert">RETARD FOURNISSEUR · 4 SEMAINES</span>
+  </div>
+  <a class="case-back" href="../#home-project-worlds">← Retour aux mondes de projet</a>
+</header>
+
+<main>
+<section class="case-hero" aria-labelledby="case-title">
+  <div>
+    <p class="case-kicker">PMERSION / MISSION 01 · DOSSIER DE DÉCISION</p>
+    <h1 id="case-title">Hôtel 120 chambres.<br><em>La livraison dérape.</em></h1>
+    <p class="case-lead">En phase EXE / travaux, le fournisseur étranger de menuiseries extérieures annonce quatre semaines de retard. Le jalon visible est à six semaines. Le problème n’est donc pas de choisir une promesse rassurante, mais de construire une trajectoire défendable.</p>
+    <div class="case-meta-grid" aria-label="Contexte de la mission">
+      <div class="case-meta"><span>Projet</span><strong>Hôtel · 120 chambres</strong></div>
+      <div class="case-meta"><span>Phase</span><strong>EXE / Travaux</strong></div>
+      <div class="case-meta"><span>Package</span><strong>Menuiseries extérieures</strong></div>
+      <div class="case-meta"><span>Fournisseur</span><strong>Étranger · délai annoncé +4 sem.</strong></div>
+      <div class="case-meta"><span>Jalon</span><strong>J42 · dans 6 semaines</strong></div>
+      <div class="case-meta"><span>Règle</span><strong>Aucune option ne masque le glissement résiduel</strong></div>
+    </div>
+  </div>
+
+  <aside class="case-hero-board" aria-label="État initial du Project Twin">
+    <div class="case-board-head"><span>PROJECT TWIN / ÉTAT INITIAL</span><span>DEMO V1 · DÉTERMINISTE</span></div>
+    <div class="case-board-body">
+      <div class="case-alert-box">
+        <div class="case-alert-mark" aria-hidden="true">!</div>
+        <div><strong>Signal critique : interface livraison → pose</strong><p>La fabrication et la pose des menuiseries conditionnent plusieurs activités de façade. Le retard consomme la marge disponible avant le jalon J42.</p></div>
+      </div>
+      <div class="case-twin-strip">
+        <div><span>Coût projet</span><strong id="twin-cost">2,40 M€</strong><small>baseline illustrative</small></div>
+        <div><span>Jalon prévisionnel</span><strong id="twin-date">J42</strong><small id="twin-date-note">référence externe</small></div>
+        <div><span>Contrôles ouverts</span><strong id="twin-quality">2</strong><small>sur 5 contrôles clés</small></div>
+        <div><span>Risque résiduel</span><strong id="twin-risk">72 / 100</strong><small>indice d’exposition, non probabiliste</small></div>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="case-section" aria-labelledby="timeline-title">
+  <div class="case-section-head">
+    <div><p class="case-kicker">01 · RÉSEAU ET DÉPENDANCES</p><h2 id="timeline-title">Le retard touche un réseau, pas une seule date.</h2></div>
+    <p>Le fournisseur n’est pas isolé. Sa livraison conditionne la pose, puis les contrôles d’interface et la fermeture de plusieurs zones. Une récupération crédible doit agir sur les dépendances avant de vendre un gain au comité.</p>
+  </div>
+
+  <div class="case-timeline" aria-label="Séquence principale du lot">
+    <div class="case-milestone"><span>J0</span><strong>Commande</strong><small>engagement fournisseur</small></div>
+    <div class="case-milestone"><span>J14</span><strong>Plans / détails</strong><small>interfaces à verrouiller</small></div>
+    <div class="case-milestone"><span>J28</span><strong>Livraison prévue</strong><small>baseline initiale</small></div>
+    <div class="case-milestone case-milestone--danger"><span>J56</span><strong>Livraison annoncée</strong><small>+4 semaines</small></div>
+    <div class="case-milestone"><span>J63</span><strong>Pose séquence A</strong><small>après disponibilité zone</small></div>
+    <div class="case-milestone"><span>J70</span><strong>Contrôles</strong><small>réception · étanchéité · interfaces</small></div>
+    <div class="case-milestone"><span>J42</span><strong>Jalon visible</strong><small>objectif externe maintenu, non garanti</small></div>
+  </div>
+
+  <div class="case-gantt" role="table" aria-label="Lecture simplifiée du planning">
+    <div class="case-gantt-head" role="row"><div role="columnheader">Activité</div><div role="columnheader">Fenêtre</div><div role="columnheader">État</div></div>
+    <div class="case-gantt-row" role="row"><div>Approvisionnement</div><div class="case-track"><span class="case-bar case-bar--late" style="left:0%;width:70%"></span></div><div class="case-gantt-note">+28 j</div></div>
+    <div class="case-gantt-row" role="row"><div>Préparation des zones</div><div class="case-track"><span class="case-bar" style="left:15%;width:39%"></span></div><div>Re-séquencable</div></div>
+    <div class="case-gantt-row" role="row"><div>Pose / interfaces</div><div class="case-track"><span class="case-bar case-bar--hard" style="left:57%;width:20%"></span></div><div class="case-gantt-note">dépendante</div></div>
+    <div class="case-gantt-row" role="row"><div>Contrôles qualité</div><div class="case-track"><span class="case-bar" style="left:75%;width:12%"></span></div><div>À confirmer</div></div>
+  </div>
+</section>
+
+<section class="case-section" aria-labelledby="documents-title">
+  <div class="case-section-head">
+    <div><p class="case-kicker">02 · DOSSIER ET DOCUMENT CONTROL</p><h2 id="documents-title">Les pièces doivent porter la décision.</h2></div>
+    <p>Chaque pièce fictive a une référence, une version et un statut. Le cas distingue ce qui est connu, ce qui est hypothétique et ce qui reste à confirmer. Aucune valeur inconnue n’est transformée en zéro.</p>
+  </div>
+  <div class="case-decision-grid">
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Registre documentaire</div><h3>Références examinées</h3></div>
+      <div class="case-card-body">
+        <div class="case-doc-list">
+          <div class="case-doc"><div><strong>Planning directeur · lot menuiseries</strong><span>Chemin critique, jalon J42 et activité de pose dépendante.</span></div><code>PLN-MX-021 · Rev C</code></div>
+          <div class="case-doc"><div><strong>Avis fournisseur de dérive</strong><span>Notification fictive de +4 semaines, capacité et date à revalider.</span></div><code>SUP-MX-014 · Rev A</code></div>
+          <div class="case-doc"><div><strong>Compte rendu interface façade</strong><span>Réservations, zones de travail et séquence de contrôle encore ouvertes.</span></div><code>INT-FAC-008 · Rev B</code></div>
+          <div class="case-doc"><div><strong>Plan de contrôle menuiseries</strong><span>Réception, conformité documentaire, interfaces et essais à fermer.</span></div><code>QLT-MX-006 · Rev A</code></div>
+        </div>
+      </div>
+    </div>
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Question d’arbitrage</div><h3>Que faut-il protéger en priorité ?</h3></div>
+      <div class="case-card-body">
+        <p style="font-size:12px;line-height:1.8;color:var(--case-muted)">Votre décision sera évaluée sur cinq axes. Le moteur ne considère pas le délai seul. Le coût d’action, la qualité des contrôles, le risque résiduel et les parties prenantes restent visibles.</p>
+        <div class="case-doc-list">
+          <div class="case-doc"><div><strong>Q · Qualité</strong><span>Conformité, réception, interfaces, rework potentiel.</span></div><code>20 %</code></div>
+          <div class="case-doc"><div><strong>C · Coût</strong><span>Forecast projet et coût spécifique de la réponse.</span></div><code>15 %</code></div>
+          <div class="case-doc"><div><strong>D · Délai</strong><span>Écart au jalon J42 et récupération conditionnelle.</span></div><code>30 %</code></div>
+          <div class="case-doc"><div><strong>R · Risque</strong><span>Exposition après décision, sans promesse probabiliste.</span></div><code>25 %</code></div>
+          <div class="case-doc"><div><strong>S · Parties prenantes</strong><span>Coordination, responsabilités, tension sur l’engagement.</span></div><code>10 %</code></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section" aria-labelledby="decision-title">
+  <div class="case-section-head">
+    <div><p class="case-kicker">03 · ARENA / DÉCISION</p><h2 id="decision-title">Choisissez une trajectoire. Pas une formule magique.</h2></div>
+    <p>Les trois options ont des coûts, des délais et des risques résiduels différents. Aucune n’affirme tenir artificiellement J42. Sélectionnez une option pour faire évoluer le Twin de démonstration.</p>
+  </div>
+
+  <div class="case-decision-grid">
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Arbitrage opérationnel</div><h3>Trois réponses possibles</h3></div>
+      <div class="case-card-body">
+        <div class="case-decision-options">
+          <label class="case-option" data-option="resequence">
+            <input type="radio" name="option" value="resequence">
+            <span><strong>Re-séquencer + accélération ciblée</strong><span>Préparer les zones et interfaces en amont, puis négocier une accélération partielle du fournisseur sur les points critiques.</span><small>Forecast +48 k€ · jalon J49 · 2 contrôles ouverts · risque résiduel modéré.</small></span>
+          </label>
+          <label class="case-option" data-option="alternate">
+            <input type="radio" name="option" value="alternate">
+            <span><strong>Qualifier une source alternative</strong><span>Lancer une qualification rapide d’un fournisseur alternatif sur un périmètre borné, sans interrompre brutalement la voie principale.</span><small>Forecast +82 k€ · jalon J47 · 3 contrôles ouverts · risque résiduel modéré à élevé.</small></span>
+          </label>
+          <label class="case-option" data-option="accept">
+            <input type="radio" name="option" value="accept">
+            <span><strong>Accepter le glissement et sécuriser la qualité</strong><span>Ne pas payer une récupération incertaine. Décaler le jalon et concentrer l’effort sur les contrôles et la maîtrise des interfaces.</span><small>Forecast +22 k€ · jalon J70 · 1 contrôle ouvert · risque résiduel faible à modéré.</small></span>
+          </label>
+        </div>
+        <div class="case-controls">
+          <p class="case-helper">Le calcul est reproductible. Le score composite change uniquement avec les poids que vous déclarez.</p>
+          <button class="case-button" id="apply-decision" type="button" disabled>Appliquer au Twin</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="case-card" aria-live="polite">
+      <div class="case-card-head"><div class="case-label">Effet du Twin</div><h3 id="twin-title">Aucune décision appliquée</h3></div>
+      <div class="case-card-body">
+        <div class="case-impact-grid" style="grid-template-columns:1fr 1fr;margin-top:0">
+          <div class="case-impact"><span>Schedule delta</span><strong id="impact-schedule">+0 j</strong><small>forecast vs J42</small></div>
+          <div class="case-impact"><span>Forecast delta</span><strong id="impact-cost">+0 k€</strong><small>coût de réponse</small></div>
+          <div class="case-impact"><span>Quality trend</span><strong id="impact-quality">stable</strong><small>contrôles encore ouverts</small></div>
+          <div class="case-impact"><span>Residual risk</span><strong id="impact-risk">72 / 100</strong><small>indice d’exposition</small></div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="case-section" aria-labelledby="mcda-title">
+  <div class="case-section-head">
+    <div><p class="case-kicker">04 · DECISION ENGINE</p><h2 id="mcda-title">Rendre la recommandation vérifiable.</h2></div>
+    <p>Le moteur applique une MCDA simple, avec des poids visibles et modifiables. Le résultat affiché est une recommandation calculée pour ce cas, pas une vérité universelle.</p>
+  </div>
+
+  <div class="case-score-grid">
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Poids de décision</div><h3>Déclarez votre arbitrage</h3></div>
+      <div class="case-card-body">
+        <div class="case-weight"><label for="w-quality">Q · Qualité</label><input id="w-quality" data-weight="quality" type="range" min="0" max="50" value="20"><output for="w-quality">20 %</output></div>
+        <div class="case-weight"><label for="w-cost">C · Coût</label><input id="w-cost" data-weight="cost" type="range" min="0" max="50" value="15"><output for="w-cost">15 %</output></div>
+        <div class="case-weight"><label for="w-schedule">D · Délai</label><input id="w-schedule" data-weight="schedule" type="range" min="0" max="50" value="30"><output for="w-schedule">30 %</output></div>
+        <div class="case-weight"><label for="w-risk">R · Risque</label><input id="w-risk" data-weight="risk" type="range" min="0" max="50" value="25"><output for="w-risk">25 %</output></div>
+        <div class="case-weight"><label for="w-stakeholder">S · Acteurs</label><input id="w-stakeholder" data-weight="stakeholder" type="range" min="0" max="50" value="10"><output for="w-stakeholder">10 %</output></div>
+        <p class="case-scale" id="weight-note">Total 100 %. Les poids sont stockés localement comme brouillon de simulation.</p>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Résultat</div><h3 id="recommendation-status">Calcul de la recommandation</h3></div>
+      <div class="case-card-body">
+        <div class="case-recommendation">
+          <div><span class="case-reco-badge">Moteur PMersion</span><div class="case-reco-title" id="recommendation-title">Re-séquencer + accélération ciblée</div><p class="case-reco-copy" id="recommendation-copy">Sous les poids actuels, cette option conserve le meilleur équilibre entre protection du chemin critique, maîtrise du risque, qualité et charge des acteurs. Le jalon reste à J49 : la récupération est conditionnelle et ne supprime pas le retard.</p></div>
+          <div class="case-reco-score" id="recommendation-score">81.0<small>/ 100 · score composite</small></div>
+        </div>
+        <table class="case-score-table">
+          <thead><tr><th>Option</th><th>Q</th><th>C</th><th>D</th><th>R</th><th>S</th><th>MCDA</th></tr></thead>
+          <tbody id="score-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section" aria-labelledby="quality-title">
+  <div class="case-section-head">
+    <div><p class="case-kicker">05 · QUALITÉ ET PARTIES PRENANTES</p><h2 id="quality-title">La décision continue après le bouton.</h2></div>
+    <p>Une option n’est pas complète tant que son coût, ses contrôles et ses responsabilités ne sont pas visibles. Le Twin expose les conséquences par acteur et par dimension.</p>
+  </div>
+
+  <div class="case-quality-grid">
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Quality controls</div><h3 id="quality-card-title">Contrôles clés</h3></div>
+      <div class="case-card-body">
+        <div class="case-control-list" id="quality-list">
+          <div class="case-control-row"><strong>Validation des interfaces réservations / façade</strong><span class="ready">PRÊT</span></div>
+          <div class="case-control-row"><strong>Contrôle documentaire fournisseur</strong><span class="open">OUVERT</span></div>
+          <div class="case-control-row"><strong>Réception et conformité des menuiseries</strong><span class="open">OUVERT</span></div>
+          <div class="case-control-row"><strong>Contrôle pose / support</strong><span class="ready">PRÊT</span></div>
+          <div class="case-control-row"><strong>Contrôle final d’interface</strong><span class="open">OUVERT</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Stakeholder impact</div><h3>Qui absorbe quoi ?</h3></div>
+      <div class="case-card-body" style="overflow:auto">
+        <table class="case-stakeholder-table">
+          <thead><tr><th>Acteur</th><th>Effet principal</th><th>Responsabilité</th></tr></thead>
+          <tbody id="stakeholder-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="case-section" aria-labelledby="justification-title">
+  <div class="case-section-head">
+    <div><p class="case-kicker">06 · PROOF / JUSTIFICATION</p><h2 id="justification-title">Défendez votre arbitrage.</h2></div>
+    <p>Écrivez la logique que vous présenteriez au comité : ce que vous protégez, le risque que vous acceptez, les conditions de réussite et le signal qui imposerait un nouvel arbitrage.</p>
+  </div>
+
+  <div class="case-justification">
+    <div class="case-card">
+      <div class="case-card-head"><div class="case-label">Livrable utilisateur</div><h3>Note d’arbitrage</h3></div>
+      <div class="case-card-body">
+        <label for="justification" style="display:block;font-size:10px;font-weight:700;margin-bottom:9px">Votre justification</label>
+        <textarea id="justification" class="case-textarea" maxlength="1800" placeholder="Ex. Je recommande... parce que... Le jalon J42 reste non tenu dans cette simulation. Je surveille..."></textarea>
+        <div class="case-controls">
+          <p class="case-helper" id="draft-status">Brouillon local uniquement. Cette page publique ne modifie pas un projet réel.</p>
+          <button class="case-button case-button--secondary" id="clear-draft" type="button">Effacer le brouillon</button>
+        </div>
+      </div>
+    </div>
+    <aside class="case-card">
+      <div class="case-card-head"><div class="case-label">Proof</div><h3>Ce qui sera vérifiable</h3></div>
+      <div class="case-card-body">
+        <div class="case-decision-log">
+          <p><strong>Option :</strong> <span id="proof-option">à choisir</span></p>
+          <p><strong>Poids :</strong> <span id="proof-weights">Q20 · C15 · D30 · R25 · S10</span></p>
+          <p><strong>Forecast :</strong> <span id="proof-forecast">2,40 M€ + réponse</span></p>
+          <p><strong>Jalon :</strong> <span id="proof-date">J42 → décision à calculer</span></p>
+          <p><strong>Conditions :</strong> <span id="proof-conditions">contrôles ouverts et acteurs impactés visibles</span></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+</main>
+
+<footer class="case-foot">
+  <p><strong>Nature du cas.</strong> Démonstration publique à données fictives. Les montants, dates et indices servent à illustrer un raisonnement de pilotage et ne constituent ni un devis, ni un engagement contractuel, ni une prédiction.</p>
+  <p><strong>Règle produit.</strong> Cette interface peut proposer et expliquer une transition. Dans le produit métier, l’état autoritatif du Project Twin doit rester versionné, déterministe, audité et muté par une transition contrôlée.</p>
+  <p><a href="../beta/">Entrer dans la bêta PMersion ↗</a></p>
+</footer>
+</div>
+</div>
+
+<script>
+const BASE_COST=2400000;
+const BASE_DATE=42;
+const options={
+  resequence:{
+    title:'Re-séquencer + accélération ciblée',
+    scores:{quality:84,cost:76,schedule:72,risk:76,stakeholder:82},
+    deltaCost:48000, date:49, risk:54,
+    quality:'surveillance renforcée',
+    open:2,
+    outcome:'Le projet récupère une partie de la dérive, sans retrouver J42. Le coût d’accélération est engagé seulement sur les interfaces critiques.',
+    qualityStates:['ready','open','open','ready','open'],
+    stakeholders:[
+      ['Architecte','Revalidation des détails et séquences de façade.','Piloter les interfaces ouvertes.','positive'],
+      ['Entreprise','Re-séquencement des zones et mobilisation ciblée.','Confirmer les fronts de pose.','positive'],
+      ['Fournisseur','Accélération partielle et confirmations de capacité.','Tenir les dates conditionnelles.','positive'],
+      ['BET','Vérification des interfaces et contrôles associés.','Fermer les points techniques.','positive'],
+      ['MOA / Sponsor','J49 à arbitrer au lieu de promettre J42.','Valider le compromis coût-délai.','negative']
+    ]
+  },
+  alternate:{
+    title:'Qualifier une source alternative',
+    scores:{quality:68,cost:48,schedule:86,risk:72,stakeholder:60},
+    deltaCost:82000, date:47, risk:61,
+    quality:'sous tension',
+    open:3,
+    outcome:'Une seconde voie réduit la dépendance au fournisseur principal, mais crée une charge de qualification et de contrôle avant toute généralisation.',
+    qualityStates:['open','open','open','ready','open'],
+    stakeholders:[
+      ['Architecte','Adaptation documentaire et validation de la variante.','Confirmer la conformité des interfaces.','negative'],
+      ['Entreprise','Coordination de deux voies d’approvisionnement.','Synchroniser les zones et réceptions.','negative'],
+      ['Fournisseur principal','Pression de performance et clarification du reliquat.','Confirmer le périmètre restant.','negative'],
+      ['BET','Campagne de comparaison / qualification.','Documenter la décision technique.','positive'],
+      ['MOA / Sponsor','Trajectoire J47 contre un surcoût de réponse.','Arbitrer le coût de résilience.','positive']
+    ]
+  },
+  accept:{
+    title:'Accepter le glissement et sécuriser la qualité',
+    scores:{quality:90,cost:88,schedule:34,risk:66,stakeholder:52},
+    deltaCost:22000, date:70, risk:44,
+    quality:'en amélioration',
+    open:1,
+    outcome:'Le projet cesse de dépenser pour une récupération incertaine. Le jalon glisse fortement, mais la réponse concentre l’effort sur la conformité et les contrôles de réception.',
+    qualityStates:['ready','ready','open','ready','ready'],
+    stakeholders:[
+      ['Architecte','Plus de temps pour verrouiller les contrôles.','Accepter la replanification des séquences.','positive'],
+      ['Entreprise','Décalage des fronts de travail et réorganisation.','Limiter les zones improductives.','negative'],
+      ['Fournisseur','Engagement maintenu sur la date révisée.','Fournir les éléments de conformité.','positive'],
+      ['BET','Contrôles plus sereins mais planning à recalibrer.','Actualiser la documentation.','positive'],
+      ['MOA / Sponsor','J70 contre la cible J42.','Assumer l’impact de délai.','negative']
+    ]
+  }
+};
+
+function getWeights(){
+  return {
+    quality:Number(document.querySelector('[data-weight="quality"]').value),
+    cost:Number(document.querySelector('[data-weight="cost"]').value),
+    schedule:Number(document.querySelector('[data-weight="schedule"]').value),
+    risk:Number(document.querySelector('[data-weight="risk"]').value),
+    stakeholder:Number(document.querySelector('[data-weight="stakeholder"]').value)
+  };
+}
+function renderScore(){
+  const raw=getWeights();
+  const total=Object.values(raw).reduce((a,b)=>a+b,0);
+  document.querySelectorAll('[data-weight]').forEach(input=>{
+    input.nextElementSibling.textContent=input.value+' %';
+  });
+  const note=document.getElementById('weight-note');
+  note.textContent=total===100?'Total 100 %. Les poids sont stockés localement comme brouillon de simulation.':'Total '+total+' %. Le moteur normalise les poids pour continuer le calcul.';
+  const entries=Object.entries(options).map(([key,opt])=>{
+    const sum=Object.entries(raw).reduce((acc,[axis,w])=>acc+opt.scores[axis]*w,0);
+    return [key,total?sum/total:0];
+  }).sort((a,b)=>b[1]-a[1]);
+  const winner=entries[0][0];
+  const body=document.getElementById('score-body');
+  body.innerHTML=entries.map(([key,score])=>{
+    const o=options[key];
+    return '<tr class="'+(key===winner?'is-recommended':'')+'"><td>'+o.title.replace(' + accélération ciblée','').replace('Qualifier une source alternative','Source alternative').replace(' et sécuriser la qualité','')+'</td><td>'+o.scores.quality+'</td><td>'+o.scores.cost+'</td><td>'+o.scores.schedule+'</td><td>'+o.scores.risk+'</td><td>'+o.scores.stakeholder+'</td><td class="score">'+score.toFixed(1)+'</td></tr>';
+  }).join('');
+  const o=options[winner];
+  document.getElementById('recommendation-title').textContent=o.title;
+  document.getElementById('recommendation-score').innerHTML=entries[0][1].toFixed(1)+'<small>/ 100 · score composite</small>';
+  document.getElementById('recommendation-copy').textContent=o.outcome+' Le moteur choisit cette option car son score pondéré est le plus élevé sous les poids actuellement déclarés. Une modification des poids peut changer la recommandation.';
+}
+function selectOption(key){
+  document.querySelectorAll('.case-option').forEach(el=>el.classList.toggle('is-selected',el.dataset.option===key));
+  const radio=document.querySelector('.case-option[data-option="'+key+'"] input');
+  if(radio) radio.checked=true;
+  document.getElementById('apply-decision').disabled=false;
+  document.getElementById('proof-option').textContent=options[key].title;
+  document.getElementById('proof-forecast').textContent='2,448 M€'.replace('448',String((BASE_COST+options[key].deltaCost)/1000));
+  document.getElementById('proof-date').textContent='J42 → J'+options[key].date+' (+'+(options[key].date-BASE_DATE)+' j)';
+}
+function applyOption(){
+  const radio=document.querySelector('input[name="option"]:checked');
+  if(!radio) return;
+  const key=radio.value;
+  const o=options[key];
+  document.getElementById('twin-title').textContent='Twin appliqué · '+o.title;
+  document.getElementById('impact-schedule').textContent='+'+(o.date-BASE_DATE)+' j';
+  document.getElementById('impact-cost').textContent='+'+(o.deltaCost/1000)+' k€';
+  document.getElementById('impact-quality').textContent=o.quality;
+  document.getElementById('impact-risk').textContent=o.risk+' / 100';
+  document.getElementById('twin-cost').textContent=((BASE_COST+o.deltaCost)/1000000).toFixed(3).replace('.',',')+' M€';
+  document.getElementById('twin-date').textContent='J'+o.date;
+  document.getElementById('twin-date-note').textContent='+'+(o.date-BASE_DATE)+' jours vs J42';
+  document.getElementById('twin-quality').textContent=o.open;
+  document.getElementById('twin-risk').textContent=o.risk+' / 100';
+  document.getElementById('quality-list').innerHTML=[
+    'Validation des interfaces réservations / façade',
+    'Contrôle documentaire fournisseur',
+    'Réception et conformité des menuiseries',
+    'Contrôle pose / support',
+    'Contrôle final d’interface'
+  ].map((label,i)=>'<div class="case-control-row"><strong>'+label+'</strong><span class="'+o.qualityStates[i]+'">'+(o.qualityStates[i]==='open'?'OUVERT':'PRÊT')+'</span></div>').join('');
+  document.getElementById('stakeholder-body').innerHTML=o.stakeholders.map(row=>'<tr><td>'+row[0]+'</td><td class="'+row[3]+'">'+row[1]+'</td><td>'+row[2]+'</td></tr>').join('');
+  document.getElementById('quality-card-title').textContent=o.open+' contrôle'+(o.open>1?'s':'')+' encore ouvert'+(o.open>1?'s':'');
+  saveDraft();
+}
+function saveDraft(){
+  const radio=document.querySelector('input[name="option"]:checked');
+  const data={option:radio?radio.value:null,justification:document.getElementById('justification').value,weights:getWeights()};
+  localStorage.setItem('pmersion.hotel.case.v1',JSON.stringify(data));
+  document.getElementById('draft-status').textContent='Brouillon local enregistré dans ce navigateur. La simulation reste publique et non persistante côté serveur.';
+}
+function restoreDraft(){
+  try{
+    const data=JSON.parse(localStorage.getItem('pmersion.hotel.case.v1')||'null');
+    if(!data) return;
+    if(data.option && options[data.option]) selectOption(data.option);
+    if(typeof data.justification==='string') document.getElementById('justification').value=data.justification;
+    if(data.weights) Object.entries(data.weights).forEach(([key,value])=>{
+      const input=document.querySelector('[data-weight="'+key+'"]');
+      if(input && Number.isFinite(Number(value))) input.value=String(value);
+    });
+  }catch{}
+}
+document.querySelectorAll('.case-option').forEach(el=>el.addEventListener('click',()=>selectOption(el.dataset.option)));
+document.getElementById('apply-decision').addEventListener('click',applyOption);
+document.querySelectorAll('[data-weight]').forEach(input=>input.addEventListener('input',()=>{renderScore();saveDraft();}));
+document.getElementById('justification').addEventListener('input',saveDraft);
+document.getElementById('clear-draft').addEventListener('click',()=>{
+  localStorage.removeItem('pmersion.hotel.case.v1');
+  document.getElementById('justification').value='';
+  document.getElementById('draft-status').textContent='Brouillon effacé. La simulation n’a pas modifié de projet réel.';
+});
+renderScore();
+restoreDraft();
+</script>
+</body>
+</html>
