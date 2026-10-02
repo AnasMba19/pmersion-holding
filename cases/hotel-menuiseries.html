@@ -361,6 +361,7 @@ function selectOption(key){
   document.getElementById('proof-option').textContent=options[key].title;
   document.getElementById('proof-forecast').textContent=((BASE_COST+options[key].deltaCost)/1000000).toFixed(3).replace('.',',')+' M€';
   document.getElementById('proof-date').textContent='J42 → J'+options[key].date+' (+'+(options[key].date-BASE_DATE)+' j)';
+  saveDraft();
 }
 function applyOption(){
   const radio=document.querySelector('input[name="option"]:checked');
