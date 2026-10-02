@@ -359,7 +359,7 @@ function selectOption(key){
   if(radio) radio.checked=true;
   document.getElementById('apply-decision').disabled=false;
   document.getElementById('proof-option').textContent=options[key].title;
-  document.getElementById('proof-forecast').textContent='2,448 M€'.replace('448',String((BASE_COST+options[key].deltaCost)/1000));
+  document.getElementById('proof-forecast').textContent=((BASE_COST+options[key].deltaCost)/1000000).toFixed(3).replace('.',',')+' M€';
   document.getElementById('proof-date').textContent='J42 → J'+options[key].date+' (+'+(options[key].date-BASE_DATE)+' j)';
 }
 function applyOption(){
@@ -417,6 +417,7 @@ document.getElementById('clear-draft').addEventListener('click',()=>{
 });
 renderScore();
 restoreDraft();
+renderScore();
 </script>
 </body>
 </html>
