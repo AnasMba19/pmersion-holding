@@ -982,9 +982,9 @@ function m() {
     <div class="world-heading"><div><p class="eyebrow">PMERSION / STUDIO DE DÉCISION</p><h1 id="world-home-title">Vos décisions<br><em>prennent forme.</em></h1></div><div class="world-heading-copy"><p>Un projet a des lieux, des équipes et des interfaces. Explorez votre terrain, examinez les pièces et construisez une décision que vous pouvez défendre.</p><a class="world-context-link" href="/beta/#/mission/construction">Examiner le cas de l’hôtel →</a><p class="world-caption">Accessible sans compte · Cas fictifs · Une mission approfondie et des ateliers</p></div></div>
     <div class="world-studio" style="--sector-accent:${t.family.accent}">
       <div class="world-selector"><p>VOTRE TERRAIN DE PROJET</p><div class="world-hierarchy">
-        <label for="home-domain">Domaine<select id="home-domain" data-world-family disabled>${p(i, t.family.id)}</select></label>
-        <label for="home-environment">Environnement<select id="home-environment" data-world-environment disabled>${p(t.family.environments, t.environment.id)}</select></label>
-        <label for="home-phase">Phase<select id="home-phase" data-world-phase disabled>${p(n, t.phase.id)}</select></label>
+        <label for="home-domain">Domaine<select id="home-domain" aria-label="Domaine" data-world-family disabled>${p(i, t.family.id)}</select></label>
+        <label for="home-environment">Environnement<select id="home-environment" aria-label="Environnement" data-world-environment disabled>${p(t.family.environments, t.environment.id)}</select></label>
+        <label for="home-phase">Phase<select id="home-phase" aria-label="Phase" data-world-phase disabled>${p(n, t.phase.id)}</select></label>
         </div><p class="world-quick-label">SIX MAQUETTES ILLUSTRÉES</p><div class="world-quick" role="group" aria-label="Accès aux maquettes sectorielles">${e.map((e) => `<button type="button" data-world-sector="${e.slug}" aria-pressed="${e.slug === "construction"}" disabled><span>${e.shortTitle}</span><b aria-hidden="true">↗</b></button>`).join("")}</div></div>
       <div class="world-model world-enter" id="world-home-model"><div data-world-scene aria-hidden="true">${d(t.family.scene, {
 		annotated: !0,
