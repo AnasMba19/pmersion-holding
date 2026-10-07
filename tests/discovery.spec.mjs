@@ -23,6 +23,9 @@ test("a public visitor reaches a real six-decision summary without an account", 
   await page.screenshot({ path: testInfo.outputPath("01-public-home.png"), fullPage: true });
   await page.screenshot({ path: testInfo.outputPath("01-public-home-viewport.png") });
   await page.getByRole("link", { name: "Essayer la bêta PMersion" }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Le projet avance");
+  await page.getByRole("link", { name: /Voir le parcours Synapse/ }).click();
+  await expect(page).toHaveURL(/#\/parcours$/);
   await expect(page.getByRole("heading", { name: "Vos décisions donnent forme au projet." })).toBeVisible();
   await fit(page);
   await page.screenshot({ path: testInfo.outputPath("02-beta-entry.png"), fullPage: true });
@@ -66,7 +69,7 @@ test("locked routes and unknown routes stay recoverable", async ({ page }) => {
 });
 
 test("corrupted progress requires a confirmed reset and preserves unrelated data", async ({ page }) => {
-  await page.goto("/beta/");
+  await page.goto("/beta/#/parcours");
   await page.evaluate((key) => { localStorage.setItem(key, "broken"); localStorage.setItem("unrelated", "keep"); }, key);
   await page.reload();
   await expect(page.getByText(/La sauvegarde est illisible/)).toBeVisible();
@@ -84,7 +87,7 @@ test("corrupted progress requires a confirmed reset and preserves unrelated data
 
 test("storage denial allows a clearly labeled session without crashing", async ({ page }) => {
   await page.addInitScript(() => { Object.defineProperty(window, "localStorage", { get() { throw new DOMException("denied", "SecurityError"); } }); });
-  await page.goto("/beta/");
+  await page.goto("/beta/#/parcours");
   await expect(page.getByText(/La sauvegarde est indisponible/)).toBeVisible();
   await page.getByRole("link", { name: "Commencer la simulation" }).click();
   await decide(page, 2);
