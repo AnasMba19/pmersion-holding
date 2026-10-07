@@ -1,15 +1,15 @@
-name: Public Beta Verification
+name: Published Beta Smoke
 on:
-  pull_request:
   push:
     branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
-  group: public-beta-${{ github.ref }}
+  group: live-beta-${{ github.ref }}
   cancel-in-progress: true
 jobs:
-  browser:
+  live:
     runs-on: ubuntu-latest
     timeout-minutes: 12
     steps:
@@ -24,23 +24,23 @@ jobs:
           if [ -f /etc/apt/apt-mirrors.txt ]; then
             sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' /etc/apt/apt-mirrors.txt
           fi
-      - name: Install browser dependencies
+      - name: Install the tested headless browser
         timeout-minutes: 5
         run: npx playwright install --with-deps --only-shell chromium
-      - run: npm test
+      - run: npx playwright test --config live-tests/playwright.config.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: public-beta-browser-${{ github.sha }}
+          name: published-beta-proof-${{ github.sha }}
           path: |
-            test-results/
-            playwright-report/
+            test-results/live-beta/
+            live-beta-report/
           retention-days: 14
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: public-workspace-views-${{ github.sha }}
-          path: test-results/**/*.png
+          name: published-beta-views-${{ github.sha }}
+          path: test-results/live-beta/**/*.png
           retention-days: 14
           if-no-files-found: error

@@ -2,17 +2,24 @@
 
 Public website: https://pmersion.com · Application: https://pmersion.com/beta/
 
-Six discovery decisions and budget, planning, risk and synthesis workshops use the shared Synapse
-engines. The homepage exposes a real decision demo and a studio of original projected 3D models.
-Six sector pages add contextual questions and 18 original fictional documents: construction,
-nuclear, robotics, SI/data, industry and services/health. These introductions are explicitly
-separate from complete sector simulations; their numeric workshop links open transversal Synapse.
+The beta opens a decision studio backed by the versioned Hotel mission: 120 rooms, a late window
+supplier, four seeded plans, weighted comparison, written reasoning and an owned/dated action.
+Quality, cost, delay, risk and stakeholder consequences share one confirmed project forecast.
+Seventeen project families have environment and phase selection. Only construction/hotel/realisation
+opens this calculated mission; the other selections are honestly labelled context dossiers.
+Six illustrated worlds and their original documents remain available, as do the distinct Synapse
+six-decision journey and budget, planning, risk and synthesis workshops.
 
 ## Local data
 
 No account, email collection, analytics or application API is used. The discovery key stores the
 six decision codes; `pmersion.public-workspace.v1` stores workshop drafts, explicitly retained
 versions and history. Retained budget/planning/risk versions feed the visitor’s common synthesis.
+`pmersion.construction-hotel.v1` separately stores the Hotel draft, confirmed Twin and its last
+twenty decisions. An explicit valid confirmation creates the versioned before/after trace;
+drafts and model controls do not mutate that Twin. Unsupported storage is protected for recovery,
+and cross-tab conflicts block stale writes until explicit reload. Written reasoning is preserved
+without a hidden semantic AI score. Planned quality checks are not proven acceptance.
 Export and explicit scoped reset preserve the other progress keys. There is no cross-device sync.
 Sector choice, model rotation and layer separation are presentation state, never persisted work.
 Hosting receives normal technical requests. All project data is fictional.
@@ -30,8 +37,10 @@ Old hashed assets remain for previously cached pages. No source maps or credenti
 GitHub Pages publishes main with the existing CNAME. The browser workflow tests the compiled
 bundle at 390/430/768/1280 px, including keyboard, model controls, direct routes, storage isolation,
 reduced motion, workshop calculations, export and reset. Screenshots require visual review before
-merge; CI alone does not establish aesthetic acceptance or learning outcomes. Release 0.5.0 is
-tracked in https://github.com/AnasMba19/pmersion-holding/pull/11.
+merge; CI alone does not establish aesthetic acceptance or learning outcomes. The 0.6.0 candidate
+is traced by its manifest and source issue https://github.com/AnasMba19/pmersion/issues/94.
+Projects, tenant-based Enterprise, real document ingestion and cross-device accounts remain future
+work; this publication does not activate private connected infrastructure or declare a gate GO.
 
 Run locally: `npm ci`, `npx playwright install chromium`, `npm test`.
 Rollback: revert the release commit; private connected environments and DNS remain separate.
