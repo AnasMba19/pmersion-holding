@@ -28,7 +28,13 @@ test("published homepage and project hierarchy use the qualified release", async
   await page.getByLabel("Environnement", { exact: true }).selectOption("sirh");
   await page.getByLabel("Phase", { exact: true }).selectOption("reception");
   await page.locator('[data-world-interface="2"]').click();
-  await expect(page.locator("[data-world-focus]")).toContainText("Réception");
+  await expect(page.getByLabel("Domaine", { exact: true })).toHaveValue("numerique");
+  await expect(page.getByLabel("Environnement", { exact: true })).toHaveValue("sirh");
+  await expect(page.getByLabel("Phase", { exact: true })).toHaveValue("reception");
+  await expect(page.locator("[data-world-kicker]")).toHaveText("Réception et transition");
+  await expect(page.locator('[data-world-interface="2"]')).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("[data-world-focus]")).toHaveText("Paramétrage → reprise fictive → recette → transition. Quelle preuve permet d’accepter le résultat et de passer le relais ?");
+  await expect(page.locator("[data-world-open]")).toHaveAttribute("href", /\/beta\/#\/univers\/numerique\?environnement=sirh&phase=reception$/);
   await page.screenshot({ path: info.outputPath("published-home.png"), fullPage: false });
   await page.locator("[data-world-open]").click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("SIRH");
