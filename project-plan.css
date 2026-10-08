@@ -3,77 +3,77 @@
   width: 100%;
   height: auto;
   overflow: visible;
-  color: #173e30;
+  color: #241d35;
   font-family: Manrope, Arial, sans-serif;
 }
 .project-plan .project-plan__floor {
-  fill: #dce5da;
+  fill: #e6e0ef;
 }
 .project-plan .project-plan__grid {
-  stroke: #d0dccf;
+  stroke: #d2c9e1;
   stroke-width: 1;
 }
 .project-plan .project-plan__label {
-  fill: #173e30;
+  fill: #241d35;
   font-size: 17px;
   font-weight: 750;
 }
 .project-plan .project-plan__date {
-  fill: #53695d;
+  fill: #655e73;
   font-size: 13px;
   font-variant-numeric: tabular-nums;
 }
 .project-plan .project-plan__tick {
-  fill: #53695d;
+  fill: #655e73;
   font-size: 15px;
   text-anchor: middle;
 }
 .project-plan .project-plan__baseline {
   fill: none;
-  stroke: #839c82;
+  stroke: #9b8db1;
   stroke-width: 1.5;
   stroke-dasharray: 4 3;
 }
 .project-plan .project-plan__bar {
-  fill: #195d46;
+  fill: #4d3fc4;
 }
 .project-plan [data-plan-task="preparation"] .project-plan__bar {
-  fill: #5e8062;
+  fill: #7963b2;
 }
 .project-plan .project-plan__top {
-  fill: #85a781;
+  fill: #b6a6df;
 }
 .project-plan .project-plan__side {
-  fill: #103d2d;
+  fill: #35258e;
 }
 .project-plan .project-plan__dependency {
   fill: none;
-  stroke: #718f76;
+  stroke: #8f7ba7;
   stroke-width: 1.5;
   opacity: 0.7;
 }
 .project-plan .project-plan__dependency[data-overlap="true"] {
-  stroke: #946017;
+  stroke: #a65c35;
   stroke-dasharray: 4 3;
 }
 .project-plan .project-plan__target {
   fill: none;
-  stroke: #a66c24;
+  stroke: #a65c35;
   stroke-width: 2;
   stroke-dasharray: 5 4;
 }
 .project-plan .project-plan__target-label {
-  fill: #895715;
+  fill: #8b4d2c;
   font-size: 13px;
   font-weight: 750;
   text-anchor: middle;
   letter-spacing: 0.06em;
 }
 .project-plan .project-plan__finish path {
-  fill: #195d46;
+  fill: #4d3fc4;
 }
 .project-plan .project-plan__finish text {
-  fill: #173e30;
+  fill: #241d35;
   font-size: 16px;
   font-weight: 750;
   text-anchor: middle;
@@ -139,7 +139,7 @@ html[data-motion="reduced"] .project-plan * {
   .project-plan-scroll-hint {
     display: block;
     font-size: 12px;
-    color: #53695d;
+    color: #655e73;
     margin: 4px 0 10px;
   }
 }

@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 test('the project plan leads to the real planning workshop with matching consequences', async ({page},info) => {
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Vos décisions');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Voyez le projet.');
  await expect(page.locator('.galaxy,.big-planet,.space-layer')).toHaveCount(0);
  await page.locator('[data-decision-choice=recover]').focus();
  await page.keyboard.press('Enter');
@@ -24,7 +24,7 @@ test('the project plan leads to the real planning workshop with matching consequ
 test('one homepage demonstration retains readable facts without JavaScript',async({browser},info)=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:info.project.use.viewport});
  const page=await context.newPage();await page.goto('http://127.0.0.1:4180/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Vos décisions');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Voyez le projet.');
  await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');
  await expect(page.locator('#home-project-plan svg')).toBeVisible();
  await expect(page.locator('[data-decision-choice=recover]')).toBeDisabled();
@@ -44,3 +44,4 @@ test('legacy unversioned module responses cannot mix with the current release', 
  await expect(page.locator('[data-plan-finish-label]')).toHaveText('Fin J56');
  expect(errors).toEqual([]);
 });
+

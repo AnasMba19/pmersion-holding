@@ -22,15 +22,15 @@ test("published homepage and project hierarchy use the qualified release", async
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
   await page.goto("/");
-  await expect(page.locator("[data-world-family] option")).toHaveCount(17);
+  await expect(page.locator("[data-world-family] option")).toHaveCount(22);
   await expect(page.locator(".header-cta,.final-cta .button")).toHaveCount(2);
-  await page.getByLabel("Domaine", { exact: true }).selectOption("numerique");
-  await page.getByLabel("Environnement", { exact: true }).selectOption("sirh");
-  await page.getByLabel("Phase", { exact: true }).selectOption("reception");
+  await page.getByLabel("Secteur d’activité", { exact: true }).selectOption("numerique");
+  await page.getByLabel("Type de projet", { exact: true }).selectOption("sirh");
+  await page.getByLabel("Phase du projet", { exact: true }).selectOption("reception");
   await page.locator('[data-world-interface="2"]').click();
-  await expect(page.getByLabel("Domaine", { exact: true })).toHaveValue("numerique");
-  await expect(page.getByLabel("Environnement", { exact: true })).toHaveValue("sirh");
-  await expect(page.getByLabel("Phase", { exact: true })).toHaveValue("reception");
+  await expect(page.getByLabel("Secteur d’activité", { exact: true })).toHaveValue("numerique");
+  await expect(page.getByLabel("Type de projet", { exact: true })).toHaveValue("sirh");
+  await expect(page.getByLabel("Phase du projet", { exact: true })).toHaveValue("reception");
   await expect(page.locator("[data-world-kicker]")).toHaveText("Réception et transition");
   await expect(page.locator('[data-world-interface="2"]')).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("[data-world-focus]")).toHaveText("Paramétrage → reprise fictive → recette → transition. Quelle preuve permet d’accepter le résultat et de passer le relais ?");
@@ -38,7 +38,7 @@ test("published homepage and project hierarchy use the qualified release", async
   await page.screenshot({ path: info.outputPath("published-home.png"), fullPage: false });
   await page.locator("[data-world-open]").click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("SIRH");
-  await expect(page.getByText("Le contexte est ouvert. Le moteur sectoriel reste à construire.", { exact: true })).toBeVisible();
+  await expect(page.getByText("Un dossier de contexte, sans simulation chiffrée pour ce projet.", { exact: true })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-context.png"), fullPage: false });
@@ -81,3 +81,4 @@ test("published Hotel decision is retained and survives a normal reload", async 
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-studio-retained.png"), fullPage: false });
 });
+
