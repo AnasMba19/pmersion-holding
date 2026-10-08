@@ -37,7 +37,9 @@ test("studio opens a shared mission, retains an argued plan and preserves histor
 }, testInfo) => {
   await page.goto("/beta/#/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Le projet avance");
-  await expect(page.locator(".studio-nav-tile")).toHaveCount(8);
+  await expect(page.locator(".studio-nav-tile")).toHaveCount(7);
+  await expect(page.locator(".studio-nav-tile:visible")).toHaveCount(3);
+  await expect(page.locator(".studio-complementary .studio-nav-tile")).toHaveCount(4);
   await page.screenshot({
     path: testInfo.outputPath("construction-dashboard.png"),
     fullPage: true,
@@ -159,7 +161,7 @@ test("narrow and reduced-motion screens retain usable model and table navigation
   await page.getByRole("button", { name: "Tourner la maquette", exact: true }).focus();
   await page.keyboard.press("Enter");
   await page.getByRole("button", { name: "Séparer les volumes", exact: true }).click();
-  await expect(page.locator(".studio-model-drawing svg")).toBeVisible();
+  await expect(page.locator(".studio-model-drawing canvas:visible, .studio-model-drawing svg:visible").first()).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(
     true,
   );
@@ -178,3 +180,4 @@ test("narrow and reduced-motion screens retain usable model and table navigation
       .evaluate((el) => getComputedStyle(el).animationName),
   ).toBe("none");
 });
+

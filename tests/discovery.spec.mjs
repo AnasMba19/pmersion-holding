@@ -18,7 +18,7 @@ test("a public visitor reaches a real six-decision summary without an account", 
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("request", (request) => { if (!request.url().startsWith("http://127.0.0.1:4180/") && !request.url().startsWith("data:")) external.push(request.url()); });
   await page.goto("/");
-  await expect(page.getByText(/Accessible sans compte/)).toBeVisible();
+  await expect(page.locator(".world-caption")).toContainText("Sans compte");
   await fit(page);
   await page.screenshot({ path: testInfo.outputPath("01-public-home.png"), fullPage: true });
   await page.screenshot({ path: testInfo.outputPath("01-public-home-viewport.png") });
@@ -109,3 +109,4 @@ test("another tab cannot overwrite a newer decision and keyboard controls work",
   expect(await second.evaluate((key) => JSON.parse(localStorage.getItem(key)).choices.length, key)).toBe(1);
   await second.close();
 });
+

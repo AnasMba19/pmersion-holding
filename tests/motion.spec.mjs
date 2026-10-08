@@ -28,10 +28,11 @@ test('static art direction exposes complete content with scripts disabled',async
  const context=await browser.newContext({javaScriptEnabled:false,viewport:info.project.use.viewport});
  const page=await context.newPage();
  await page.goto('http://127.0.0.1:4180/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Vos décisions');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Voyez le projet.');
  await expect(page.locator('#signature-title')).toBeVisible();
  await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');
  await expect(page.locator('#home-project-plan svg')).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await context.close();
 });
+

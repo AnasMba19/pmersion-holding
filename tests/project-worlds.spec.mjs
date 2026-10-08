@@ -1,15 +1,19 @@
 import { expect, test } from "@playwright/test";
 
-test("hierarchy has seventeen families and links a selected environment and phase without mixing simulation coverage", async ({
+test("hierarchy has twenty-two activity sectors and links a selected environment and phase without mixing simulation coverage", async ({
   page,
 }, info) => {
   await page.goto("/beta/#/secteurs");
-  await expect(page.locator(".project-domain-grid a")).toHaveCount(17);
-  await expect(page.locator("#project-domain option")).toHaveCount(17);
-  await page.getByLabel("Domaine", { exact: true }).selectOption("numerique");
-  await page.getByLabel("Environnement", { exact: true }).selectOption("sirh");
-  await page.getByLabel("Phase", { exact: true }).selectOption("reception");
-  await expect(page.locator(".project-world-selection")).toContainText("moteur spécifique");
+  await expect(page.locator(".project-domain-grid a")).toHaveCount(22);
+  await expect(page.locator("#project-domain option")).toHaveCount(22);
+  const ids = await page.locator("#project-domain option").evaluateAll(options => options.map(option => option.value));
+  expect(new Set(ids).size).toBe(22);
+  const cards = await page.locator(".project-domain-grid a").evaluateAll(nodes => nodes.map(node => node.getAttribute("href").split("?")[0]));
+  expect(new Set(cards).size).toBe(22);
+  await page.getByLabel("Secteur d’activité", { exact: true }).selectOption("numerique");
+  await page.getByLabel("Type de projet", { exact: true }).selectOption("sirh");
+  await page.getByLabel("Phase du projet", { exact: true }).selectOption("reception");
+  await expect(page.locator(".project-world-selection")).toContainText("n’a pas encore de simulation chiffrée");
   await page.getByRole("link", { name: "Ouvrir ce dossier", exact: false }).click();
   await expect(page).toHaveURL(/univers\/numerique\?environnement=sirh&phase=reception/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("SIRH");
@@ -73,17 +77,32 @@ test("hotel reset confirms its exact scope and preserves both Synapse dossiers",
   expect(await page.evaluate(() => localStorage.getItem("unrelated-keep"))).toBe("yes");
 });
 
-test("an unsupported domain has a genuine recovery route", async ({ page }) => {
+test("historical sector aliases preserve context and unsupported domains have a recovery route", async ({ page }) => {
+  for (const [alias, family, environment, title] of [
+    ["infrastructures", "construction", "ouvrage", "Ouvrage d’art"],
+    ["robotique", "industrie", "cellule", "Cellule robotisée"],
+    ["data-ia", "numerique", "bi", "BI et analytique"],
+    ["aerospatial", "industrie", "systeme", "Intégration d’un système complexe"],
+    ["innovation", "services-professionnels", "prototype", "Recherche et expérimentation de prototype"],
+    ["transformation", "services-professionnels", "processus", "Conseil en processus et organisation"],
+    ["personnalise", "services-professionnels", "transversal", "Mission de conseil sur mesure"],
+  ]) {
+    await page.goto(`/beta/#/univers/${alias}`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(title);
+    await expect(page.getByLabel("Secteur d’activité", { exact: true })).toHaveValue(family);
+    await expect(page.getByLabel("Type de projet", { exact: true })).toHaveValue(environment);
+    await expect(page.getByRole("link", { name: "Ouvrir ce dossier", exact: false })).toHaveAttribute("href", new RegExp(`univers/${family}\\?environnement=${environment}&phase=realisation$`));
+  }
   await page.goto("/beta/#/univers/inconnu");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Ce domaine");
   await page.getByRole("link", { name: "Revenir aux domaines", exact: false }).click();
-  await expect(page.locator(".project-domain-grid a")).toHaveCount(17);
+  await expect(page.locator(".project-domain-grid a")).toHaveCount(22);
 });
 
-test("homepage hierarchy connects seventeen families, phases and three readings with two beta calls", async ({page}) => {
+test("homepage hierarchy connects twenty-two activity sectors, phases and three readings with two beta calls", async ({page}) => {
   await page.emulateMedia({reducedMotion:"reduce"});
   await page.goto("/");
-  await expect(page.locator("[data-world-family] option")).toHaveCount(17);
+  await expect(page.locator("[data-world-family] option")).toHaveCount(22);
   await expect(page.locator(".header-cta,.final-cta .button")).toHaveCount(2);
   await expect(page.locator(".header-cta")).toHaveAttribute("href","/beta/");
   await expect(page.locator(".final-cta .button")).toHaveAttribute("href","/beta/");
@@ -100,12 +119,13 @@ test("homepage hierarchy connects seventeen families, phases and three readings 
     await page.keyboard.press("Enter");
     await expect(button).toHaveAttribute("aria-pressed","true");
     readings.push(await page.locator("[data-world-focus]").innerText());
-    await expect(page.locator(`[data-scene-interface="${number}"] circle`)).toHaveAttribute("r","20");
+    await expect(page.locator("[data-world-scene] .context-map li")).toHaveCount(3);
   }
   expect(new Set(readings).size).toBe(3);
-  await page.locator("[data-world-turn]").click();
-  await page.locator("[data-world-explode]").click();
+  await expect(page.locator("[data-world-turn]")).toBeHidden();
+  await expect(page.locator("[data-world-explode]")).toBeHidden();
   await expect.poll(()=>page.evaluate(()=>document.getAnimations().filter(a=>a.playState==="running").length)).toBe(0);
   expect(await page.evaluate(()=>JSON.stringify(Object.entries(localStorage)))).toBe(before);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
 });
+
