@@ -83,7 +83,7 @@ test("stale tab blocks writes and explicit reload restores the newer draft", asy
 }) => {
   await page.goto("/beta/#/mission/cas/sirh");
   const second = await context.newPage();
-  await second.goto("#/mission/cas/sirh");
+  await second.goto("/beta/#/mission/cas/sirh");
   await second.getByLabel("Responsable de l’action").fill("Autre PMO");
   await expect(
     page.getByRole("button", { name: "Retenir cette décision", exact: true }),
