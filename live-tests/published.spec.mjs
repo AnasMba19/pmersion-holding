@@ -82,3 +82,30 @@ test("published Hotel decision is retained and survives a normal reload", async 
   await page.screenshot({ path: info.outputPath("published-studio-retained.png"), fullPage: false });
 });
 
+
+test("published sector mission retains a conditional forecast and resumes the dossier", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto("/beta/#/missions");
+  await expect(page.locator(".case-card")).toHaveCount(6);
+  await page.getByLabel("Filtrer les missions par secteur").selectOption("numerique");
+  await page.locator(".case-card").press("Enter");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("SIRH · bascule de la paie");
+  await page.getByLabel("Accélérer la livraison", { exact: true }).check();
+  await expect(page.locator(".case-metrics").first()).toContainText("J32");
+  await page.getByLabel("Conditions de récupération confirmées", { exact: false }).check();
+  await expect(page.locator(".case-metrics").first()).toContainText("J28");
+  await page.getByLabel("Votre recommandation", { exact: false }).fill("Je retiens une accélération confirmée pour récupérer quatre jours, en maintenant la recette de paie et la validation finale.");
+  await page.getByLabel("Condition à vérifier", { exact: false }).fill("Confirmation écrite de la capacité de livraison.");
+  await page.getByLabel("Responsable de l’action").fill("PMO de simulation");
+  await page.getByLabel("Action concrète").fill("Obtenir l’engagement écrit du fournisseur.");
+  await page.getByLabel("Échéance", { exact: false }).fill("3");
+  await page.getByRole("button", { name: "Retenir cette décision", exact: true }).click();
+  await expect(page.getByText("Décision v1", { exact: false })).toBeVisible();
+  await page.reload();
+  await expect(page.getByText("Décision v1", { exact: false })).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("sector-sirh-live.png"), fullPage: true });
+});

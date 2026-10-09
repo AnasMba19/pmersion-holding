@@ -1,9 +1,20 @@
 {
   "mode": "public-workspace",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "scenarioVersion": "synapse-discovery.2026-09-30",
   "simulationVersions": {
-    "constructionHotel": "hotel120.1"
+    "constructionHotel": "hotel120.1",
+    "deliveryCases": "delivery-cases.1"
+  },
+  "missionFactory": {
+    "templates": 5,
+    "configurations": 15,
+    "variants": [
+      "standard",
+      "tendu",
+      "critique"
+    ],
+    "storage": "browser-local"
   },
   "contextTaxonomy": {
     "families": 22,
@@ -13,21 +24,22 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "985cc9d409ce53f0f68fcb88d2a08a3c844828d2",
-  "builtAt": "2026-10-08",
+  "sourceCommit": "942b7b510c5efdcc0a3ec79264e7f720b1e8c317",
+  "builtAt": "2026-10-09",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Source SHA supplied by the release operator; run from that reviewed checkout.",
   "files": {
     "assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
     "assets/hotel-scene-CSfBVLQp.js": "8bcb8e5690f02be3861d3b9ed4d3c2bceff6285dd6971f5b358c35598672e5ac",
-    "assets/index-BV_uS4t4.css": "f559fcb9078d2d33329a0108913811d3cf7d44c4c8ad1ce463640c7dc7cf7cc6",
-    "assets/index-DxPIGvta.js": "9fbca75a821293153304bd06d7a2b758d51a5a9af52bbe1c5f333ceb364182ae",
+    "assets/index-B3Gmr3oI.css": "78e6f49f5652769c740e07e5f1823870aad3f1f8baad69c142531bbe36c50cba",
+    "assets/index-BJqBDcw9.js": "189eb012fd4ff78b531a6bd2b023b0b205b84e999445e6b3993188ea388594e5",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "index.html": "5d386d2764f1b6c2ba85f34a3f4c4276d826e964dc80c5a364462a0f59fdeff7"
+    "assets/ScenarioExperience-CrZASgcj.js": "a4a9d25b804b013b1eb7c9b615548bfd03c33ec72b23420caac8065e35373ee7",
+    "index.html": "596dc1a7541f660e46e45ae831a06a53b4e7cffdb313d13e99938685b38b9882"
   },
   "sharedAssets": {
     "decision-data.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
@@ -45,6 +57,6 @@
     "project-plan.06416ee77cc91aba.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
     "decision.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "decision.ee79ed2bd90a08f0.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
-    "index.html": "f4e3debc5f9a9589e3d5cc348db9d824e8053f43a28e7633698cedd4e889e108"
+    "index.html": "b4645c930d7745203ae1711d824ec5cf2ed56cd52dc6071e68b9174650894f43"
   }
 }
