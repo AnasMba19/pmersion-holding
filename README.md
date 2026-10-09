@@ -5,10 +5,14 @@ Public website: https://pmersion.com · Application: https://pmersion.com/beta/
 The beta opens a decision studio backed by the versioned Hotel mission: 120 rooms, a late window
 supplier, four seeded plans, weighted comparison, written reasoning and an owned/dated action.
 Quality, cost, delay, risk and stakeholder consequences share one confirmed project forecast.
-Seventeen project families have environment and phase selection. Only construction/hotel/realisation
-opens this calculated mission; the other selections are honestly labelled context dossiers.
+The sector catalog covers 22 NACE Rev. 2.1 sections and 71 illustrative contexts. The mission
+library adds five calculated templates (SIRH, industrial robotics, logistics, solar energy and
+healthcare), each with three configurations. Context coverage is distinct from playable models.
 Six illustrated worlds and their original documents remain available, as do the distinct Synapse
 six-decision journey and budget, planning, risk and synthesis workshops.
+
+Version 0.8.0 extends the iris/copper public interface with mission selection, dependency
+forecasts, conditional recovery, explicit costs, free-text notes and retained dashboard summaries.
 
 ## Local data
 
@@ -20,6 +24,10 @@ twenty decisions. An explicit valid confirmation creates the versioned before/af
 drafts and model controls do not mutate that Twin. Unsupported storage is protected for recovery,
 and cross-tab conflicts block stale writes until explicit reload. Written reasoning is preserved
 without a hidden semantic AI score. Planned quality checks are not proven acceptance.
+`pmersion.delivery-cases.v1` independently preserves sector drafts and the last twenty retained
+decisions per configuration. Forecasts are deterministic and revalidated on load; stale tabs
+and unsupported formats block replacement. Risk assumptions are fictional and pedagogical.
+Sector dossiers can be exported; no destructive reset is added.
 Export and explicit scoped reset preserve the other progress keys. There is no cross-device sync.
 Sector choice, model rotation and layer separation are presentation state, never persisted work.
 Hosting receives normal technical requests. All project data is fictional.
