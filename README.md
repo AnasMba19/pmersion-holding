@@ -1,54 +1,38 @@
-# PMersion — public project-learning beta
+# PMersion : atelier public de projet
 
-Public website: https://pmersion.com · Application: https://pmersion.com/beta/
+L’entrée principale présente le nouvel atelier issu de la direction D 12ui.
+Huit archétypes ouvrent 24 pièces fictives. Six missions sont calculées ; deux
+archétypes restent des contextes sans moteur. Les anciens parcours restent
+accessibles dans le navigateur et la présentation précédente à /classique.html.
 
-The beta opens a decision studio backed by the versioned Hotel mission: 120 rooms, a late window
-supplier, four seeded plans, weighted comparison, written reasoning and an owned/dated action.
-Quality, cost, delay, risk and stakeholder consequences share one confirmed project forecast.
-The sector catalog covers 22 NACE Rev. 2.1 sections and 71 illustrative contexts. The mission
-library adds five calculated templates (SIRH, industrial robotics, logistics, solar energy and
-healthcare), each with three configurations. Context coverage is distinct from playable models.
-Six illustrated worlds and their original documents remain available, as do the distinct Synapse
-six-decision journey and budget, planning, risk and synthesis workshops.
+L’atelier Hôtel possède six vues et un modèle hotel-mission.3 distinct des archives.
+Il relie des leviers combinables, des pertes d’exploitation sous hypothèses, une
+créance fournisseur distincte des encaissements et quatre critères qualité. Les
+preuves sont déclarées par l’utilisateur. Une NC ou une preuve manquante bloque
+l’acceptation, sans prétendre accepter un ouvrage réel.
 
-Version 0.8.0 extends the iris/copper public interface with mission selection, dependency
-forecasts, conditional recovery, explicit costs, free-text notes and retained dashboard summaries.
+La géométrie cible Three.js contient 120 chambres identifiées. Le GLB et le
+manifeste sont accessibles dans beta/models. Les dimensions sont fictives ; ce
+n’est pas du BIM. Aucun runtime Blender, agent IA produit, Projects, Enterprise
+ou compte cloud n’est présenté comme nouvellement livré.
 
-## Local data
+La sauvegarde pmersion.hotel-mission.v3 conserve explicitement vingt études, leur
+justification et les preuves déclarées. Le changement de fournisseur retire les
+preuves du produit précédent. Les dossiers historiques gardent leurs clés et
+leurs modèles. Il n’y a pas de synchronisation entre appareils.
 
-No account, email collection, analytics or application API is used. The discovery key stores the
-six decision codes; `pmersion.public-workspace.v1` stores workshop drafts, explicitly retained
-versions and history. Retained budget/planning/risk versions feed the visitor’s common synthesis.
-`pmersion.construction-hotel.v1` separately stores the Hotel draft, confirmed Twin and its last
-twenty decisions. An explicit valid confirmation creates the versioned before/after trace;
-drafts and model controls do not mutate that Twin. Unsupported storage is protected for recovery,
-and cross-tab conflicts block stale writes until explicit reload. Written reasoning is preserved
-without a hidden semantic AI score. Planned quality checks are not proven acceptance.
-`pmersion.delivery-cases.v1` independently preserves sector drafts and the last twenty retained
-decisions per configuration. Forecasts are deterministic and revalidated on load; stale tabs
-and unsupported formats block replacement. Risk assumptions are fictional and pedagogical.
-Sector dossiers can be exported; no destructive reset is added.
-Export and explicit scoped reset preserve the other progress keys. There is no cross-device sync.
-Sector choice, model rotation and layer separation are presentation state, never persisted work.
-Hosting receives normal technical requests. All project data is fictional.
+Le manifeste beta/release.json contient les versions, la source exacte et les
+empreintes. Les ressources compilées immuables sont conservées pour les caches.
+La CI vérifie les parcours à quatre largeurs ; le contrôle publié vérifie aussi
+le domaine. Aucun test automatique ne vaut acceptation esthétique, évaluation
+pédagogique auprès des utilisateurs ou décision GO G5–G10.
 
-## Source and design
+```sh
+npm ci
+npx playwright install chromium
+npm test
+```
 
-`beta/` is the compiled `apps/public-beta` app; `beta/release.json` records exact source and hashes.
-The source catalogue and SVG geometry are shared by homepage, context pages and method resources.
-Public titles use locally hosted Barlow Condensed; Manrope remains body/control type. The font’s
-OFL license is included. Generated world JS/CSS and decision modules use immutable content URLs.
-Old hashed assets remain for previously cached pages. No source maps or credentials are shipped.
-
-## Verification and publication
-
-GitHub Pages publishes main with the existing CNAME. The browser workflow tests the compiled
-bundle at 390/430/768/1280 px, including keyboard, model controls, direct routes, storage isolation,
-reduced motion, workshop calculations, export and reset. Screenshots require visual review before
-merge; CI alone does not establish aesthetic acceptance or learning outcomes. The 0.6.0 candidate
-is traced by its manifest and source issue https://github.com/AnasMba19/pmersion/issues/94.
-Projects, tenant-based Enterprise, real document ingestion and cross-device accounts remain future
-work; this publication does not activate private connected infrastructure or declare a gate GO.
-
-Run locally: `npm ci`, `npx playwright install chromium`, `npm test`.
-Rollback: revert the release commit; private connected environments and DNS remain separate.
+Retour arrière : revert du commit de publication, sans changement DNS ni
+environnement privé connecté. L’ancienne présentation a conservé ses tests
+fonctionnels ; de nouveaux tests qualifient l’entrée principale et l’atelier.

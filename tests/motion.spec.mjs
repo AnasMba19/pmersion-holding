@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 test.use({video:{mode:'on',size:{width:1280,height:900}}});
 test('art direction stays usable through scroll motion and manual reduction',async({page},info)=>{
  await page.emulateMedia({reducedMotion:'no-preference'});
- await page.goto('/');
+ await page.goto('/classique.html');
  await expect(page.locator('html')).toHaveAttribute('data-motion','full');
  await expect(page.getByRole('link',{name:'Essayer la bêta PMersion',exact:true})).toBeVisible();
  await page.evaluate(()=>document.fonts.ready);
@@ -27,7 +27,7 @@ test('art direction stays usable through scroll motion and manual reduction',asy
 test('static art direction exposes complete content with scripts disabled',async({browser},info)=>{
  const context=await browser.newContext({javaScriptEnabled:false,viewport:info.project.use.viewport});
  const page=await context.newPage();
- await page.goto('http://127.0.0.1:4180/');
+ await page.goto('http://127.0.0.1:4180/classique.html');
  await expect(page.getByRole('heading',{level:1})).toContainText('Voyez le projet.');
  await expect(page.locator('#signature-title')).toBeVisible();
  await expect(page.locator('#decision-cost')).toHaveText('1 090 000 €');

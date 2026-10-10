@@ -3,7 +3,7 @@ test.use({video:{mode:'on',size:{width:1280,height:900}}});
 
 test('three alternatives expose independent canonical consequences and comparison',async({page},info)=>{
  const errors=[];page.on('pageerror',error=>errors.push(error.message));
- await page.goto('/');
+ await page.goto('/classique.html');
  const originalStorage=await page.evaluate(()=>JSON.stringify(localStorage));
  const choice=key=>page.locator(`[data-decision-choice="${key}"]`);
  await choice('savings').click();
@@ -39,7 +39,7 @@ test('three alternatives expose independent canonical consequences and compariso
 
 test('motion settles after interrupted decisions and manual reduction',async({page},info)=>{
  await page.emulateMedia({reducedMotion:'no-preference'});
- await page.goto('/');
+ await page.goto('/classique.html');
  await page.locator('[data-decision-choice="recover"]').click();
  await page.locator('[data-decision-choice="defer"]').click();
  await page.locator('[data-decision-choice="savings"]').click();

@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('activity and project context open the right dossier without changing stored work', async ({ page }, info) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/');
+  await page.goto('/classique.html');
   await page.getByLabel('Secteur d’activité', { exact: true }).selectOption('energie');
   await page.getByLabel('Type de projet', { exact: true }).selectOption('nucleaire');
   await expect(page.locator('[data-world-title]')).toHaveText('Projet nucléaire');
@@ -60,7 +60,7 @@ test('manual motion reduction settles the Hotel model and context diagrams witho
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.emulateMedia({ reducedMotion: 'no-preference' });
-  await page.goto('/');
+  await page.goto('/classique.html');
   await expect(page.locator('.hotel-scene')).toHaveAttribute('data-renderer', 'webgl');
   const canvas = page.locator('.hotel-scene-canvas canvas');
   await expect(canvas).toBeVisible();
@@ -90,7 +90,7 @@ test('unavailable WebGL keeps Hotel facts and the simulation accessible without 
       return /^webgl/.test(type) ? null : original.call(this, type, ...args);
     };
   });
-  await page.goto('/');
+  await page.goto('/classique.html');
   const before = await page.evaluate(() => JSON.stringify(Object.entries(localStorage)));
   await expect(page.locator('.hotel-scene')).toHaveAttribute('data-renderer', 'diagram');
   await expect(page.locator('.hotel-scene-fallback svg')).toBeVisible();

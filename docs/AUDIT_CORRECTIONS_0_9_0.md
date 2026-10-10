@@ -79,3 +79,33 @@ Les résultats des tests compilés et du contrôle du domaine sont à lire dans 
 L’inspection des captures du domaine 0.9.0 a détecté un chevauchement vertical sur mobile. Le diagramme textuel conservait la hauteur fixe prévue pour la maquette WebGL. Les trois éléments étaient présents et la page ne débordait pas horizontalement ; ces contrôles ne suffisaient pas.
 Le correctif sépare les deux modes : hauteur naturelle pour les textes, légende dans le flux et lecture accessible du diagramme. La maquette Hôtel conserve sa hauteur propre.
 Le test de l’accueil mesure maintenant le dernier élément du diagramme, le bas du conteneur et la position de la légende sur quatre largeurs. Le résultat du contrôle compilé et du domaine est suivi dans les workflows de la publication 0.9.1.
+
+
+## Nouvel atelier 0.10.0, 10 octobre 2026
+
+Cette tranche remplace le blocage de connexion annoncé dans le texte historique.
+12ui est connecté : quatre candidats inspectés, direction D retenue, huit
+conversions HTML obtenues. L’entrée principale utilise le nouvel atelier ;
+la présentation précédente reste consultable à classique.html. Aucun accord
+esthétique du fondateur n’est déduit de la génération.
+
+Les huit archétypes ont maintenant 24 extraits de pièces fictives datés, versionnés
+et attribués à des rôles. Six conduisent à des simulations existantes et deux
+restent clairement sans moteur. Aucun dossier client authentique n’est revendiqué.
+
+Hôtel .3 prolonge l’étude .2 avec des preuves déclarées, une NC et une admissibilité
+bloquante. Une mesure fictive 38 dB échoue au critère fictif de 40 dB ; 42 dB le
+satisfait mais ne dispense pas des trois autres preuves. Ces chiffres ne sont pas
+une exigence réglementaire. Une étude locale peut conserver ses réserves sans
+autoriser des travaux. Les anciennes décisions gardent leurs modèles.
+
+La géométrie cible possède 120 chambres identifiées. Three.js est le runtime
+opérationnel, GLB et manifeste sont fournis ; un script Blender est préparé.
+Aucune exécution Blender, aucun fichier .blend ni conformité BIM n’est annoncé.
+Le prototype 12ui automatique et son recheck URL restent bloqués par Chromium
+local. Le premier kit image improve est non ancré et n’établit pas un alignement
+final. Les parcours et les captures CI qualifient la réalisation effective.
+
+Projects, Enterprise, synchronisation cloud, intelligence documentaire réelle et
+mesure du transfert d’apprentissage restent ouverts. Le sommaire détaillé conserve
+ces limites dans ses 35 chapitres. Aucun GO G5–G10 n’est déduit des tests.
