@@ -41,12 +41,12 @@ test("a public visitor reaches a real six-decision summary without an account", 
     }
     await page.getByRole("link", { name: index === 5 ? "Découvrir mon bilan" : "Passer à la décision suivante" }).click();
   }
-  await expect(page.getByRole("heading", { name: "Votre bilan de simulation." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Votre bilan Synapse" })).toBeVisible();
   await expect(page.getByRole("meter")).toHaveCount(6);
   await expect(page.getByRole("meter", { name: "Clarté du périmètre" })).toHaveAttribute("value", "92");
   await expect(page.getByRole("meter", { name: "Exposition au risque" })).toHaveAttribute("value", "0");
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Votre bilan de simulation." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Votre bilan Synapse" })).toBeVisible();
   await fit(page);
   await page.screenshot({ path: testInfo.outputPath("05-summary.png"), fullPage: true });
   await page.getByRole("link", { name: "Relire le raisonnement" }).first().click();
@@ -63,7 +63,7 @@ test("locked routes and unknown routes stay recoverable", async ({ page }) => {
   await page.getByRole("link", { name: "Reprendre le parcours" }).click();
   await expect(page.getByRole("heading", { name: "Cadrer le mandat", exact: true })).toBeVisible();
   await page.goto("/beta/#/bilan");
-  await expect(page.getByRole("heading", { name: "Votre bilan se construit." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Parcours guidé Synapse" })).toBeVisible();
   await page.goto("/beta/#/unknown");
   await expect(page.getByRole("link", { name: "Reprendre le parcours" })).toBeVisible();
 });
