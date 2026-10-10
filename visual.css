@@ -908,7 +908,7 @@
 		line-height: 1.1;
 	}
 	.theatre-context h2 br {
-		display: none;
+		display: inline;
 	}
 	.theatre-context > p {
 		font-size: 12px;

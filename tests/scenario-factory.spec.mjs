@@ -1,10 +1,10 @@
 import { test, expect } from "@playwright/test";
-const key = "pmersion.delivery-cases.v1";
+const key = "pmersion.delivery-cases.v2";
 test("mission library, filtering and keyboard navigation work without horizontal page overflow", async ({
   page,
 }, info) => {
   await page.goto("/beta/#/missions");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Changez de projet");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Choisissez une situation");
   await expect(page.locator(".case-card")).toHaveCount(6);
   await page.getByLabel("Filtrer les missions par secteur").selectOption("numerique");
   await expect(page.locator(".case-card")).toHaveCount(1);
@@ -90,4 +90,48 @@ test("stale tab blocks writes and explicit reload restores the newer draft", asy
   ).toBeDisabled();
   await page.getByRole("button", { name: "Relire la sauvegarde des missions" }).click();
   await expect(page.getByLabel("Responsable de l’action")).toHaveValue("Autre PMO");
+});
+
+test("v2 contrasts confirmed sector plans and the global summary includes sector decisions", async ({
+  page,
+}) => {
+  await page.goto("/beta/#/mission/cas/sirh?variante=critique");
+  await page.getByLabel("Conditions de récupération confirmées", { exact: false }).check();
+  await page.getByLabel("Les trois contrôles d’acceptation sont planifiés").check();
+  const rows = page.locator(".case-table tbody tr");
+  await expect(rows.nth(1)).toContainText("J34");
+  await expect(rows.nth(2)).toContainText("J40");
+  await expect(page.getByRole("heading", { name: "Conditions avant engagement" })).toBeVisible();
+  await page.goto("/beta/#/bilan");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Votre bilan de pratique");
+  await expect(page.getByRole("heading", { name: "Mission Hôtel", exact: true })).toBeVisible();
+  await expect(
+    page.getByText("Ce compte ne comprend pas les missions Hôtel", { exact: false }),
+  ).toBeVisible();
+});
+
+test("Hotel v2 combines levers without rewriting the historical hotel state", async ({
+  page,
+}, info) => {
+  await page.goto("/beta/#/mission/construction");
+  await page
+    .getByText("Étude Hôtel v2 : combiner les leviers et distinguer le retard d’ouverture", {
+      exact: true,
+    })
+    .click();
+  const study = page
+    .locator(".pm-card")
+    .filter({ has: page.getByRole("heading", { name: "Étudier des leviers combinés" }) });
+  await study.getByRole("radio", { name: "Accélérer le fournisseur", exact: true }).check();
+  await study.getByLabel("Préparer les tâches hors zone en parallèle").check();
+  await expect(study.locator('[aria-live="polite"]')).toContainText("Chambre témoin J29");
+  await expect(study.locator('[aria-live="polite"]')).toContainText("ouverture J58");
+  expect(
+    await page.evaluate(
+      () =>
+        JSON.parse(localStorage.getItem("pmersion.construction-hotel.v1") ?? "null")?.twin
+          .version ?? 0,
+    ),
+  ).toBe(0);
+  await page.screenshot({ path: info.outputPath("hotel-v2-study.png"), fullPage: true });
 });
