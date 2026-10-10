@@ -6,6 +6,10 @@ test("new studio exposes eight honest dossiers and a complete hotel workflow", a
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "Pratiquer le pilotage de projet",
   );
+  await page.getByRole("button", { name: "Aller au contenu", exact: true }).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#studio-main")).toBeFocused();
+  await expect(page).toHaveURL(/#\/studio$/);
   await fit(page);
   await page.getByRole("link", { name: "Explorer les huit archétypes" }).click();
   await expect(page.locator(".studio-archetypes article")).toHaveCount(8);

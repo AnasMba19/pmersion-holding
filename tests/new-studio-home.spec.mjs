@@ -3,6 +3,10 @@ test("main entry opens the professional studio and every hotel view with the sam
   const errors=[];page.on("pageerror", e=>errors.push(e.message));
   await page.goto("/");
   await expect(page.getByRole("heading",{level:1})).toHaveText("Pratiquer le pilotage de projet");
+  await page.getByRole("button",{name:"Aller au contenu",exact:true}).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#studio-main")).toBeFocused();
+  expect(new URL(page.url()).hash).toBe("");
   await expect(page.getByLabel("Chambre",{exact:true}).locator("option")).toHaveCount(120);
   await page.screenshot({path:info.outputPath("new-studio-accueil.png"),fullPage:false});
   await page.getByRole("link",{name:"Explorer les huit archétypes"}).click();
@@ -26,6 +30,15 @@ test("main entry opens the professional studio and every hotel view with the sam
   const b=await glb.body();expect(b.readUInt32LE(0)).toBe(0x46546c67);
   const data=JSON.parse(b.subarray(20,20+b.readUInt32LE(12)).toString("utf8"));
   expect(data.nodes.filter(n=>/^room-\d+$/.test(n.name||""))).toHaveLength(120);
+  await page.getByRole("link",{name:"Atelier",exact:true}).click();
+  await expect(page.getByRole("heading",{level:1})).toHaveText("Hôtel 120 chambres");
+  const canvas=page.locator(".studio-model-host canvas");
+  if(await canvas.count()) {
+    await canvas.evaluate(node=>node.dispatchEvent(new Event("webglcontextlost",{cancelable:true})));
+    await expect(page.getByText("La vue 3D est indisponible",{exact:false})).toBeVisible();
+    await expect(canvas).toHaveCount(0);
+    await expect(page.getByLabel("Approvisionnement",{exact:true})).toHaveValue("alternative");
+  }
   expect(errors).toEqual([]);
 });
 test("main entry has an honest reading route with scripts disabled",async({browser},info)=>{
