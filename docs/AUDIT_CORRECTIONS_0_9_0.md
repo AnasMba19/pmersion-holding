@@ -73,3 +73,9 @@ La refonte visuelle reste à produire et à vérifier. Les contrôles techniques
 Version : 0.9.0. Source fusionnée : b788350eed76b6e90a74dd921d8565460d6022fc, PR source #97.
 Qualification source : 266 tests métier ; 128 parcours publics ; 134 régressions navigateur, avec un cas conditionnel ignoré.
 Les résultats des tests compilés et du contrôle du domaine sont à lire dans les workflows du dépôt public. Une préparation locale ne vaut pas publication.
+
+## Complément 0.9.1 : diagramme des contextes
+
+L’inspection des captures du domaine 0.9.0 a détecté un chevauchement vertical sur mobile. Le diagramme textuel conservait la hauteur fixe prévue pour la maquette WebGL. Les trois éléments étaient présents et la page ne débordait pas horizontalement ; ces contrôles ne suffisaient pas.
+Le correctif sépare les deux modes : hauteur naturelle pour les textes, légende dans le flux et lecture accessible du diagramme. La maquette Hôtel conserve sa hauteur propre.
+Le test de l’accueil mesure maintenant le dernier élément du diagramme, le bas du conteneur et la position de la légende sur quatre largeurs. Le résultat du contrôle compilé et du domaine est suivi dans les workflows de la publication 0.9.1.

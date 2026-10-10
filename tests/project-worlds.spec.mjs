@@ -120,6 +120,17 @@ test("homepage hierarchy connects twenty-two activity sectors, phases and three 
     await expect(button).toHaveAttribute("aria-pressed","true");
     readings.push(await page.locator("[data-world-focus]").innerText());
     await expect(page.locator("[data-world-scene] .context-map li")).toHaveCount(3);
+    await expect(page.getByRole("list", { name: "Interfaces du projet" })).toBeVisible();
+    const geometry = await page.locator(".world-model").evaluate(model => {
+      const scene = model.querySelector("[data-world-scene]").getBoundingClientRect();
+      const last = model.querySelector(".context-map li:last-child").getBoundingClientRect();
+      const label = model.querySelector(".world-model-label").getBoundingClientRect();
+      return { last: last.bottom, scene: scene.bottom, labelTop: label.top,
+        labelBottom: label.bottom, model: model.getBoundingClientRect().bottom };
+    });
+    expect(geometry.last).toBeLessThanOrEqual(geometry.scene + 1);
+    expect(geometry.scene).toBeLessThanOrEqual(geometry.labelTop + 1);
+    expect(geometry.labelBottom).toBeLessThanOrEqual(geometry.model + 1);
   }
   expect(new Set(readings).size).toBe(3);
   await expect(page.locator("[data-world-turn]")).toBeHidden();

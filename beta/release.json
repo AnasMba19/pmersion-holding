@@ -1,6 +1,6 @@
 {
   "mode": "public-workspace",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "scenarioVersion": "synapse-discovery.2026-09-30",
   "simulationVersions": {
     "constructionHotel": "hotel120.1",
@@ -26,32 +26,32 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "b788350eed76b6e90a74dd921d8565460d6022fc",
+  "sourceCommit": "f28ee5823c2e203a10ff2cad2d5ede94b71a859d",
   "builtAt": "2026-10-10",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Source SHA supplied by the release operator; run from that reviewed checkout.",
   "files": {
     "assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
     "assets/hotel-scene-CXGt4JJ6.js": "cc7f0587d5690213052f0bc9c3a850995f4d43e439f58003447e180639470caa",
-    "assets/index-Bl1N45QI.css": "d6d9e081a5e9ee1dc89df299646ad1002e66c4a39aaae6c39a65ca1f18e61715",
-    "assets/index-Cqi1Pk2S.js": "5ebf347dbd243d2e1e2d48bbb1d2c577625bab2d80dbde72e4c91b4f50940812",
+    "assets/index-B_woQpeg.js": "94c3b77c066ea1e75108f8e4885cf781932629a7de5b19c931c6508b993924ad",
+    "assets/index-D3YtGhOn.css": "a7cd9ad39471a5ea9bf8fba8602b598ad7137db2700afe31ccdf896f6e128515",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "assets/ScenarioExperience-Bsd5z8MD.js": "6e0de234da4fe74a00c2e4841da3a049ac2a7a25bc178723c055f2bc42805962",
-    "index.html": "af2c377540772e20423276b6b6ec9780cc4289819e2260176c15b5bf819e8b39"
+    "assets/ScenarioExperience-J6CB46st.js": "e104bf6b9dce1fd37cfc370a5bed5b8652740b1acb47e1ab95e0f450b7463c49",
+    "index.html": "9d47894c875ab8c1cfd9268ff776da2d63ebc1bdb6376aafdc1112f13b49eadd"
   },
   "sharedAssets": {
     "decision-data.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
     "dossier-data.js": "3eca4d8b417b2d3d707207d6e6e1083180863ea29e950852862817be69e4e0a4",
     "project-plan.css": "70d1c44bd00d0fd3c51415875bb779f2b02673d4ff637f71c02d678a78855c25",
     "project-plan.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
-    "worlds.js": "65b9161720538d4fdd5a98f665b960fada8dd14ad519febcfc77389aa6942504",
-    "worlds.65b9161720538d4f.js": "65b9161720538d4fdd5a98f665b960fada8dd14ad519febcfc77389aa6942504",
-    "project-world.css": "51d588dea869ed49f289f25ee551b1759131797b56cc7b969d329e853b16f989",
-    "project-world.51d588dea869ed49.css": "51d588dea869ed49f289f25ee551b1759131797b56cc7b969d329e853b16f989",
+    "worlds.js": "9fe19612fe190652873ccccceaa635d765abcc038940ba618255e747976c2d17",
+    "worlds.9fe19612fe190652.js": "9fe19612fe190652873ccccceaa635d765abcc038940ba618255e747976c2d17",
+    "project-world.css": "083bb8ff4d02de09b6254025f1a0fc4f18e154ab7c63c97b348c0beede60af74",
+    "project-world.083bb8ff4d02de09.css": "083bb8ff4d02de09b6254025f1a0fc4f18e154ab7c63c97b348c0beede60af74",
     "barlow-condensed-latin-600-normal.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
     "BARLOW-OFL.txt": "046ee27d8bddc6b6ee08eee53c96dbf3ec1f6df561644e018507dd8ffcb11d31",
     "hotel-scene-DOt99-ck.js": "540fb5e6e1f84b798539c808064b1ce661c9a08cf2bb8c4fd7bc793dd7f845d3",
@@ -59,6 +59,6 @@
     "project-plan.06416ee77cc91aba.js": "06416ee77cc91aba114924a54af79bc80db7a5616d3721fe777f4460e890be86",
     "decision.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "decision.ee79ed2bd90a08f0.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
-    "index.html": "a852024060af624f710b8f243df574e8c4a83d1b2085d8cddf18204e16e11502"
+    "index.html": "893c3800c3c0b3a4872f454c25f02af202ab6ccd38d7c84fdb0d0e2b480b91e3"
   }
 }
