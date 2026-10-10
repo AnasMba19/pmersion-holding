@@ -159,3 +159,23 @@ Automated checks establish behavior, not aesthetic acceptance or human learning 
 The release generator names the homepage data, shared renderer and controller by their content hash.
 Their imports must stay content-addressed: a browser with cached modules from an older release must
 not combine them with the current controller. Stable file copies remain only for compatibility.
+
+
+## Atelier professionnel, 10 octobre 2026
+
+La nouvelle entrée principale utilise le bundle compilé de ProjectStudio, avec
+le marqueur data-pmersion-entry=studio. Le bundle beta garde ses routes historiques.
+Le générateur source scripts/build-public-release.mjs est le propriétaire de
+index.html, du manifeste et du CSS/JS compilé. La palette et les deux polices de
+la nouvelle surface sont définies une seule fois dans le source studio.css.
+
+La direction D de 12ui a été réellement obtenue et inspectée parmi quatre
+candidats. Huit conversions sont disponibles ; le nav et ses assets sont réutilisés.
+Les données générées ne sont pas des faits produit et ont été remplacées par
+les moteurs versionnés et les pièces fictives. La maquette utilise Three.js,
+120 objets chambre identifiés, et un export GLB reproductible.
+
+L’ancienne présentation est conservée à classique.html avec ses contrôles et ses
+tests. Ses anciens choix de couleur et de motion ne gouvernent pas le nouvel
+atelier. Aucun alignement final 12ui improve ni acceptation esthétique du
+fondateur n’est déduit de la génération ou de la CI.

@@ -101,7 +101,7 @@ test("historical sector aliases preserve context and unsupported domains have a 
 
 test("homepage hierarchy connects twenty-two activity sectors, phases and three readings with two beta calls", async ({page}) => {
   await page.emulateMedia({reducedMotion:"reduce"});
-  await page.goto("/");
+  await page.goto("/classique.html");
   await expect(page.locator("[data-world-family] option")).toHaveCount(22);
   await expect(page.locator(".header-cta,.final-cta .button")).toHaveCount(2);
   await expect(page.locator(".header-cta")).toHaveAttribute("href","/beta/");

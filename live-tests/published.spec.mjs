@@ -21,7 +21,7 @@ test("published homepage and project hierarchy use the qualified release", async
   await published(request);
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/classique.html");
   await expect(page.locator("[data-world-family] option")).toHaveCount(22);
   await expect(page.locator(".header-cta,.final-cta .button")).toHaveCount(2);
   await page.getByLabel("Secteur d’activité", { exact: true }).selectOption("numerique");
@@ -116,4 +116,30 @@ test("published sector mission retains a conditional forecast and resumes the do
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("sector-sirh-live.png"), fullPage: true });
+});
+
+
+test("published professional studio retains a hotel study and declared proof",async({page,request},info)=>{
+ await published(request);
+ await page.goto("/");
+ await expect(page.getByRole("heading",{level:1})).toHaveText("Pratiquer le pilotage de projet");
+ await page.getByRole("link",{name:"Ouvrir la mission Hôtel",exact:true}).click();
+ await expect(page.getByLabel("Chambre",{exact:true}).locator("option")).toHaveCount(120);
+ await page.getByLabel("Approvisionnement",{exact:true}).selectOption("alternative");
+ await page.getByLabel("Préparer les tâches hors zone").check();
+ await page.getByRole("link",{name:"Qualité",exact:true}).click();
+ await page.getByLabel("Mesure d’isolement acoustique").fill("42");
+ await page.getByRole("button",{name:"Ajouter le constat à l’étude"}).click();
+ await page.getByRole("link",{name:"Revue MOA",exact:true}).click();
+ await page.getByLabel("Votre recommandation").fill("Je prépare la substitution avec ses réserves ; les interfaces et le standard du témoin restent à vérifier.");
+ await page.getByRole("button",{name:"Conserver l’étude Hôtel"}).click();
+ await expect(page.getByText("Étude et preuves déclarées conservées sur ce navigateur.")).toBeVisible();
+ await page.getByRole("link",{name:"Bilan",exact:true}).click();
+ await page.reload();
+ await expect(page.getByRole("heading",{level:2})).toContainText("Ouverture J58");
+ await expect(page.getByText("0 NC constatées ; 3 preuves manquantes.")).toBeVisible();
+ const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("pmersion.hotel-mission.v3")));
+ expect(saved.history).toHaveLength(1);expect(saved.history[0].model).toBe("hotel-mission.3");
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+ await page.screenshot({path:info.outputPath("published-new-studio.png"),fullPage:true});
 });
