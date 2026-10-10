@@ -34,7 +34,7 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "6a6955ae617ce2502e49ee7d9a77443909adf431",
+  "sourceCommit": "56a33b26c4d4f8d69c263eba5d28293589791959",
   "builtAt": "2026-10-10",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Source SHA supplied by the release operator; run from that reviewed checkout.",
