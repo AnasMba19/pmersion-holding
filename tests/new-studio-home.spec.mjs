@@ -14,6 +14,7 @@ test("main entry opens the professional studio and every hotel view with the sam
   for(const [view,title] of [["Atelier","Hôtel 120 chambres"],["Dossier","Les pièces du dossier"],["Planning","Planning et impact économique"],["Qualité","Qualité et preuves"],["Revue MOA","Défendre votre décision"],["Bilan","Votre étude conservée"]]) {
     await page.getByRole("link",{name:view,exact:true}).click();
     await expect(page.getByRole("heading",{level:1})).toHaveText(title);
+    await expect(page).toHaveTitle(`${title} · PMersion`);
     await expect(page.locator(".studio-facts").first()).toContainText("J27");
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
     await page.screenshot({path:info.outputPath(`new-studio-${view.replaceAll(" ","-")}.png`),fullPage:false});

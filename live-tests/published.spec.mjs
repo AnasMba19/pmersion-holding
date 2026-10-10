@@ -136,7 +136,7 @@ test("published professional studio retains a hotel study and declared proof",as
  await expect(page.getByText("Étude et preuves déclarées conservées sur ce navigateur.")).toBeVisible();
  await page.getByRole("link",{name:"Bilan",exact:true}).click();
  await page.reload();
- await expect(page.getByRole("heading",{level:2})).toContainText("Ouverture J58");
+ await expect(page.getByRole("heading",{level:2,name:/Ouverture J58/})).toBeVisible();
  await expect(page.getByText("0 NC constatées ; 3 preuves manquantes.")).toBeVisible();
  const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("pmersion.hotel-mission.v3")));
  expect(saved.history).toHaveLength(1);expect(saved.history[0].model).toBe("hotel-mission.3");

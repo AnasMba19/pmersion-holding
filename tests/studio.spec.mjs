@@ -38,9 +38,10 @@ test("new studio exposes eight honest dossiers and a complete hotel workflow", a
     page.getByText("Étude et preuves déclarées conservées sur ce navigateur."),
   ).toBeVisible();
   await page.getByRole("link", { name: "Bilan", exact: true }).click();
-  await expect(page.getByRole("heading", { level: 2 })).toContainText("Ouverture J58");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Votre étude conservée");
+  await expect(page.getByRole("heading", { level: 2, name: /Ouverture J58/ })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole("heading", { level: 2 })).toContainText("Ouverture J58");
+  await expect(page.getByRole("heading", { level: 2, name: /Ouverture J58/ })).toBeVisible();
   await expect(page.getByText("0 NC constatées ; 3 preuves manquantes.")).toBeVisible();
   const data = await page.evaluate(() =>
     JSON.parse(localStorage.getItem("pmersion.hotel-mission.v3")),
