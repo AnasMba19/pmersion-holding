@@ -35,6 +35,14 @@ test("published homepage and project hierarchy use the qualified release", async
   await expect(page.locator('[data-world-interface="2"]')).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("[data-world-focus]")).toHaveText("Paramétrage → reprise fictive → recette → transition. Quelle preuve permet d’accepter le résultat et de passer le relais ?");
   await expect(page.locator("[data-world-open]")).toHaveAttribute("href", /\/beta\/#\/univers\/numerique\?environnement=sirh&phase=reception$/);
+  await expect.poll(() => page.locator(".world-model").evaluate(model => {
+    const last = model.querySelector(".context-map li:last-child").getBoundingClientRect();
+    const scene = model.querySelector("[data-world-scene]").getBoundingClientRect();
+    const label = model.querySelector(".world-model-label").getBoundingClientRect();
+    return last.bottom <= scene.bottom + 1 && scene.bottom <= label.top + 1 &&
+      label.bottom <= model.getBoundingClientRect().bottom + 1;
+  })).toBe(true);
+  await page.locator(".world-model").screenshot({ path: info.outputPath("published-diagram.png") });
   await page.screenshot({ path: info.outputPath("published-home.png"), fullPage: false });
   await page.locator("[data-world-open]").click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("SIRH");
