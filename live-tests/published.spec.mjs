@@ -119,27 +119,71 @@ test("published sector mission retains a conditional forecast and resumes the do
 });
 
 
-test("published professional studio retains a hotel study and declared proof",async({page,request},info)=>{
- await published(request);
- await page.goto("/");
- await expect(page.getByRole("heading",{level:1})).toHaveText("Pratiquer le pilotage de projet");
- await page.getByRole("link",{name:"Ouvrir la mission Hôtel",exact:true}).click();
- await expect(page.getByLabel("Chambre",{exact:true}).locator("option")).toHaveCount(120);
- await page.getByLabel("Approvisionnement",{exact:true}).selectOption("alternative");
- await page.getByLabel("Préparer les tâches hors zone").check();
- await page.getByRole("link",{name:"Qualité",exact:true}).click();
- await page.getByLabel("Mesure d’isolement acoustique").fill("42");
- await page.getByRole("button",{name:"Ajouter le constat à l’étude"}).click();
- await page.getByRole("link",{name:"Revue MOA",exact:true}).click();
- await page.getByLabel("Votre recommandation").fill("Je prépare la substitution avec ses réserves ; les interfaces et le standard du témoin restent à vérifier.");
- await page.getByRole("button",{name:"Conserver l’étude Hôtel"}).click();
- await expect(page.getByText("Étude et preuves déclarées conservées sur ce navigateur.")).toBeVisible();
- await page.getByRole("link",{name:"Bilan",exact:true}).click();
- await page.reload();
- await expect(page.getByRole("heading",{level:2,name:/Ouverture J58/})).toBeVisible();
- await expect(page.getByText("0 NC constatées ; 3 preuves manquantes.")).toBeVisible();
- const saved=await page.evaluate(()=>JSON.parse(localStorage.getItem("pmersion.hotel-mission.v3")));
- expect(saved.history).toHaveLength(1);expect(saved.history[0].model).toBe("hotel-mission.3");
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
- await page.screenshot({path:info.outputPath("published-new-studio.png"),fullPage:true});
+test("published studio retains selected proof and MOA responses while preserving the historical .3 study", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pratiquer le pilotage de projet");
+  const archive = JSON.stringify({
+    format: "hotel-mission-local.3",
+    revision: 1,
+    history: [{
+      id: "published-archive-001",
+      version: 1,
+      model: "hotel-mission.3",
+      inputs: {
+        plan: { supply: "wait", prepare: false, checks: true },
+        deliveryShift: 0,
+        dailyMargin: 5000,
+        evidence: [],
+      },
+      reasoning: "Étude historique fictive : préserver le modèle utilisé lors de cet arbitrage.",
+      recordedAt: "2026-10-10T19:00:00Z",
+    }],
+  });
+  // Write the fixture once. A reload must expose, rather than mask, an accidental overwrite.
+  await page.evaluate(raw => localStorage.setItem("pmersion.hotel-mission.v3", raw), archive);
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pratiquer le pilotage de projet");
+  await page.getByRole("link", { name: "Ouvrir la mission Hôtel", exact: true }).click();
+  await expect(page.locator("details.studio-model-disclosure")).toHaveJSProperty("open", false);
+  const modelSummary = page.getByText("Explorer la maquette cible, en complément du dossier", { exact: true });
+  await modelSummary.click();
+  await expect(page.getByLabel("Chambre", { exact: true }).locator("option")).toHaveCount(120);
+  await modelSummary.click();
+  await page.getByLabel("Approvisionnement", { exact: true }).selectOption("alternative");
+  await page.getByLabel("Préparer les tâches hors zone").check();
+  await page.getByRole("link", { name: "Qualité", exact: true }).click();
+  await page.getByLabel("Pièce du dossier", { exact: true }).selectOption("HOT-AC-ALT-INITIAL");
+  await page.getByRole("button", { name: "Ajouter la pièce à l’étude", exact: true }).click();
+  await expect(page.getByText("NC ouverte", { exact: true })).toBeVisible();
+  await page.getByLabel("Pièce du dossier", { exact: true }).selectOption("HOT-AC-ALT-REPRISE");
+  await page.getByRole("button", { name: "Ajouter la pièce à l’étude", exact: true }).click();
+  await expect(page.getByText("NC ouverte", { exact: true })).toHaveCount(0);
+  await page.getByRole("link", { name: "Revue MOA", exact: true }).click();
+  const questions = page.locator("fieldset").filter({ has: page.getByRole("radio") });
+  await expect(questions).toHaveCount(3);
+  for (const question of await questions.all()) await question.locator('input[value="verify"]').check();
+  await page.getByLabel("Votre recommandation").fill("Je prépare la substitution avec ses réserves ; les interfaces et le standard du témoin restent à vérifier.");
+  await page.getByRole("button", { name: "Conserver l’étude Hôtel", exact: true }).click();
+  await expect(page.getByText("Étude, pièces choisies et réponses MOA conservées sur ce navigateur.")).toBeVisible();
+  await page.getByRole("link", { name: "Bilan", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Votre étude conservée");
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 2, name: /Ouverture J58/ })).toBeVisible();
+  await expect(page.getByText(/0 NC constatées ; 3 preuves manquantes\./)).toBeVisible();
+  const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("pmersion.hotel-scenario.v4")));
+  expect(saved.history).toHaveLength(1);
+  expect(saved.history[0].model).toBe("hotel-scenario.4");
+  expect(saved.history[0].inputs.evidence).toEqual([{ id: "acoustics", documentId: "HOT-AC-ALT-REPRISE" }]);
+  expect(saved.history[0].inputs.responses).toHaveLength(3);
+  expect(await page.evaluate(() => localStorage.getItem("pmersion.hotel-mission.v3"))).toBe(archive);
+  await page.getByText("Relire les études de l’ancien modèle Hôtel .3", { exact: true }).click();
+  await expect(page.getByRole("heading", { level: 2, name: /Ancienne prévision J68/ })).toBeVisible();
+  await expect(page.getByText("hotel-mission.3", { exact: false })).toBeVisible();
+  expect(await page.evaluate(() => localStorage.getItem("pmersion.hotel-mission.v3"))).toBe(archive);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("published-new-studio.png"), fullPage: true });
 });
