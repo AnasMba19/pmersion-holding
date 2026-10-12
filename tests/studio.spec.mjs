@@ -137,3 +137,25 @@ test("quality fallback, unknown dossiers and future data remain usable without o
 	).toBeVisible();
 	await fit(page);
 });
+
+test("deeper archetype paths show a missing dossier and recover instead of leaving an empty route", async ({
+  page,
+}) => {
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  for (const path of [
+    "/beta/#/projets/absent/sous-route",
+    "/beta/#/projets/ouverture/sous-route",
+  ]) {
+    await page.goto(path);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Dossier indisponible");
+    await expect(page.getByText("Ce dossier n’existe pas", { exact: false })).toBeVisible();
+    const back = page.getByRole("link", { name: "Revenir aux archétypes", exact: true });
+    await back.focus();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Choisir un enjeu de projet");
+    await expect(page.locator(".studio-archetypes article")).toHaveCount(8);
+    await fit(page);
+  }
+  expect(errors).toEqual([]);
+});

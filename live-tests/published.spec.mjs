@@ -187,3 +187,24 @@ test("published studio retains selected proof and MOA responses while preserving
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-new-studio.png"), fullPage: true });
 });
+
+test("published deeper archetype paths recover from a missing dossier through keyboard navigation", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  for (const id of ["absent", "ouverture"]) {
+    await page.goto(`/#/projets/${id}/sous-route`);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Dossier indisponible");
+    await expect(page.getByText("Ce dossier n’existe pas", { exact: false })).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+    await page.screenshot({ path: info.outputPath(`published-missing-dossier-${id}.png`), fullPage: true });
+    const back = page.getByRole("link", { name: "Revenir aux archétypes", exact: true });
+    await back.focus();
+    await expect(back).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Choisir un enjeu de projet");
+    await expect(page.locator(".studio-archetypes article")).toHaveCount(8);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  }
+  expect(errors).toEqual([]);
+});
