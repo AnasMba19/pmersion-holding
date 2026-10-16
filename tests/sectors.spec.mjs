@@ -39,7 +39,9 @@ test('six inherited document routes stay readable while the catalogue has twenty
   await page.screenshot({ path: info.outputPath('sector-catalog.png'), fullPage: true });
   for (const slug of ['construction', 'nucleaire', 'robotique', 'si-data', 'industrie', 'services-sante']) {
     await page.goto(`/beta/#/secteurs/${slug}`);
-    await expect(page.locator('.sector-document')).toHaveCount(3);
+    await expect(page.locator('[aria-labelledby="sector-documents-title"] > .sector-document')).toHaveCount(3);
+    await expect(page.locator('[data-domain-example]')).toHaveCount(2);
+    await expect(page.locator('[data-domain-example] details:not([data-example-option])')).toHaveCount(6);
     await expect(page.locator('.sector-questions li')).toHaveCount(3);
     await expect(page.locator('.sector-model-controls button')).toHaveCount(3);
     await expect(page.getByRole('button', { name: 'Tourner la maquette', exact: true })).toHaveCount(0);
