@@ -440,7 +440,7 @@ test("Projects detects a second tab's save and refuses stale writes until explic
   await page.goto("/beta/#/projects");
   await heading(page, "Piloter le projet");
   const other = await context.newPage();
-  await other.goto("/beta/#/projects");
+  await other.goto("#/projects");
   await heading(other, "Piloter le projet");
   await addTask(other, "Tâche fictive de l’autre onglet");
   await other.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
@@ -713,7 +713,7 @@ test("Decision Lab compares explicit hypotheses on a detached Projects copy and 
     /1\s800(?:,00)?\s€/,
   ]);
   const other = await context.newPage();
-  await other.goto("/beta/#/projects");
+  await other.goto("#/projects");
   await heading(other, "Piloter le projet");
   await other
     .getByRole("button", { name: "Modifier la tâche Contrôle fictif principal", exact: true })
@@ -807,4 +807,279 @@ test("Decision Lab reloads an explicitly loaded demo and keeps a later Projects 
   await unchangedHotel(page);
   await fit(page);
   expect(errors).toEqual([]);
+});
+
+const assistantDisclosure = (page) => {
+  const assistant = page.getByRole("complementary", { name: "Assistant PMersion", exact: true });
+  return {
+    assistant,
+    details: assistant.locator("details"),
+    summary: assistant.locator("summary"),
+  };
+};
+
+async function checkAssistant(page) {
+  const { assistant, details, summary } = assistantDisclosure(page);
+  await expect(assistant).toHaveCount(1);
+  await expect(details).toHaveJSProperty("open", false);
+  await expect(summary).toContainText("Assistant IA");
+  await expect(summary.getByText("En cours", { exact: true })).toBeVisible();
+  await summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(details).toHaveJSProperty("open", true);
+  // The lazy legacy Studio reset must not remove the shared help's reading inset.
+  const bodyStyle = await assistant.locator(".public-assistant-body").evaluate((node) => {
+    const style = getComputedStyle(node);
+    return { top: parseFloat(style.paddingTop), left: parseFloat(style.paddingInlineStart) };
+  });
+  expect(bodyStyle.top).toBeGreaterThanOrEqual(16);
+  expect(bodyStyle.left).toBeGreaterThanOrEqual(16);
+  await expect(
+    assistant.getByText(
+      "Cette aide est rédigée à l’avance. L’IA est en préparation. Aucune analyse par IA ni aucun entraînement sur vos données n’est actif.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(assistant.getByRole("heading", { level: 2 })).toHaveCount(1);
+  expect(await assistant.locator("ol > li").count()).toBeGreaterThan(0);
+  await expect(assistant.locator("input, textarea, select, form")).toHaveCount(0);
+  await fit(page);
+  await summary.focus();
+  await page.keyboard.press("Space");
+  await expect(details).toHaveJSProperty("open", false);
+}
+
+for (const [group, routes] of [
+  [
+    "Next",
+    [
+      "/accueil",
+      "/learn",
+      "/simulate",
+      "/projects",
+      "/decision-lab",
+      "/enterprise",
+      "/disponibilite",
+    ],
+  ],
+  [
+    "atelier Hôtel",
+    [
+      "/studio",
+      "/hotel",
+      "/hotel?vue=dossier",
+      "/hotel?vue=planning",
+      "/hotel?vue=qualite",
+      "/hotel?vue=revue",
+      "/hotel?vue=bilan",
+      "/projets",
+      "/projets/ouverture",
+      "/projets/inconnu/suite",
+    ],
+  ],
+  [
+    "exercices et récupération",
+    [
+      "/mission/overview",
+      "/mission/construction",
+      "/missions",
+      "/mission/cas/sirh",
+      "/mission/cas/inconnue",
+      "/secteurs",
+      "/secteurs/construction",
+      "/secteurs/inconnu",
+      "/univers/industrie",
+      "/univers/inconnu",
+      "/parcours",
+      "/situation/1",
+      "/bilan",
+      "/reperes",
+      "/atelier/budget",
+      "/atelier/planning",
+      "/atelier/risques",
+      "/atelier/synthese",
+      "/donnees",
+      "/inconnue",
+    ],
+  ],
+]) {
+  test(`Contextual assistant stays honest and keyboard accessible across ${group}`, async ({
+    page,
+    context,
+  }, info) => {
+    // This inventory visits twenty real routes rather than extending a stalled assertion.
+    if (routes.length > 10) test.setTimeout(90_000);
+    await seed(context);
+    const errors = watchErrors(page);
+    const mutations = watchMutations(page);
+    for (const route of routes) {
+      await test.step(route, async () => {
+        await page.goto(`/beta/#${route}`);
+        await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+        await checkAssistant(page);
+        if (
+          ["phone-390", "desktop-1280"].includes(info.project.name) &&
+          ["/learn", "/hotel?vue=qualite"].includes(route)
+        ) {
+          const { assistant, details, summary } = assistantDisclosure(page);
+          await summary.focus();
+          await page.keyboard.press("Enter");
+          await expect(details).toHaveJSProperty("open", true);
+          await assistant.scrollIntoViewIfNeeded();
+          const name = route === "/learn" ? "learn" : "hotel-quality";
+          await page.screenshot({
+            path: info.outputPath(`next-assistant-${name}-viewport.png`),
+            fullPage: false,
+          });
+          await page.screenshot({
+            path: info.outputPath(`next-assistant-${name}-full.png`),
+            fullPage: true,
+          });
+          await summary.focus();
+          await page.keyboard.press("Space");
+          await expect(details).toHaveJSProperty("open", false);
+        }
+      });
+    }
+    expect(await savedRaw(page)).toBe(envelope());
+    expect(await savedRaw(page, LAB_KEY)).toBeNull();
+    await unchangedHotel(page);
+    expect(mutations).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+}
+
+test("Unsaved Projects remains protected against reload after moving to Lab and another universe", async ({
+  page,
+  context,
+}) => {
+  await seed(context);
+  const errors = watchErrors(page);
+  await page.goto("/beta/#/projects");
+  await heading(page, "Piloter le projet");
+  const title = "Brouillon fictif protégé entre les écrans";
+  await addTask(page, title);
+  expect(await savedRaw(page)).toBe(envelope());
+  await projectView(page, "Pilotage");
+  await page
+    .getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+
+  async function cancelReload() {
+    const beforeUrl = page.url();
+    const beforeDocument = await page.evaluate(() => performance.timeOrigin);
+    const dialogPromise = page.waitForEvent("dialog", { timeout: 5_000 });
+    // A cancelled reload never reaches Playwright's navigation load state.
+    const reloadPromise = page.evaluate(() => window.location.reload());
+    const dialog = await dialogPromise;
+    expect(dialog.type()).toBe("beforeunload");
+    await dialog.dismiss();
+    await reloadPromise;
+    await expect(page).toHaveURL(beforeUrl);
+    expect(await page.evaluate(() => performance.timeOrigin)).toBe(beforeDocument);
+  }
+
+  await cancelReload();
+  await heading(page, "Comparer avant d’engager");
+  expect(await savedRaw(page)).toBe(envelope());
+  await page
+    .getByRole("navigation", { name: "Univers PMersion", exact: true })
+    .getByRole("link", { name: "Learn", exact: true })
+    .click();
+  await heading(page, /Une méthode devient utile\s*quand on la pratique\./);
+  await cancelReload();
+  await heading(page, /Une méthode devient utile\s*quand on la pratique\./);
+  await page
+    .getByRole("navigation", { name: "Univers PMersion", exact: true })
+    .getByRole("link", { name: "Projects", exact: true })
+    .click();
+  await heading(page, "Piloter le projet");
+  await projectView(page, "Liste");
+  await expect(page.getByRole("rowheader", { name: title, exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
+  await expect(
+    page.getByText(
+      "Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const saved = await savedRaw(page);
+  expect(JSON.parse(saved).project.tasks.some((task) => task.title === title)).toBe(true);
+  await projectView(page, "Pilotage");
+  await page
+    .getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+  const unexpectedDialogs = [];
+  page.on("dialog", async (dialog) => {
+    unexpectedDialogs.push(dialog.type());
+    await dialog.dismiss();
+  });
+  await page.reload();
+  await heading(page, "Comparer avant d’engager");
+  expect(unexpectedDialogs).toEqual([]);
+  expect(await savedRaw(page)).toBe(saved);
+  expect(await savedRaw(page, LAB_KEY)).toBeNull();
+  await unchangedHotel(page);
+  expect(errors).toEqual([]);
+});
+
+test("Page titles and archive navigation identify the actual page, while contextual help follows the Hotel view", async ({
+  page,
+  context,
+}) => {
+  await seed(context);
+  for (const [route, title] of [
+    ["/reperes", /Repères de méthode.*PMersion/],
+    ["/donnees", /Sauvegarde et données.*PMersion/],
+    ["/inconnue", /Page indisponible.*PMersion/],
+    ["/mission/cas/inconnue", /Mission indisponible.*PMersion/],
+  ]) {
+    if (route === "/mission/cas/inconnue") {
+      await page.goto("/beta/#/mission/cas/sirh");
+      await heading(page, "SIRH · bascule de la paie");
+    }
+    await page.goto(`/beta/#${route}`);
+    await expect(page).toHaveTitle(title);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
+  }
+  const navigation = page.getByRole("navigation", { name: "Navigation principale", exact: true });
+  for (const route of ["/mission/overview", "/mission/construction", "/mission/cas/sirh"]) {
+    await page.goto(`/beta/#${route}`);
+    await expect(navigation.locator('[aria-current="page"]')).toHaveCount(1);
+    await expect(navigation.locator('[aria-current="page"]')).toHaveText(
+      route === "/mission/cas/sirh" ? /Missions/ : /Première mission Hôtel/,
+    );
+  }
+  await page.goto("/beta/#/hotel?vue=planning");
+  await heading(page, "Planning et impact économique");
+  let disclosure = assistantDisclosure(page);
+  await disclosure.summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(disclosure.details).toHaveJSProperty("open", true);
+  await expect(
+    disclosure.assistant.getByRole("heading", {
+      name: "Vérifier la séquence de l’ouverture",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page
+    .getByRole("navigation", { name: "Navigation de l’atelier", exact: true })
+    .getByRole("link", { name: "Qualité", exact: true })
+    .click();
+  await heading(page, "Qualité et preuves");
+  disclosure = assistantDisclosure(page);
+  await expect(disclosure.details).toHaveJSProperty("open", false);
+  await disclosure.summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(
+    disclosure.assistant.getByRole("heading", {
+      name: "Faire de la qualité une condition réelle",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await fit(page);
+  expect(await savedRaw(page)).toBe(envelope());
+  await unchangedHotel(page);
 });
