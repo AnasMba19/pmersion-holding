@@ -136,6 +136,7 @@ async function addTask(page, title, due = "2026-10-21") {
   await page.getByRole("combobox", { name: "Jalon rattaché", exact: true }).selectOption("m-cible");
   await page.getByRole("button", { name: "Enregistrer la tâche", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Créer une tâche", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Nouvelle tâche", exact: true })).toBeFocused();
 }
 
 test("Next portal gives keyboard access to three usable universes and keeps the public identity", async ({
@@ -289,8 +290,10 @@ test("Projects creates, edits and moves one stable task, derives its views, then
   await expect(page.getByRole("heading", { name: "Modifier la tâche", exact: true })).toHaveCount(
     0,
   );
+  await expect(page.getByRole("button", { name: "Nouvelle tâche", exact: true })).toBeFocused();
   const move = page.getByLabel(`Déplacer ${title}`, { exact: true });
   await move.focus();
+  await expect(move).toBeFocused();
   await page.keyboard.press("End");
   await page.keyboard.press("Enter");
   await expect(move).toHaveValue("done");
