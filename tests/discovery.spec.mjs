@@ -23,8 +23,10 @@ test("a public visitor reaches a real six-decision summary without an account", 
   await page.screenshot({ path: testInfo.outputPath("01-public-home.png"), fullPage: true });
   await page.screenshot({ path: testInfo.outputPath("01-public-home-viewport.png") });
   await page.getByRole("link", { name: "Essayer la bêta PMersion" }).click();
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Le projet avance");
-  await page.getByRole("link", { name: /Voir le parcours Synapse/ }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Comprendre");
+  await page.getByRole("link", { name: "Simulate", exact: true }).click();
+  await page.getByText("Retrouver les autres exercices et leurs sauvegardes", { exact: true }).click();
+  await page.getByRole("link", { name: "Parcours Synapse", exact: true }).click();
   await expect(page).toHaveURL(/#\/parcours$/);
   await expect(page.getByRole("heading", { name: "Vos décisions donnent forme au projet." })).toBeVisible();
   await fit(page);

@@ -54,7 +54,7 @@ test("forecast responds to confirmation, note retains and reload restores withou
   await page.getByLabel("Configuration du projet").selectOption("standard");
   await expect(page.getByLabel("Responsable de l’action")).toHaveValue("PMO");
   await page.screenshot({ path: info.outputPath("mission-sirh-retained.png"), fullPage: true });
-  await page.goto("/beta/#/");
+  await page.goto("/beta/#/mission/overview");
   await expect(page.locator(".case-dashboard-summary")).toContainText(
     "SIRH · bascule de la paie · v1",
   );
