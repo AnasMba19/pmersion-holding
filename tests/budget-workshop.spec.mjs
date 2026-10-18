@@ -49,7 +49,7 @@ test("savings produce a conditional note without changing the existing journey",
     if (!request.url().startsWith("http://127.0.0.1:4180") && !request.url().startsWith("data:"))
       externalRequests.push(request.url());
   });
-  await page.goto("/beta/");
+  await page.goto("/beta/#/mission/overview");
   await page.getByRole("link", { name: /Voir le parcours Synapse/ }).click();
   await page.getByRole("link", { name: "Commencer la simulation" }).click();
   await page.getByRole("radio").first().check();

@@ -56,7 +56,7 @@ test("published Hotel decision is retained and survives a normal reload", async 
   await published(request);
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto("/beta/");
+  await page.goto("/beta/#/mission/overview");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Le projet avance");
   await page.screenshot({ path: info.outputPath("published-studio.png"), fullPage: false });
   await page.getByRole("link", { name: "Ouvrir la mission chantier", exact: false }).click();
@@ -123,7 +123,7 @@ test("published studio retains selected proof and MOA responses while preserving
   await published(request);
   const errors = [];
   page.on("pageerror", error => errors.push(error.message));
-  await page.goto("/");
+  await page.goto("/#/studio");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Pratiquer le pilotage de projet");
   const archive = JSON.stringify({
     format: "hotel-mission-local.3",
@@ -207,4 +207,66 @@ test("published deeper archetype paths recover from a missing dossier through ke
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   }
   expect(errors).toEqual([]);
+});
+
+test("published Next saves a fictional project and compares a detached copy without rewriting it", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  const projectsKey = "pmersion.projects.v1";
+  const labKey = "pmersion.decision-lab.v1";
+  const raw = key => page.evaluate(name => localStorage.getItem(name), key);
+  await page.goto("/");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Comprendre\s*avant d’agir\./);
+  await expect(page.locator(".next-universe")).toHaveCount(3);
+  await page.getByRole("navigation", { name: "Univers PMersion" }).getByRole("link", { name: "Projects", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Piloter le projet");
+  await expect(page.getByText("Données fictives uniquement.", { exact: true })).toBeVisible();
+  const views = page.getByRole("navigation", { name: "Vues du projet" });
+  await views.getByRole("link", { name: "Tableau Kanban", exact: true }).click();
+  const title = "Vérification de publication fictive";
+  await page.getByRole("button", { name: "Nouvelle tâche", exact: true }).click();
+  await page.getByLabel("Titre de la tâche", { exact: true }).fill(title);
+  await page.getByLabel("Responsable", { exact: true }).fill("Responsable fictif de la démonstration");
+  await page.getByLabel("Date de début", { exact: true }).fill("2026-10-18");
+  await page.getByLabel("Échéance", { exact: true }).fill("2026-10-21");
+  await page.getByRole("button", { name: "Enregistrer la tâche", exact: true }).click();
+  await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
+  await page.getByLabel(`Déplacer ${title}`, { exact: true }).selectOption("done");
+  await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
+  await expect(page.getByText("Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.", { exact: true })).toBeVisible();
+  const savedProject = await raw(projectsKey);
+  expect(JSON.parse(savedProject).project.tasks.find(task => task.title === title).status).toBe("done");
+  await page.reload();
+  await expect(page.getByLabel(`Déplacer ${title}`, { exact: true })).toHaveValue("done");
+  expect(await raw(projectsKey)).toBe(savedProject);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  await page.screenshot({ path: info.outputPath("published-next-projects.png"), fullPage: false });
+  await views.getByRole("link", { name: "Pilotage", exact: true }).click();
+  await page.getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  await expect(page).toHaveTitle("Decision Lab · PMersion");
+  const table = page.getByRole("table", { name: /Calcul sur la copie de révision / });
+  const total = table.getByRole("row").filter({ has: page.getByRole("rowheader", { name: "Total sous hypothèses", exact: true }) });
+  await expect(total.getByRole("cell")).toHaveText(["Non renseigné", "Non renseigné", "Non renseigné"]);
+  expect(await raw(projectsKey)).toBe(savedProject);
+  const note = "Hypothèse fictive de publication : comparer les variantes sans appliquer de changement au projet de référence.";
+  await page.getByRole("textbox", { name: "Pourquoi cette variante, sous quelles réserves ?", exact: true }).fill(note);
+  await page.getByRole("button", { name: "Conserver l’analyse", exact: true }).click();
+  await expect(page.getByText(/Analyse \d+ conservée dans ce navigateur\. Le projet de référence n’a pas été modifié\./)).toBeVisible();
+  const savedAnalysis = await raw(labKey);
+  const analysis = JSON.parse(savedAnalysis).analyses.at(-1);
+  expect(analysis.model).toBe("decision-lab.1");
+  expect(analysis.note).toBe(note);
+  expect(analysis.source.origin).toBe("projects");
+  expect(analysis.source.reference).toEqual(JSON.parse(savedProject).project);
+  expect(await raw(projectsKey)).toBe(savedProject);
+  await page.reload();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  await expect(page.getByRole("textbox", { name: "Pourquoi cette variante, sous quelles réserves ?", exact: true })).toHaveValue(note);
+  expect(await raw(labKey)).toBe(savedAnalysis);
+  expect(await raw(projectsKey)).toBe(savedProject);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("published-next-lab.png"), fullPage: false });
 });

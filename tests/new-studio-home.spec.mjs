@@ -2,13 +2,16 @@ import { expect, test } from "@playwright/test";
 
 const modelSummary = "Explorer la maquette cible, en complément du dossier";
 
-test("main entry opens the professional studio and every hotel view with the same draft", async ({
+test("main portal retains access to the professional studio and every hotel view with the same draft", async ({
 	page,
 	request,
 }, info) => {
 	const errors = [];
 	page.on("pageerror", (error) => errors.push(error.message));
 	await page.goto("/");
+	await expect(page.getByRole("heading", { level: 1 })).toContainText("Comprendre");
+	await expect(page.locator(".next-universe")).toHaveCount(3);
+	await page.getByRole("link", { name: "Atelier Hôtel", exact: true }).click();
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText(
 		"Pratiquer le pilotage de projet",
 	);
@@ -17,7 +20,7 @@ test("main entry opens the professional studio and every hotel view with the sam
 		.focus();
 	await page.keyboard.press("Enter");
 	await expect(page.locator("#studio-main")).toBeFocused();
-	expect(new URL(page.url()).hash).toBe("");
+	expect(new URL(page.url()).hash).toBe("#/studio");
 	await expect(
 		page.locator("details.studio-model-disclosure"),
 	).toHaveJSProperty("open", false);
@@ -132,7 +135,7 @@ test("main entry has an honest archived reading route with scripts disabled", as
 	const page = await context.newPage();
 	await page.goto("http://127.0.0.1:4180/");
 	await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-		"Pratiquer le pilotage de projet",
+		"PMersion : apprendre, expérimenter, piloter",
 	);
 	await page
 		.getByRole("link", {

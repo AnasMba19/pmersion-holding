@@ -35,7 +35,7 @@ async function draftPlan(page) {
 test("studio opens a shared mission, retains an argued plan and preserves historical snapshots", async ({
   page,
 }, testInfo) => {
-  await page.goto("/beta/#/");
+  await page.goto("/beta/#/mission/overview");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Le projet avance");
   await expect(page.locator(".studio-nav-tile")).toHaveCount(7);
   await expect(page.locator(".studio-nav-tile:visible")).toHaveCount(3);

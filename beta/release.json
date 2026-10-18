@@ -1,6 +1,6 @@
 {
   "mode": "public-workspace",
-  "version": "0.11.2",
+  "version": "0.13.0",
   "scenarioVersion": "hotel-scenario.4",
   "simulationVersions": {
     "constructionHotel": "hotel120.1",
@@ -8,6 +8,8 @@
     "hotelMission": "hotel-mission.3",
     "hotelScenario": "hotel-scenario.4",
     "hotelGeometry": "hotel-geometry.2",
+    "projects": "pmersion-projects.1",
+    "decisionLab": "decision-lab.1",
     "deliveryCases": "delivery-cases.2",
     "archivedDeliveryCases": "delivery-cases.1"
   },
@@ -15,7 +17,51 @@
     "model": "hotel-scenario.4",
     "geometry": "hotel-geometry.2",
     "route": "/#/hotel",
-    "purpose": "Fictional project decision exercise; figures are pedagogical hypotheses."
+    "purpose": "Fictional project decision exercise; figures are pedagogical hypotheses.",
+    "scope": "hotel-reference-simulation"
+  },
+  "next": {
+    "product": "PMersion Next",
+    "entryRoute": "/#/accueil",
+    "universes": {
+      "learn": {
+        "route": "/#/learn",
+        "scope": "reference-library"
+      },
+      "simulate": {
+        "route": "/#/simulate",
+        "referenceModel": "hotel-scenario.4"
+      },
+      "projects": {
+        "route": "/#/projects",
+        "model": "pmersion-projects.1",
+        "scope": "fictional-local-demo"
+      }
+    },
+    "decisionLab": {
+      "route": "/#/decision-lab",
+      "model": "decision-lab.1",
+      "referenceMutation": "explicit-only"
+    },
+    "enterprise": {
+      "route": "/#/enterprise",
+      "realSharedData": false
+    },
+    "availabilityRoute": "/#/disponibilite",
+    "persistence": "browser-local",
+    "sharedCloudWorkspace": false,
+    "figures": "Fictional project data or explicit assumptions; no certified learning or professional validation claimed."
+  },
+  "domainExamples": {
+    "version": "domain-examples.1",
+    "count": 44,
+    "domainCount": 22,
+    "documentCount": 132,
+    "type": "illustrative",
+    "status": "exploratory",
+    "fictional": true,
+    "validatedMissionCount": 0,
+    "purpose": "Fictional, unreviewed decision illustrations; counts do not represent validated missions. Durations and costs are pedagogical hypotheses."
   },
   "archivedModels": {
     "discovery": [
@@ -58,8 +104,8 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "143afa2ad96161cea213308bd92c255493f7317e",
-  "builtAt": "2026-10-16",
+  "sourceCommit": "255b8909f35d3ec6ec9864cff8e178faddea7e73",
+  "builtAt": "2026-10-18",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Compiled from a clean checkout whose Git HEAD equals sourceCommit; legacy inputs are pinned and checksummed.",
   "legacyInputs": {
@@ -68,21 +114,26 @@
   },
   "files": {
     "assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
-    "assets/DomainIllustrations-DbfN_57k.js": "ade48168de8cdc1448ac9f93a4d623acad57654beb0957d6346ad27568fdf848",
-    "assets/hotel-planning-scene-DPDUKTRH.js": "7b1446e06d49bc3c90f7d9a01df5485707381fe045907002345940eca205ef0a",
+    "assets/DecisionLab-BiH4BANW.css": "a59725d8c874c8af55e3e149515203923b1cbdaadfc44f981f2efd632445fd3c",
+    "assets/DecisionLab-Cvtu-NGU.js": "904c4744a8779890b2c43e2ea8326569c0fd32a37e63bcc13dda6b4bd33f5391",
+    "assets/DomainIllustrations-CsUiYyY1.js": "7a31142e20d3f5f37d52848eb700e022cc9f35d3cf49134abb508eb64b431eed",
+    "assets/hotel-planning-scene-Cn2JtgnB.js": "e74060c2bf7d75a9e64c30e9fbee98733688b87aef7cd60bc9d42af1802e402d",
     "assets/hotel-scene-Srd2X6K_.js": "bdd82ef6f47fe40c1d00de15c2bb27e46f314005d5fa561273b4932bea7170c7",
-    "assets/index-CF4Qe6ZW.css": "b3ef43b4d94b0687ff95a82f51dd7d3da7e03655ca8ea73ba1e29a502899ced0",
-    "assets/index-DWMJgzkb.js": "29ca734cd9d5f4c688e8c55552c87def7e2277c938267f4627ad3ae7619b9f5f",
+    "assets/index-BfGdkwQv.js": "e04a2dc94f4d3d8aa1d262810ad6e6430d51d1a07221f8d01785d700f71c55f4",
+    "assets/index-v1Gf91MY.css": "40480bde74cef4aef5936439eea93c493b308b49765cac1acc8fe776e47e8e7b",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "assets/ProjectStudio-CuUGHN0b.js": "10621482b8ed1afd16a00c41afd597e2567a04371f026b6ab8f8349cc42a2fa1",
+    "assets/projects-store-Da58F8f2.js": "00df7689336d0e44a24627e6563f3918bf7ae6c97f9ef365bb25b4534eaec098",
+    "assets/ProjectStudio-BiRTFCDH.js": "4d64e77a3036c3a99fe399a3fd47257146d0b1d5cbe53b28cea7610cf3ce44db",
     "assets/ProjectStudio-DweT84Bq.css": "eb2b826d87650d0568aef32241c08d2670a4d243d7e1f9c49756cfd3f3d2b9e9",
-    "assets/ScenarioExperience-DWsEqhz1.js": "b9ae3a75e56fb2daec46a7949b1c10f2435da2117d689d0e7a0e56b714e8e093",
+    "assets/ProjectsWorkspace-B2_obKA3.js": "c10dfd7cf9bc708789fa81dca736f0e73a615425bf81a0a3baae0027d2bbfa32",
+    "assets/ProjectsWorkspace-X9WzJkqo.css": "0f368a1df2a8b5c0ebaf5a9e59acf18d1a38ac07606187525e79b29ed360ecc8",
+    "assets/ScenarioExperience-8_03_auJ.js": "c207dfdbc2757ae8ab3f3bcca4fd77c0c1d4eb9adca8693f0ab1cead73f98235",
     "assets/three.module-DWo8yXin.js": "6e6c776d3b9ee906c3b81a73f870d9d624e328bfef591b4391733d230b505d96",
-    "index.html": "f3441f5266315ad80d4dd5ab76eb5e4c31410fc7c7de205492dff4411f0dffdc",
+    "index.html": "bbbb625e41a0293f070670e29695bf9741db48c1bd3788701ee9514c2b9c3182",
     "models/hotel120.glb": "565892a33911a0dba98ae79d68457b41a1b452f84bdd27641d4916db98132173",
     "models/manifest.json": "45edd934990ec3dff8a092de282ee0ba0988c07d1d7aa77912ff104c1f5e87c3",
     "models/README.md": "7d198db9de2b32104f7c285c128e22496d97ae8c383d7658e28a6bc723542a01"
@@ -116,6 +167,6 @@
     "decision.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "decision.ee79ed2bd90a08f0.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "classique.html": "893c3800c3c0b3a4872f454c25f02af202ab6ccd38d7c84fdb0d0e2b480b91e3",
-    "index.html": "6b6785571f0a747d59e8e616a7cee3ddb9101e08242e418f6444347e061f46e6"
+    "index.html": "2849bf78102edbd0eeb1aeced8f94c003508c3c91570c8e5aafd3e56bd16441a"
   }
 }
