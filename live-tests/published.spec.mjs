@@ -17,6 +17,25 @@ async function stored(page) {
   return page.evaluate(key => JSON.parse(localStorage.getItem(key) || "null"), KEY);
 }
 
+async function contextualAssistant(page) {
+  const assistant = page.getByRole("complementary", { name: "Assistant PMersion", exact: true });
+  await expect(assistant).toHaveCount(1);
+  const disclosure = assistant.locator("details");
+  const summary = disclosure.locator(":scope > summary");
+  await expect(disclosure).toHaveJSProperty("open", false);
+  await expect(summary).toContainText("Assistant IA");
+  await expect(summary).toContainText("En cours");
+  await summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(disclosure).toHaveJSProperty("open", true);
+  await expect(assistant).toContainText("Cette aide est rédigée à l’avance. L’IA est en préparation. Aucune analyse par IA ni aucun entraînement sur vos données n’est actif.");
+  await expect(assistant.locator("input, textarea, input[type=file]")).toHaveCount(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  await summary.focus();
+  await page.keyboard.press("Space");
+  await expect(disclosure).toHaveJSProperty("open", false);
+}
+
 test("published homepage and project hierarchy use the qualified release", async ({ page, request }, info) => {
   await published(request);
   const errors = [];
@@ -219,10 +238,13 @@ test("published Next saves a fictional project and compares a detached copy with
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Comprendre\s*avant d’agir\./);
   await expect(page.locator(".next-universe")).toHaveCount(3);
+  await contextualAssistant(page);
   await page.getByRole("navigation", { name: "Univers PMersion" }).getByRole("link", { name: "Projects", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Piloter le projet");
   await expect(page.getByText("Données fictives uniquement.", { exact: true })).toBeVisible();
+  await contextualAssistant(page);
   const views = page.getByRole("navigation", { name: "Vues du projet" });
+  const beforeProject = await raw(projectsKey);
   await views.getByRole("link", { name: "Tableau Kanban", exact: true }).click();
   const title = "Vérification de publication fictive";
   await page.getByRole("button", { name: "Nouvelle tâche", exact: true }).click();
@@ -233,6 +255,25 @@ test("published Next saves a fictional project and compares a detached copy with
   await page.getByRole("button", { name: "Enregistrer la tâche", exact: true }).click();
   await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
   await page.getByLabel(`Déplacer ${title}`, { exact: true }).selectOption("done");
+  await views.getByRole("link", { name: "Pilotage", exact: true }).click();
+  await page.getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  const beforeUrl = page.url();
+  const beforeDocument = await page.evaluate(() => performance.timeOrigin);
+  const dialogPromise = page.waitForEvent("dialog", { timeout: 5_000 });
+  const reloadPromise = page.evaluate(() => window.location.reload());
+  const dialog = await dialogPromise;
+  expect(dialog.type()).toBe("beforeunload");
+  await dialog.dismiss();
+  await reloadPromise;
+  await expect(page).toHaveURL(beforeUrl);
+  expect(await page.evaluate(() => performance.timeOrigin)).toBe(beforeDocument);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  expect(await raw(projectsKey)).toBe(beforeProject);
+  await page.getByRole("link", { name: "Ouvrir Projects", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Piloter le projet");
+  await views.getByRole("link", { name: "Tableau Kanban", exact: true }).click();
+  await expect(page.getByLabel(`Déplacer ${title}`, { exact: true })).toHaveValue("done");
   await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
   await expect(page.getByText("Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.", { exact: true })).toBeVisible();
   const savedProject = await raw(projectsKey);
@@ -246,6 +287,7 @@ test("published Next saves a fictional project and compares a detached copy with
   await page.getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true }).click();
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
   await expect(page).toHaveTitle("Decision Lab · PMersion");
+  await contextualAssistant(page);
   const table = page.getByRole("table", { name: /Calcul sur la copie de révision / });
   const total = table.getByRole("row").filter({ has: page.getByRole("rowheader", { name: "Total sous hypothèses", exact: true }) });
   await expect(total.getByRole("cell")).toHaveText(["Non renseigné", "Non renseigné", "Non renseigné"]);
@@ -269,4 +311,18 @@ test("published Next saves a fictional project and compares a detached copy with
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-next-lab.png"), fullPage: false });
+});
+
+test("published contextual assistance stays truthful and usable across the three public shells", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  for (const route of ["learn", "simulate", "enterprise", "studio", "hotel", "atelier/planning", "donnees", "page-indisponible"]) {
+    await page.goto(`/#/${route}`);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await contextualAssistant(page);
+    await expect(page.getByRole("main")).toHaveCount(1);
+  }
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("published-contextual-assistant.png"), fullPage: false });
 });
