@@ -27,9 +27,16 @@ jobs:
       - name: Install the tested headless browser
         timeout-minutes: 5
         run: npx playwright install --with-deps --only-shell chromium
-      - run: npx playwright test --config live-tests/playwright.config.mjs
-      - uses: actions/upload-artifact@v4
+      - id: live_tests
+        run: npx playwright test --config live-tests/playwright.config.mjs
+      - name: Preserve published-domain test provenance
         if: always()
+        env:
+          SOURCE_SHA: ${{ github.sha }}
+          TEST_OUTCOME: ${{ steps.live_tests.outcome }}
+        run: python3 ci/emit-evidence.py emit --kind browser --root test-results/live-beta --source "$SOURCE_SHA" --outcome "$TEST_OUTCOME"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: published-beta-proof-${{ github.sha }}
           path: |
@@ -38,7 +45,7 @@ jobs:
           retention-days: 14
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: published-beta-views-${{ github.sha }}
           path: test-results/live-beta/**/*.png

@@ -27,9 +27,16 @@ jobs:
       - name: Install browser dependencies
         timeout-minutes: 5
         run: npx playwright install --with-deps --only-shell chromium
-      - run: npm test
-      - uses: actions/upload-artifact@v4
+      - id: public_tests
+        run: npm test
+      - name: Preserve bounded public viewport evidence in checksummed logs
         if: always()
+        env:
+          SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          TEST_OUTCOME: ${{ steps.public_tests.outcome }}
+        run: python3 ci/emit-evidence.py emit --kind workshop --root test-results --source "$SOURCE_SHA" --outcome "$TEST_OUTCOME"
+      - uses: actions/upload-artifact@v4
+        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: public-beta-browser-${{ github.sha }}
           path: |
@@ -38,7 +45,7 @@ jobs:
           retention-days: 14
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: public-workspace-views-${{ github.sha }}
           path: test-results/**/*.png
