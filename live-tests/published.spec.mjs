@@ -326,3 +326,54 @@ test("published contextual assistance stays truthful and usable across the three
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-contextual-assistant.png"), fullPage: false });
 });
+
+test("published recovery preserves an unsaved project and an unretained Lab note across confirmed reloads", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  const raw = key => page.evaluate(name => localStorage.getItem(name), key);
+  async function leaveAndReload() {
+    const dialogPromise = page.waitForEvent("dialog", { timeout: 5000 });
+    const reloadPromise = page.reload();
+    const dialog = await dialogPromise;
+    expect(dialog.type()).toBe("beforeunload");
+    await dialog.accept();
+    await reloadPromise;
+  }
+  await page.goto("/#/projects");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Piloter le projet");
+  const before = await raw("pmersion.projects.v1");
+  const title = "Récupération fictive de publication";
+  await page.getByRole("button", { name: "Nouvelle tâche", exact: true }).click();
+  await page.getByLabel("Titre de la tâche", { exact: true }).fill(title);
+  await page.getByLabel("Responsable", { exact: true }).fill("Rôle fictif de vérification");
+  await expect(page.getByText(/Copie de récupération enregistrée dans cet onglet\./)).toBeVisible();
+  await leaveAndReload();
+  await expect(page.getByLabel("Titre de la tâche", { exact: true })).toHaveValue(title);
+  await expect(page.getByText("Brouillon repris dans cet onglet. La version sauvegardée n’a pas été modifiée.", { exact: true })).toBeVisible();
+  expect(await raw("pmersion.projects.v1")).toBe(before);
+  await page.getByRole("button", { name: "Enregistrer la tâche", exact: true }).click();
+  await expect(page.getByRole("heading", { name: title, exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
+  await expect(page.getByText("Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.", { exact: true })).toBeVisible();
+  const reference = await raw("pmersion.projects.v1");
+  await page.getByRole("navigation", { name: "Vues du projet", exact: true }).getByRole("link", { name: "Pilotage", exact: true }).click();
+  await page.getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  const history = await raw("pmersion.decision-lab.v1");
+  const note = "Hypothèse fictive en cours de rédaction : vérifier les moyens avant de retenir la comparaison.";
+  await page.getByRole("textbox", { name: "Pourquoi cette variante, sous quelles réserves ?", exact: true }).fill(note);
+  await expect(page.getByText(/Copie de récupération enregistrée dans cet onglet\./)).toBeVisible();
+  await page.getByRole("navigation", { name: "Univers PMersion", exact: true }).getByRole("link", { name: "Learn", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(/Une méthode devient utile\s*quand on la pratique\./);
+  await leaveAndReload();
+  await page.getByRole("navigation", { name: "Univers PMersion", exact: true }).getByRole("link", { name: "Decision Lab", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  await expect(page.getByRole("textbox", { name: "Pourquoi cette variante, sous quelles réserves ?", exact: true })).toHaveValue(note);
+  await expect(page.getByText("Brouillon d’analyse repris dans cet onglet. L’historique conservé et le projet de référence n’ont pas été modifiés.", { exact: true })).toBeVisible();
+  expect(await raw("pmersion.projects.v1")).toBe(reference);
+  expect(await raw("pmersion.decision-lab.v1")).toBe(history);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("published-next-recovered-note.png"), fullPage: false });
+});

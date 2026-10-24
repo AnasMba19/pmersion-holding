@@ -1,6 +1,6 @@
 {
   "mode": "public-workspace",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "scenarioVersion": "hotel-scenario.4",
   "simulationVersions": {
     "constructionHotel": "hotel120.1",
@@ -104,8 +104,8 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "188df0a057ec4bc240809e238ba45d0c7a5c7405",
-  "builtAt": "2026-10-19",
+  "sourceCommit": "cfa72da0270bce9b91a5e1ada9617c05cfe63a15",
+  "builtAt": "2026-10-24",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Compiled from a clean checkout whose Git HEAD equals sourceCommit; legacy inputs are pinned and checksummed.",
   "legacyInputs": {
@@ -114,26 +114,26 @@
   },
   "files": {
     "assets/barlow-condensed-latin-600-normal-DepVgxBB.woff2": "215a93c696f442034a46fbb382958f753fda60e30490683aeea6b235fcbb2b66",
-    "assets/DecisionLab-15AxfQao.js": "5b3bc9dcc2f0701b4b44a85b4bf622f8314eb810f74c37330c1852d843f75a14",
     "assets/DecisionLab-BiH4BANW.css": "a59725d8c874c8af55e3e149515203923b1cbdaadfc44f981f2efd632445fd3c",
-    "assets/DomainIllustrations-DfOuS9xX.js": "10bf7db0dbf5ba36d65f2b3d6c7605132a861fc76b0ac2399945cbfd9d6256ee",
-    "assets/hotel-planning-scene-DSClwT2t.js": "513df84d845ec96a3e01f8626a0d5c5d1ee1662b3eeefee0d18f38d86bdc8f53",
+    "assets/DecisionLab-BYEFx8k9.js": "efb33c2c5656e1f67d882a2f812936ab78b561e855448d37b696bbb5e0193850",
+    "assets/DomainIllustrations-BVt1onmR.js": "cd28891d978e1a59aa4628058f88f3ef5340b261f4796278032f222094b55cf5",
+    "assets/draft-recovery-BxKlPRJn.js": "bf5ca6beb3148399c9e0b136fd0f36a307b131be8bc4fc6201a0a4d5725cc244",
+    "assets/hotel-planning-scene-D2Ww66aa.js": "ffa00184b1e2dfe0df035cc8872bba5cbd705d4f9c9ec66f81d4c50cd05c6794",
     "assets/hotel-scene-Srd2X6K_.js": "bdd82ef6f47fe40c1d00de15c2bb27e46f314005d5fa561273b4932bea7170c7",
-    "assets/index-CMjjhT07.css": "3f001a9e6b9edd95f6c9acde250a9397b6f1281e1cc50a38c35c45eb79ce6a20",
-    "assets/index-JdNfM2yM.js": "aa2399e22a8d63e4d3aea1157d78d2661a41af05846175288b23bc85a34ef5b5",
+    "assets/index-Ck56KyMA.js": "e62e9c03996c29418fc6b7bebbb63504dad3ed4a6f6c12d0c68957eb8a283948",
+    "assets/index-CZUmw6-E.css": "a45aa1b73fd4b1b5f481b3020bc2df0a003d9d04fab876b2635b30a700374836",
     "assets/manrope-cyrillic-wght-normal-Dvxsihut.woff2": "c268b459a9329e59fecf39a17618efd44c71735532048d60b12aab76a8c14914",
     "assets/manrope-greek-wght-normal-DL7QRZyv.woff2": "2fb2e8cbfd52ae46179a8b6024eb162f1f9c6de3d22d6e3a30d8f395de7220be",
     "assets/manrope-latin-ext-wght-normal-Ch3YOpNY.woff2": "3911b66d9f2e005a4b989223405d0e5032619c668597ba467cc76a23c8fffcfb",
     "assets/manrope-latin-wght-normal-DHIcAJRg.woff2": "a30ddcd349703aff7464c34bef3fffdff405ee50c113440d7c8693c02d210972",
     "assets/manrope-vietnamese-wght-normal-usUDDRr7.woff2": "6bbb044ab420e07edb0a3042d2eb314b85e83a0182e945a15ab3b9092668dfd5",
-    "assets/projects-store-Da58F8f2.js": "00df7689336d0e44a24627e6563f3918bf7ae6c97f9ef365bb25b4534eaec098",
-    "assets/ProjectStudio-6F_-yLJx.js": "0c1520f8813aade336c702d6e7523e64d099bcf80e03f6d0fb179831ad80de69",
+    "assets/ProjectStudio-BbX_6mVN.js": "3c44f1954d35629e1d4451a10221960c6a7c41d1b00031f3414d07c5c69a0bb9",
     "assets/ProjectStudio-DweT84Bq.css": "eb2b826d87650d0568aef32241c08d2670a4d243d7e1f9c49756cfd3f3d2b9e9",
-    "assets/ProjectsWorkspace-e40J10pm.js": "c62c5a1cab684b417f55535d1ef90b7fd6eb6a91c306b9785df2fc9d16afcd8a",
+    "assets/ProjectsWorkspace-CRjKjjrX.js": "17f0eab1703ffcb8f1dd75b4f15dd96fd6a72f814c303961a1a41591408deba2",
     "assets/ProjectsWorkspace-X9WzJkqo.css": "0f368a1df2a8b5c0ebaf5a9e59acf18d1a38ac07606187525e79b29ed360ecc8",
-    "assets/ScenarioExperience-Cu_AGeRJ.js": "2f69ba83a324aec0f83ad1f673cfe5c277c9a5f488e5850b686595355754ae30",
+    "assets/ScenarioExperience-DfRAPYIJ.js": "df54968a9a057c8b6c2c17a86600438e350e0f332de55eeca54b6b196a87bb13",
     "assets/three.module-DWo8yXin.js": "6e6c776d3b9ee906c3b81a73f870d9d624e328bfef591b4391733d230b505d96",
-    "index.html": "12d5eb68825b1b9b02bdcbec1712f074f9660eaaabd6bfe82bfb7ec20266e983",
+    "index.html": "3d7ee5f3539a879036edfb53aacc512088c0eab920eee6c412562e57da74d1f3",
     "models/hotel120.glb": "565892a33911a0dba98ae79d68457b41a1b452f84bdd27641d4916db98132173",
     "models/manifest.json": "45edd934990ec3dff8a092de282ee0ba0988c07d1d7aa77912ff104c1f5e87c3",
     "models/README.md": "7d198db9de2b32104f7c285c128e22496d97ae8c383d7658e28a6bc723542a01"
@@ -167,6 +167,6 @@
     "decision.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "decision.ee79ed2bd90a08f0.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "classique.html": "893c3800c3c0b3a4872f454c25f02af202ab6ccd38d7c84fdb0d0e2b480b91e3",
-    "index.html": "e6e1c697bd0531f0a106d5762a2e28586d6e2e9df289cca897b47ecd5cebf1ec"
+    "index.html": "9564b13ac1ae2a84efe05d89241ce8275eb66a002df90f3036df51f0b1ba85f9"
   }
 }

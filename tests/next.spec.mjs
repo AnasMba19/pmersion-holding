@@ -88,11 +88,16 @@ async function fit(page) {
 async function screenshot(page, info, name) {
   if (["phone-390", "desktop-1280"].includes(info.project.name)) {
     await page.screenshot({ path: info.outputPath(`next-${name}.png`), fullPage: true });
-    if (name === "decision-lab")
+    if (name === "decision-lab") {
+      await page.evaluate(() => window.scrollTo(0, 0));
+      await page.screenshot({
+        path: info.outputPath("next-decision-lab-intro-viewport.png"),
+        fullPage: false,
+      });
       await page
         .getByRole("heading", { name: "Dates, coûts et conditions", exact: true })
         .evaluate((node) => node.scrollIntoView({ block: "start" }));
-    else await page.evaluate(() => window.scrollTo(0, 0));
+    } else await page.evaluate(() => window.scrollTo(0, 0));
     await page.screenshot({ path: info.outputPath(`next-${name}-viewport.png`), fullPage: false });
   }
 }
@@ -194,10 +199,12 @@ test("Next portal gives keyboard access to three usable universes and keeps the 
 test("Learn exposes reasoning without claiming assessment, Enterprise stays limited, and Hotel remains reachable", async ({
   page,
   context,
-}) => {
+}, info) => {
   await seed(context);
   const errors = watchErrors(page);
   await page.goto("/beta/#/learn");
+  await heading(page, /Une méthode devient utile\s*quand on la pratique\./);
+  await screenshot(page, info, "learn");
   const lessons = page.locator(".next-lesson");
   await expect(lessons).toHaveCount(3);
   for (const lesson of await lessons.all()) {
@@ -224,6 +231,15 @@ test("Learn exposes reasoning without claiming assessment, Enterprise stays limi
   );
   await expect(page.locator("input[type=file], input[type=password], form")).toHaveCount(0);
   await fit(page);
+  await page
+    .getByRole("navigation", { name: "Univers PMersion", exact: true })
+    .getByRole("link", { name: "Simulate", exact: true })
+    .click();
+  await heading(page, /Le dossier est ouvert\.\s*À vous de construire le plan\./);
+  await fit(page);
+  await screenshot(page, info, "simulate");
+  await page.getByRole("link", { name: "Ouvrir la mission Hôtel", exact: true }).click();
+  await heading(page, "Hôtel 120 chambres");
   await page.goto("/beta/#/studio");
   await expect(
     page.getByRole("link", { name: "Ouvrir la mission Hôtel", exact: true }),
@@ -440,7 +456,7 @@ test("Projects detects a second tab's save and refuses stale writes until explic
   await page.goto("/beta/#/projects");
   await heading(page, "Piloter le projet");
   const other = await context.newPage();
-  await other.goto("#/projects");
+  await other.goto("/beta/#/projects");
   await heading(other, "Piloter le projet");
   await addTask(other, "Tâche fictive de l’autre onglet");
   await other.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
@@ -713,7 +729,7 @@ test("Decision Lab compares explicit hypotheses on a detached Projects copy and 
     /1\s800(?:,00)?\s€/,
   ]);
   const other = await context.newPage();
-  await other.goto("#/projects");
+  await other.goto("/beta/#/projects");
   await heading(other, "Piloter le projet");
   await other
     .getByRole("button", { name: "Modifier la tâche Contrôle fictif principal", exact: true })
@@ -1082,4 +1098,408 @@ test("Page titles and archive navigation identify the actual page, while context
   await fit(page);
   expect(await savedRaw(page)).toBe(envelope());
   await unchangedHotel(page);
+});
+
+test("Demo crosses Learn, Projects, Decision Lab and Hotel through working controls while keeping the saved reference", async ({
+  page,
+  context,
+}, info) => {
+  // This is one continuous fictional presentation path, not a claim of human timing.
+  test.setTimeout(60_000);
+  await seed(context);
+  const errors = watchErrors(page);
+  const mutations = watchMutations(page);
+  const universe = (name) =>
+    page
+      .getByRole("navigation", { name: "Univers PMersion", exact: true })
+      .getByRole("link", { name, exact: true });
+  await page.goto("/beta/#/accueil");
+  await heading(page, /Comprendre\s*avant d’agir\./);
+  await page.getByRole("button", { name: "Choisir mon univers", exact: true }).focus();
+  await page.keyboard.press("Enter");
+  await page.getByRole("link", { name: /Ouvrir Learn/ }).click();
+  await heading(page, /Une méthode devient utile\s*quand on la pratique\./);
+  const lesson = page.locator(".next-lesson").first();
+  const exercise = lesson.locator(":scope > div > details");
+  await exercise.locator(":scope > summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(exercise).toHaveJSProperty("open", true);
+  const answer = exercise.locator(":scope > details");
+  await answer.locator(":scope > summary").focus();
+  await page.keyboard.press("Enter");
+  await expect(answer).toContainText("pas une évaluation de votre compétence");
+  await fit(page);
+  await universe("Projects").click();
+  await heading(page, "Piloter le projet");
+  await page.getByLabel("Déplacer Logistique fictive", { exact: true }).selectOption("in_progress");
+  await page
+    .getByRole("button", { name: "Modifier la tâche Logistique fictive", exact: true })
+    .click();
+  await page.getByLabel("Échéance", { exact: true }).fill("2026-10-20");
+  await page.getByRole("button", { name: "Enregistrer la tâche", exact: true }).click();
+  await projectView(page, "Liste");
+  await expect(
+    page
+      .getByRole("table", { name: "Tâches du projet affiché" })
+      .getByRole("row")
+      .filter({ has: page.getByRole("rowheader", { name: "Logistique fictive", exact: true }) }),
+  ).toContainText("En cours");
+  await projectView(page, "Planning");
+  await expect(
+    page.getByRole("table", { name: "Planning et dépendances du projet" }),
+  ).toBeVisible();
+  await fit(page);
+  await projectView(page, "Pilotage");
+  await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
+  await expect(
+    page.getByText(
+      "Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const reference = await savedRaw(page);
+  const savedProject = JSON.parse(reference).project;
+  expect(savedProject.tasks.find((task) => task.id === "d")).toMatchObject({
+    status: "in_progress",
+    dueDate: "2026-10-20",
+  });
+  await page.reload();
+  await heading(page, "Piloter le projet");
+  expect(await savedRaw(page)).toBe(reference);
+  await page
+    .getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Projet QA fictif", exact: true }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Charger le dossier fictif", exact: true }).click();
+  await expect(
+    page.getByRole("heading", {
+      level: 2,
+      name: "Intégration fournisseur · dossier fictif",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await page.getByRole("radio", { name: "Réaffectation ciblée", exact: true }).check();
+  const note =
+    "Hypothèse de démonstration : retenir la variante ciblée sous réserve de confirmer les ressources et les contrôles.";
+  await page
+    .getByRole("textbox", { name: "Pourquoi cette variante, sous quelles réserves ?", exact: true })
+    .fill(note);
+  await page.getByRole("button", { name: "Conserver l’analyse", exact: true }).click();
+  await expect(
+    page.getByText(
+      "Analyse 1 conservée dans ce navigateur. Le projet de référence n’a pas été modifié.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const analysis = await savedRaw(page, LAB_KEY);
+  await page.reload();
+  await heading(page, "Comparer avant d’engager");
+  await expect(
+    page.getByRole("textbox", {
+      name: "Pourquoi cette variante, sous quelles réserves ?",
+      exact: true,
+    }),
+  ).toHaveValue(note);
+  await expect(
+    page.getByRole("radio", { name: "Réaffectation ciblée", exact: true }),
+  ).toBeChecked();
+  expect(await savedRaw(page)).toBe(reference);
+  expect(await savedRaw(page, LAB_KEY)).toBe(analysis);
+  await fit(page);
+  await universe("Projects").click();
+  await heading(page, "Piloter le projet");
+  await projectView(page, "Historique");
+  const historyEvents = page.locator(".projects-history > ol > li");
+  const expectedEvents = [...savedProject.history].reverse();
+  await expect(historyEvents).toHaveCount(expectedEvents.length);
+  await expect(historyEvents.locator("strong")).toHaveText(
+    expectedEvents.map((event) => event.summary),
+  );
+  for (const [index, event] of expectedEvents.entries()) {
+    await expect(historyEvents.nth(index)).toBeVisible();
+    await expect(historyEvents.nth(index)).toContainText(`Objet : ${event.entityId}`);
+    await expect(historyEvents.nth(index).locator("time")).toHaveAttribute("datetime", event.at);
+  }
+  await universe("Simulate").click();
+  await heading(page, /Le dossier est ouvert\.\s*À vous de construire le plan\./);
+  await page.getByRole("link", { name: "Ouvrir la mission Hôtel", exact: true }).click();
+  await heading(page, "Hôtel 120 chambres");
+  await page.getByRole("link", { name: "Dossier", exact: true }).click();
+  await expect(page).toHaveURL(/#\/hotel\?vue=dossier$/);
+  await fit(page);
+  await page.getByRole("link", { name: "Planning", exact: true }).click();
+  await expect(page).toHaveURL(/#\/hotel\?vue=planning$/);
+  await fit(page);
+  await screenshot(page, info, "demo-hotel-planning");
+  await page.getByRole("link", { name: "Portail PMersion", exact: true }).click();
+  await heading(page, /Comprendre\s*avant d’agir\./);
+  await page.getByRole("link", { name: "Espace professionnel", exact: true }).click();
+  await heading(page, /Un cadre commun\.\s*Un espace pour votre organisation\./);
+  await page.getByRole("link", { name: "Disponibilité et limites", exact: true }).click();
+  await expect(page).toHaveURL(/#\/disponibilite$/);
+  await fit(page);
+  expect(await savedRaw(page)).toBe(reference);
+  expect(await savedRaw(page, LAB_KEY)).toBe(analysis);
+  await unchangedHotel(page);
+  expect(mutations).toEqual([]);
+  expect(errors).toEqual([]);
+});
+
+test("Projects recovers both its edited task and unfinished form after a confirmed reload without silently saving", async ({
+  page,
+  context,
+}) => {
+  await seed(context);
+  const errors = watchErrors(page);
+  await page.goto("/beta/#/projects");
+  await heading(page, "Piloter le projet");
+  await page.getByLabel("Déplacer Logistique fictive", { exact: true }).selectOption("in_progress");
+  await page.getByRole("button", { name: "Nouvelle tâche", exact: true }).click();
+  const unfinished = "Brouillon fictif incomplet à reprendre";
+  await page.getByLabel("Titre de la tâche", { exact: true }).fill(unfinished);
+  await page.getByLabel("Responsable", { exact: true }).fill("Rôle fictif à confirmer");
+  await expect(page.getByText(/Copie de récupération enregistrée dans cet onglet\./)).toBeVisible();
+  const recoveryKey = "pmersion.projects.draft.v1";
+  const recoveredRaw = await page.evaluate((key) => sessionStorage.getItem(key), recoveryKey);
+  expect(JSON.parse(recoveredRaw).draft.task.value.title).toBe(unfinished);
+  expect(await savedRaw(page)).toBe(envelope());
+  const dialogPromise = page.waitForEvent("dialog", { timeout: 5_000 });
+  const reloadPromise = page.reload();
+  const dialog = await dialogPromise;
+  expect(dialog.type()).toBe("beforeunload");
+  await dialog.accept();
+  await reloadPromise;
+  await heading(page, "Piloter le projet");
+  await expect(
+    page.getByText(
+      "Brouillon repris dans cet onglet. La version sauvegardée n’a pas été modifiée.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(page.getByLabel("Titre de la tâche", { exact: true })).toHaveValue(unfinished);
+  await expect(page.getByLabel("Responsable", { exact: true })).toHaveValue(
+    "Rôle fictif à confirmer",
+  );
+  await expect(page.getByLabel("Déplacer Logistique fictive", { exact: true })).toHaveValue(
+    "in_progress",
+  );
+  expect(await savedRaw(page)).toBe(envelope());
+  expect(await savedRaw(page, LAB_KEY)).toBeNull();
+  await expect(
+    page.getByRole("button", { name: "Sauvegarder le projet", exact: true }),
+  ).toBeDisabled();
+  await fit(page);
+  await unchangedHotel(page);
+  expect(errors).toEqual([]);
+});
+
+test("Decision Lab recovers its unretained note after a confirmed reload from Learn while reference and history stay intact", async ({
+  page,
+  context,
+}) => {
+  await seed(context);
+  const errors = watchErrors(page);
+  await page.goto("/beta/#/projects?vue=pilotage");
+  await heading(page, "Piloter le projet");
+  await page
+    .getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+  await page.getByRole("radio", { name: "Réaffectation ciblée", exact: true }).check();
+  const note =
+    "Brouillon fictif : hypothèse en cours, ressources et contrôle à confirmer avant toute décision.";
+  await page
+    .getByRole("textbox", { name: "Pourquoi cette variante, sous quelles réserves ?", exact: true })
+    .fill(note);
+  await expect(page.getByText(/Copie de récupération enregistrée dans cet onglet\./)).toBeVisible();
+  const recoveryKey = "pmersion.decision-lab.draft.v1";
+  await expect
+    .poll(() =>
+      page.evaluate(
+        (key) => JSON.parse(sessionStorage.getItem(key) || "null")?.draft?.draft?.note,
+        recoveryKey,
+      ),
+    )
+    .toBe(note);
+  expect(await savedRaw(page)).toBe(envelope());
+  expect(await savedRaw(page, LAB_KEY)).toBeNull();
+  await page
+    .getByRole("navigation", { name: "Univers PMersion", exact: true })
+    .getByRole("link", { name: "Learn", exact: true })
+    .click();
+  await heading(page, /Une méthode devient utile\s*quand on la pratique\./);
+  const dialogPromise = page.waitForEvent("dialog", { timeout: 5_000 });
+  const reloadPromise = page.reload();
+  const dialog = await dialogPromise;
+  expect(dialog.type()).toBe("beforeunload");
+  await dialog.accept();
+  await reloadPromise;
+  await heading(page, /Une méthode devient utile\s*quand on la pratique\./);
+  await page
+    .getByRole("navigation", { name: "Univers PMersion", exact: true })
+    .getByRole("link", { name: "Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+  await expect(
+    page.getByText(
+      "Brouillon d’analyse repris dans cet onglet. L’historique conservé et le projet de référence n’ont pas été modifiés.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { level: 2, name: "Projet QA fictif", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("textbox", {
+      name: "Pourquoi cette variante, sous quelles réserves ?",
+      exact: true,
+    }),
+  ).toHaveValue(note);
+  await expect(
+    page.getByRole("radio", { name: "Réaffectation ciblée", exact: true }),
+  ).toBeChecked();
+  expect(await savedRaw(page)).toBe(envelope());
+  expect(await savedRaw(page, LAB_KEY)).toBeNull();
+  await fit(page);
+  await unchangedHotel(page);
+  expect(errors).toEqual([]);
+});
+
+test("A new Projects handoff asks before replacing a recovered Lab draft and restoring that draft keeps its original provenance", async ({
+  page,
+  context,
+}) => {
+  await seed(context);
+  await page.goto("/beta/#/projects?vue=pilotage");
+  await heading(page, "Piloter le projet");
+  await page
+    .getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+  const handoffKey = await page.evaluate(() => history.state.key);
+  const note =
+    "Brouillon fictif de la révision zéro : vérifier les ressources avant tout engagement.";
+  const noteField = page.getByRole("textbox", {
+    name: "Pourquoi cette variante, sous quelles réserves ?",
+    exact: true,
+  });
+  await noteField.fill(note);
+  await page.getByRole("link", { name: "Ouvrir Projects", exact: true }).click();
+  await heading(page, "Piloter le projet");
+  await projectView(page, "Tableau Kanban");
+  await addTask(page, "Nouvelle tâche fictive de la référence révisée");
+  await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
+  await expect(
+    page.getByText(
+      "Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const revised = await savedRaw(page);
+  expect(JSON.parse(revised).project.revision).toBe(1);
+  await projectView(page, "Pilotage");
+  await page
+    .getByRole("button", { name: "Comparer une hypothèse dans Decision Lab", exact: true })
+    .click();
+  await heading(page, "Comparer avant d’engager");
+  await expect(
+    page.getByRole("heading", { name: "Une copie Projects est disponible", exact: true }),
+  ).toBeVisible();
+  await expect(noteField).toHaveValue(note);
+  await expect(page.locator(".decision-lab-reference")).toContainText("Copie de la révision 0");
+  await page.getByRole("button", { name: "Charger la copie Projects", exact: true }).click();
+  await expect(noteField).toHaveValue("");
+  await expect(page.locator(".decision-lab-reference")).toContainText("Copie de la révision 1");
+  await page.getByRole("button", { name: "Rétablir le brouillon précédent", exact: true }).click();
+  await expect(noteField).toHaveValue(note);
+  await expect(page.locator(".decision-lab-reference")).toContainText("Copie de la révision 0");
+  await page.getByRole("button", { name: "Conserver l’analyse", exact: true }).click();
+  await expect(
+    page.getByText(
+      "Analyse 1 conservée dans ce navigateur. Le projet de référence n’a pas été modifié.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  const analysis = JSON.parse(await savedRaw(page, LAB_KEY)).analyses[0];
+  expect(analysis).toMatchObject({
+    handoffKey,
+    note,
+    source: { origin: "projects", projectRevision: 0 },
+  });
+  expect(analysis.source.reference).toEqual(projectFixture());
+  expect(await savedRaw(page)).toBe(revised);
+  await unchangedHotel(page);
+  await fit(page);
+});
+
+test("Decision Lab freezes the analysis while a deferred storage lock is pending and clears recovery only after that exact note is retained", async ({
+  page,
+  context,
+}) => {
+  await seed(context);
+  await context.addInitScript(() => {
+    Object.defineProperty(navigator, "locks", {
+      configurable: true,
+      value: {
+        request: (_name, action) =>
+          new Promise((resolve, reject) => {
+            window.__qaReleaseLabLock = () => {
+              try {
+                resolve(action());
+              } catch (error) {
+                reject(error);
+              }
+            };
+          }),
+      },
+    });
+  });
+  await page.goto("/beta/#/decision-lab");
+  await heading(page, "Comparer avant d’engager");
+  const note =
+    "Hypothèse fictive : conserver exactement cette note après acquisition du verrou, sans perte de travail.";
+  const noteField = page.getByRole("textbox", {
+    name: "Pourquoi cette variante, sous quelles réserves ?",
+    exact: true,
+  });
+  await noteField.fill(note);
+  await page.getByRole("button", { name: "Conserver l’analyse", exact: true }).click();
+  await expect(noteField).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Conserver l’analyse", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("button", { name: "Charger le dossier fictif", exact: true }),
+  ).toBeDisabled();
+  await expect(
+    page.getByRole("radio", { name: "Réaffectation ciblée", exact: true }),
+  ).toBeDisabled();
+  expect(await savedRaw(page, LAB_KEY)).toBeNull();
+  expect(await savedRaw(page)).toBe(envelope());
+  const recoveryKey = "pmersion.decision-lab.draft.v1";
+  expect(
+    await page.evaluate(
+      (key) => JSON.parse(sessionStorage.getItem(key)).draft.draft.note,
+      recoveryKey,
+    ),
+  ).toBe(note);
+  await page.evaluate(() => window.__qaReleaseLabLock());
+  await expect(
+    page.getByText(
+      "Analyse 1 conservée dans ce navigateur. Le projet de référence n’a pas été modifié.",
+      { exact: true },
+    ),
+  ).toBeVisible();
+  await expect(noteField).toBeEnabled();
+  await expect(noteField).toHaveValue(note);
+  expect(JSON.parse(await savedRaw(page, LAB_KEY)).analyses[0].note).toBe(note);
+  await expect
+    .poll(() => page.evaluate((key) => JSON.parse(sessionStorage.getItem(key)).draft, recoveryKey))
+    .toBeNull();
+  expect(await savedRaw(page)).toBe(envelope());
+  await unchangedHotel(page);
+  await fit(page);
 });
