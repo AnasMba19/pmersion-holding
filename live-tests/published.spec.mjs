@@ -444,6 +444,11 @@ test("published Hotel episode preserves two recommendations and reloads their ca
     ["Interfaces et dimensions visées", "HOT-IF-REF"],
     ["Standard témoin approuvé pour le produit proposé", "HOT-TEM-REF"]
   ]) await page.getByLabel(`Pièce pour : ${label}`, { exact: true }).selectOption(value);
+  const projection = page.getByRole("complementary", { name: "Projection du brouillon", exact: true });
+  await expect(projection.getByText("Recommandation conditionnelle", { exact: true })).toBeVisible();
+  await page.getByText("Répondre aux objections de la MOA", { exact: true }).click();
+  await page.locator("#hotel-episode-response-preparation").selectOption("accept");
+  await expect(projection.getByText("Recommandation bloquée dans l’exercice", { exact: true })).toBeVisible();
   await page.getByLabel("Justifier la recommandation", { exact: true }).fill("Hypothèse fictive : maintenir la livraison et les contrôles, sous réserve de confirmer le dossier.");
   await page.getByRole("button", { name: "Conserver la recommandation initiale", exact: true }).click();
   await expect.poll(async () => (await episode())?.workspace.episode.revision).toBe(1);
@@ -452,6 +457,9 @@ test("published Hotel episode preserves two recommendations and reloads their ca
   await page.getByRole("button", { name: "Prendre en compte la notification", exact: true }).click();
   await expect.poll(async () => (await episode())?.workspace.episode.revision).toBe(2);
   await page.getByLabel("Approvisionnement", { exact: true }).selectOption("expedite");
+  const objections = page.locator("summary").filter({ hasText: "Répondre aux objections de la MOA" });
+  if ((await objections.locator("..").getAttribute("open")) === null) await objections.click();
+  await page.locator("#hotel-episode-response-preparation").selectOption("verify");
   await page.getByLabel("Justifier la recommandation", { exact: true }).fill("Hypothèse fictive : demander une accélération du même produit, sous réserve de confirmation écrite.");
   await page.getByRole("button", { name: "Conserver la recommandation révisée", exact: true }).click();
   await expect.poll(async () => (await episode())?.workspace.episode.revision).toBe(3);
@@ -466,7 +474,10 @@ test("published Hotel episode preserves two recommendations and reloads their ca
   await expect(table).toBeVisible();
   for (const name of ["Initiale", "Même plan après notification", "Plan révisé"]) await expect(table.getByRole("columnheader", { name, exact: true })).toBeVisible();
   await expect(table.getByRole("row", { name: /Dossier qualité/ }).getByRole("cell")).toHaveText([
-    "Conditions satisfaites dans l’exercice", "Conditions satisfaites dans l’exercice", "Conditions satisfaites dans l’exercice"
+    "Pièces suffisantes pour l’exercice", "Pièces suffisantes pour l’exercice", "Pièces suffisantes pour l’exercice"
+  ]);
+  await expect(table.getByRole("row", { name: "Recommandation", exact: false }).getByRole("cell")).toHaveText([
+    "Recommandation bloquée dans l’exercice", "Recommandation bloquée dans l’exercice", "Recommandation conditionnelle"
   ]);
   expect(await episode()).toEqual(final);
   expect(await snapshots()).toEqual(before);

@@ -16,6 +16,66 @@ const historical = {
   "pmersion.projects.v1": "Projet fictif indépendant, octets à préserver.",
   "pmersion.decision-lab.v1": "Analyse fictive indépendante, octets à préserver.",
 };
+
+test("Sufficient quality pieces never conceal a refused lining instruction, including after reload", async ({
+  page,
+  context,
+}, info) => {
+  await seed(context);
+  await start(page);
+  await page.getByLabel("Préparer une autre zone", { exact: true }).check();
+  await selectReferenceProofs(page);
+  const projection = page.getByRole("complementary", {
+    name: "Projection du brouillon",
+    exact: true,
+  });
+  await expect(
+    projection.getByText("Pièces suffisantes pour l’exercice", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    projection.getByText("Recommandation conditionnelle", { exact: true }),
+  ).toBeVisible();
+  await page.locator("summary").filter({ hasText: "Répondre aux objections de la MOA" }).click();
+  await page.locator("#hotel-episode-response-preparation").selectOption("accept");
+  await expect(
+    projection.getByText("Recommandation bloquée dans l’exercice", { exact: true }),
+  ).toBeVisible();
+  await expect(projection).toContainText("La MOA fictive refuse cette instruction");
+  await expect(
+    projection.getByText("Pièces suffisantes pour l’exercice", { exact: true }),
+  ).toBeVisible();
+  if (["phone-390", "desktop-1280"].includes(info.project.name)) {
+    await projection
+      .getByText("Recommandation bloquée dans l’exercice", { exact: true })
+      .scrollIntoViewIfNeeded();
+    await page.screenshot({
+      path: info.outputPath("hotel-episode-readiness.png"),
+      animations: "disabled",
+    });
+  }
+  await page
+    .getByLabel(REASON, { exact: true })
+    .fill(
+      "Hypothèse fictive : conserver le choix contesté pour examiner ses conséquences, sans lancer les travaux.",
+    );
+  await page
+    .getByRole("button", { name: "Conserver la recommandation initiale", exact: true })
+    .click();
+  await expect.poll(async () => (await saved(page))?.workspace.episode.events.length).toBe(1);
+  await page.reload();
+  const retained = page.getByRole("complementary", {
+    name: "Recommandation initiale conservée",
+    exact: true,
+  });
+  await expect(
+    retained.getByText("Recommandation bloquée dans l’exercice", { exact: true }),
+  ).toBeVisible();
+  await expect(
+    retained.getByText("Pièces suffisantes pour l’exercice", { exact: true }),
+  ).toBeVisible();
+  await isolated(page);
+  await fit(page);
+});
 const proofs = [
   ["Zone témoin fermée et protégée", "HOT-ZONE-REPRISE"],
   ["Performance acoustique du produit proposé", "HOT-AC-REF"],
@@ -149,14 +209,14 @@ async function canonicalComparison(page) {
     ["Marge d’exploitation perdue supposée", ["60 000 €", "90 000 €", "0 €"]],
     ["Impact économique total supposé", ["98 200 €", "135 400 €", "42 400 €"]],
     ["Exposition pédagogique au risque", ["4 800 €", "4 800 €", "8 800 €"]],
-    ["Créance fournisseur potentielle", ["10 000 €", "10 000 €", "9 000 €"]],
+    ["Pénalité théorique du modèle", ["10 000 €", "10 000 €", "9 000 €"]],
     ["Pénalité encaissée", ["0 €", "0 €", "0 €"]],
     [
       "Dossier qualité",
       [
-        "Conditions satisfaites dans l’exercice",
-        "Conditions satisfaites dans l’exercice",
-        "Conditions satisfaites dans l’exercice",
+        "Pièces suffisantes pour l’exercice",
+        "Pièces suffisantes pour l’exercice",
+        "Pièces suffisantes pour l’exercice",
       ],
     ],
   ];
@@ -281,7 +341,7 @@ test("Short recommendation is refused without advancing or losing the selected l
     "Contrôles non planifiés. 0 pièce(s) manquante(s), 0 insuffisante(s)",
   );
   await expect(
-    projection.getByText("Conditions satisfaites dans l’exercice", { exact: true }),
+    projection.getByText("Pièces suffisantes pour l’exercice", { exact: true }),
   ).toHaveCount(0);
   await page.getByLabel(REASON, { exact: true }).fill("Trop court");
   await page
