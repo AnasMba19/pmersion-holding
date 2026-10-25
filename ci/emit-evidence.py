@@ -15,6 +15,7 @@ VIEWS = {
     "next-portail-viewport.png", "next-learn-viewport.png",
     "next-simulate-viewport.png", "next-projects-kanban-viewport.png",
     "next-decision-lab-intro-viewport.png",
+    "projects-restore-preview.png",
 }
 
 
@@ -36,8 +37,8 @@ def emit(args):
         names = sorted(str(p.relative_to(root)) for p in root.rglob("*.png")
                        if p.name in VIEWS and any(
                            part.endswith(("phone-390", "desktop-1280")) for part in p.parts))
-        if args.outcome == "success" and len(names) != 10:
-            raise ValueError("Successful workshop must provide ten exact viewport images")
+        if args.outcome == "success" and len(names) != len(VIEWS) * 2:
+            raise ValueError("Successful workshop must provide all twelve exact viewport images")
     elif args.kind == "unit":
         names = ["report.json", "report.md"]
     if len(names) > 100:
