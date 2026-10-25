@@ -16,6 +16,8 @@ VIEWS = {
     "next-simulate-viewport.png", "next-projects-kanban-viewport.png",
     "next-decision-lab-intro-viewport.png",
     "projects-restore-preview.png",
+    "hotel-episode-viewport.png",
+    "hotel-episode-notice.png",
 }
 
 
@@ -38,7 +40,7 @@ def emit(args):
                        if p.name in VIEWS and any(
                            part.endswith(("phone-390", "desktop-1280")) for part in p.parts))
         if args.outcome == "success" and len(names) != len(VIEWS) * 2:
-            raise ValueError("Successful workshop must provide all twelve exact viewport images")
+            raise ValueError("Successful workshop must provide all sixteen exact viewport images")
     elif args.kind == "unit":
         names = ["report.json", "report.md"]
     if len(names) > 100:
