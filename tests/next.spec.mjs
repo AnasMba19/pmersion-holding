@@ -872,6 +872,7 @@ for (const [group, routes] of [
       "/accueil",
       "/learn",
       "/simulate",
+      "/simulate/hotel-episode",
       "/projects",
       "/decision-lab",
       "/enterprise",

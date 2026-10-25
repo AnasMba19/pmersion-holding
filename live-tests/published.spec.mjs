@@ -426,3 +426,51 @@ test("published Projects restores a portable export into a draft before an expli
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-project-restored.png"), fullPage: false });
 });
+
+test("published Hotel episode preserves two recommendations and reloads their causal comparison", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.goto("/#/simulate/hotel-episode");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Le fournisseur change la donne");
+  const keys = ["pmersion.hotel-scenario.v4", "pmersion.projects.v1", "pmersion.decision-lab.v1"];
+  const snapshots = () => page.evaluate(names => Object.fromEntries(names.map(name => [name, localStorage.getItem(name)])), keys);
+  const before = await snapshots();
+  const episode = async () => JSON.parse(await page.evaluate(() => localStorage.getItem("pmersion.hotel-episode.v1")) || "null");
+  await page.getByText("Examiner les pièces de contrôle", { exact: true }).click();
+  for (const [label, value] of [
+    ["Zone témoin fermée et protégée", "HOT-ZONE-REPRISE"],
+    ["Performance acoustique du produit proposé", "HOT-AC-REF"],
+    ["Interfaces et dimensions visées", "HOT-IF-REF"],
+    ["Standard témoin approuvé pour le produit proposé", "HOT-TEM-REF"]
+  ]) await page.getByLabel(`Pièce pour : ${label}`, { exact: true }).selectOption(value);
+  await page.getByLabel("Justifier la recommandation", { exact: true }).fill("Hypothèse fictive : maintenir la livraison et les contrôles, sous réserve de confirmer le dossier.");
+  await page.getByRole("button", { name: "Conserver la recommandation initiale", exact: true }).click();
+  await expect.poll(async () => (await episode())?.workspace.episode.revision).toBe(1);
+  const first = structuredClone((await episode()).workspace.episode.events[0]);
+  await page.getByText("Ouvrir la notification fournisseur", { exact: true }).click();
+  await page.getByRole("button", { name: "Prendre en compte la notification", exact: true }).click();
+  await expect.poll(async () => (await episode())?.workspace.episode.revision).toBe(2);
+  await page.getByLabel("Approvisionnement", { exact: true }).selectOption("expedite");
+  await page.getByLabel("Justifier la recommandation", { exact: true }).fill("Hypothèse fictive : demander une accélération du même produit, sous réserve de confirmation écrite.");
+  await page.getByRole("button", { name: "Conserver la recommandation révisée", exact: true }).click();
+  await expect.poll(async () => (await episode())?.workspace.episode.revision).toBe(3);
+  await expect(page.getByText("Épisode sauvegardé sur ce navigateur.", { exact: true })).toBeVisible();
+  const final = await episode();
+  expect(final.workspace.episode.events[0]).toEqual(first);
+  expect(final.workspace.episode.events[1]).toMatchObject({ kind: "supplier_notice", productId: "MENU-REF", deliveryShift: 4 });
+  expect(final.workspace.episode.events[2].inputs.evidence).toEqual(first.inputs.evidence);
+  expect(final.workspace.episode.events[2].inputs.dailyMargin).toBe(first.inputs.dailyMargin);
+  await page.reload();
+  const table = page.getByRole("table", { name: "Projections calculées sur les trois situations conservées.", exact: true });
+  await expect(table).toBeVisible();
+  for (const name of ["Initiale", "Même plan après notification", "Plan révisé"]) await expect(table.getByRole("columnheader", { name, exact: true })).toBeVisible();
+  await expect(table.getByRole("row", { name: /Dossier qualité/ }).getByRole("cell")).toHaveText([
+    "Conditions satisfaites dans l’exercice", "Conditions satisfaites dans l’exercice", "Conditions satisfaites dans l’exercice"
+  ]);
+  expect(await episode()).toEqual(final);
+  expect(await snapshots()).toEqual(before);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("published-hotel-episode.png"), fullPage: false });
+});

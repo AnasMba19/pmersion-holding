@@ -11,7 +11,9 @@ concurrency:
 jobs:
   browser:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    # The 320-case source suite took 12 minutes; this bundle runs 384 cases.
+    # Bound the job without changing test timeouts, assertions or retries.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
