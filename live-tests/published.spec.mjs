@@ -377,3 +377,52 @@ test("published recovery preserves an unsaved project and an unretained Lab note
   expect(errors).toEqual([]);
   await page.screenshot({ path: info.outputPath("published-next-recovered-note.png"), fullPage: false });
 });
+
+test("published Projects restores a portable export into a draft before an explicit save", async ({ page, request }, info) => {
+  await published(request);
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  const key = "pmersion.projects.v1";
+  const raw = () => page.evaluate(name => localStorage.getItem(name), key);
+  await page.goto("/#/projects");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Piloter le projet");
+  const reference = await raw();
+  const waiting = page.waitForEvent("download");
+  await page.getByRole("button", { name: "Exporter le projet", exact: true }).click();
+  const download = await waiting;
+  const path = await download.path();
+  expect(path).not.toBeNull();
+  const original = JSON.parse(readFileSync(path, "utf8"));
+  const incoming = structuredClone(original);
+  incoming.project.title = "Restauration fictive de publication";
+  async function inspect() {
+    await page.getByRole("button", { name: "Importer un projet", exact: true }).click();
+    const dialog = page.getByRole("dialog", { name: "Importer un projet", exact: true });
+    await dialog.getByLabel("Fichier de projet PMersion", { exact: true }).setInputFiles({ name: "projet-fictif.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(incoming)) });
+    await expect(dialog.getByText(incoming.project.title, { exact: true })).toBeVisible();
+    expect(await raw()).toBe(reference);
+    await dialog.getByRole("button", { name: "Restaurer dans le brouillon", exact: true }).click();
+    await expect(dialog).toHaveCount(0);
+    await expect(page.getByText(incoming.project.title, { exact: true })).toBeVisible();
+    expect(await raw()).toBe(reference);
+  }
+  await inspect();
+  await page.getByRole("button", { name: "Annuler la restauration", exact: true }).click();
+  await expect(page.getByText(original.project.title, { exact: true })).toBeVisible();
+  expect(await raw()).toBe(reference);
+  await inspect();
+  await page.getByRole("button", { name: "Sauvegarder le projet", exact: true }).click();
+  await expect(page.getByText("Projet sauvegardé sur ce navigateur. Cette version sera reprise après rechargement.", { exact: true })).toBeVisible();
+  const saved = await raw();
+  expect(JSON.parse(saved).project).toEqual(incoming.project);
+  await page.reload();
+  await expect(page.getByText(incoming.project.title, { exact: true })).toBeVisible();
+  expect(await raw()).toBe(saved);
+  await page.getByRole("button", { name: "Explorer Decision Lab sans modifier le projet", exact: true }).click();
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Comparer avant d’engager");
+  await expect(page.getByRole("heading", { level: 2, name: incoming.project.title, exact: true })).toBeVisible();
+  expect(await raw()).toBe(saved);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+  expect(errors).toEqual([]);
+  await page.screenshot({ path: info.outputPath("published-project-restored.png"), fullPage: false });
+});
