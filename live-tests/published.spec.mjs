@@ -479,6 +479,14 @@ test("published Hotel episode preserves two recommendations and reloads their ca
   await expect(table.getByRole("row", { name: "Recommandation", exact: false }).getByRole("cell")).toHaveText([
     "Recommandation bloquée dans l’exercice", "Recommandation bloquée dans l’exercice", "Recommandation conditionnelle"
   ]);
+  await page.getByText("Comparer les jalons fournisseur et chantier", { exact: true }).click();
+  const milestones = page.getByRole("region", { name: "Projection distincte des jalons", exact: true });
+  await expect(milestones).toBeVisible();
+  const row = name => milestones.getByRole("row").filter({ has: page.getByRole("rowheader", { name, exact: true }) }).getByRole("cell");
+  await expect(row("Échéance contractuelle fournisseur")).toHaveText(["Inconnue", "Inconnue", "Inconnue"]);
+  await expect(row("Ouverture prévisionnelle")).toHaveText([/14\s+janv\.\s+2027/, /20\s+janv\.\s+2027/, /30\s+déc\.\s+2026/]);
+  await expect(row("Branche qui fixe l’ouverture")).toHaveText(["Travaux liés au témoin", "Travaux liés au témoin", "Autres conditions"]);
+  await milestones.scrollIntoViewIfNeeded();
   expect(await episode()).toEqual(final);
   expect(await snapshots()).toEqual(before);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

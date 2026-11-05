@@ -318,6 +318,46 @@ test("Hotel episode preserves the initial recommendation, applies a product-spec
   for (const name of ["Initiale", "Même plan après notification", "Plan révisé"])
     await expect(table.getByRole("columnheader", { name, exact: true })).toBeVisible();
   await canonicalComparison(page);
+
+  const summary = page.getByText("Comparer les jalons fournisseur et chantier", { exact: true });
+  const milestones = page.getByRole("region", {
+    name: "Projection distincte des jalons",
+    exact: true,
+  });
+  await expect(milestones).toBeHidden();
+  await summary.focus();
+  await page.keyboard.press("Enter");
+  await expect(milestones).toBeVisible();
+  for (const [label, values] of [
+    ["Livraison annoncée", [/4\s+déc\.\s+2026/, /10\s+déc\.\s+2026/, /19\s+nov\.\s+2026/]],
+    ["Échéance contractuelle fournisseur", ["Inconnue", "Inconnue", "Inconnue"]],
+    [
+      "Protection de la zone témoin",
+      [/8\s+déc\.\s+2026/, /14\s+déc\.\s+2026/, /23\s+nov\.\s+2026/],
+    ],
+    ["Validation du témoin", [/18\s+déc\.\s+2026/, /24\s+déc\.\s+2026/, /3\s+déc\.\s+2026/]],
+    ["Ouverture prévisionnelle", [/14\s+janv\.\s+2027/, /20\s+janv\.\s+2027/, /30\s+déc\.\s+2026/]],
+    [
+      "Branche qui fixe l’ouverture",
+      ["Travaux liés au témoin", "Travaux liés au témoin", "Autres conditions"],
+    ],
+    ["Marge perdue selon le retard calendaire", ["50 000 €", "80 000 €", "0 €"]],
+  ]) {
+    const row = milestones
+      .getByRole("row")
+      .filter({ has: page.getByRole("rowheader", { name: label, exact: true }) });
+    await expect(row.getByRole("cell")).toHaveText(values);
+  }
+  await milestones.focus();
+  await expect(milestones).toBeFocused();
+  if (["phone-390", "desktop-1280"].includes(info.project.name)) {
+    await summary.evaluate((element) => element.scrollIntoView({ block: "start" }));
+    await page.screenshot({
+      path: info.outputPath("hotel-episode-milestones.png"),
+      animations: "disabled",
+    });
+  }
+  expect(await raw(page)).toBe(beforeReload);
   await isolated(page);
   await fit(page);
   expect(errors).toEqual([]);
