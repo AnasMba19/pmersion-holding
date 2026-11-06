@@ -1,6 +1,6 @@
 {
   "mode": "public-workspace",
-  "version": "0.17.2",
+  "version": "0.17.3",
   "scenarioVersion": "hotel-scenario.4",
   "simulationVersions": {
     "constructionHotel": "hotel120.1",
@@ -104,8 +104,8 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "b154ceb9ba9f6854bbb2bd0e33b25eb20cf1c2c3",
-  "builtAt": "2026-11-05",
+  "sourceCommit": "3c958e4a68dadbdcdbc7807cb12dd9cbe319b41d",
+  "builtAt": "2026-11-06",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Compiled from a clean checkout whose Git HEAD equals sourceCommit; legacy inputs are pinned and checksummed.",
   "legacyInputs": {
@@ -171,6 +171,20 @@
     "decision.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "decision.ee79ed2bd90a08f0.js": "ee79ed2bd90a08f0f2d1f6dd1cf7979f937f522c497b505912a4523ab14daceb",
     "classique.html": "893c3800c3c0b3a4872f454c25f02af202ab6ccd38d7c84fdb0d0e2b480b91e3",
-    "index.html": "8231bbf0442a166c571c70ed2989e3c8ed4a219e08cd402b5664b07818464c47"
+    "index.html": "8231bbf0442a166c571c70ed2989e3c8ed4a219e08cd402b5664b07818464c47",
+    "accueil/index.html": "381121d60fece460059a94055f9bff250821fc231906e5ff290d958031d3c65b",
+    "learn/index.html": "5a903c6d862255171451d0477b2534d9db4609fe0be11dfed8cc2a3ac923ad7a",
+    "simulate/index.html": "d0d43e6fedabd65eb0b48c99050e497da7822adefdc8b0bc29899d2d771e0ebc",
+    "simulate/hotel-episode/index.html": "81fb30f8b0ab38f90fe86561f8a851bc1eff4c8c633b67de78d399f434ae057e",
+    "studio/index.html": "ea3925fa9255a0a87d6eb952be22007b4cee6edbdb0e260dafe6072ee0d69b71",
+    "missions/index.html": "4a804c8d8107c1da304742a4cac5049ba4bbb8a8bb5841ffc5fb2322a0cf9925",
+    "projets/index.html": "919a66dd939fd860485feb9109be5d36157bb70507837c09ece0e48fa417a914",
+    "secteurs/index.html": "8e6bfc8e626f365655f1874db2a5b5464fa5333cb4553b5efb95e672372873f6",
+    "hotel/index.html": "49d75cfbfbfa816d960c2ba82115726583dbb05c5fb86fd423280001bb0d54c3",
+    "projects/index.html": "61c79c0c6cf583735a4ce8097ddd2c73359ed9bf74145f891e04b954c87f1763",
+    "decision-lab/index.html": "7717ac800d4e1cb33ddee0dbb56c6ead1af0d6e0eac5f94e50240b39693a6afd",
+    "enterprise/index.html": "2dd79fae5ea6744b2a7f98329979073e049828155132addb186194a86dcb7cd1",
+    "disponibilite/index.html": "046ac904321881adbd07c79440a99c83f5a0e26637e9271a8b1a1372e532a838",
+    "donnees/index.html": "e868bc02b18e3a7ee8fa8c4b9b2e14106d6d5c4ae1b96230619fba19528bb19a"
   }
 }
