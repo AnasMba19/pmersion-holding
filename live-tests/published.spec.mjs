@@ -17,6 +17,20 @@ async function stored(page) {
   return page.evaluate(key => JSON.parse(localStorage.getItem(key) || "null"), KEY);
 }
 
+test("published direct links open the expected PMersion view", async ({ page, request }) => {
+  await published(request);
+  for (const [path, target, heading] of [
+    ["/simulate", "/#/simulate", /Le dossier est ouvert/],
+    ["/hotel?vue=dossier", "/#/hotel?vue=dossier", "Les pièces du dossier"],
+  ]) {
+    const response = await request.get(path);
+    expect(response.ok()).toBe(true);
+    await page.goto(path);
+    await expect(page).toHaveURL(target);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(heading);
+  }
+});
+
 async function contextualAssistant(page) {
   const assistant = page.getByRole("complementary", { name: "Assistant PMersion", exact: true });
   await expect(assistant).toHaveCount(1);
