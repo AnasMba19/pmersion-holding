@@ -29,16 +29,25 @@ jobs:
       - name: Install browser dependencies
         timeout-minutes: 5
         run: npx playwright install --with-deps --only-shell chromium
+      - name: Identify the published workspace generation
+        id: generation
+        run: |
+          node --input-type=module -e 'import fs from "node:fs"; const m=JSON.parse(fs.readFileSync("public-release.json")); const [major,minor]=m.version.split(".").map(Number); fs.appendFileSync(process.env.GITHUB_OUTPUT, "direction_d="+(major > 0 || minor >= 18)+"\n");'
       - id: public_tests
-        run: npm test
+        run: |
+          if [[ "${{ steps.generation.outputs.direction_d }}" == 'true' ]]; then
+            npx playwright test tests/published-d.spec.mjs
+          else
+            npm test
+          fi
       - name: Preserve bounded public viewport evidence in checksummed logs
-        if: always()
+        if: always() && steps.generation.outputs.direction_d != 'true'
         env:
           SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
           TEST_OUTCOME: ${{ steps.public_tests.outcome }}
         run: python3 ci/emit-evidence.py emit --kind workshop --root test-results --source "$SOURCE_SHA" --outcome "$TEST_OUTCOME"
       - uses: actions/upload-artifact@v4
-        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
+        if: ${{ always() && steps.generation.outputs.direction_d != 'true' && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: public-beta-browser-${{ github.sha }}
           path: |
@@ -47,7 +56,7 @@ jobs:
           retention-days: 14
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
-        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
+        if: ${{ always() && steps.generation.outputs.direction_d != 'true' && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: public-workspace-views-${{ github.sha }}
           path: test-results/**/*.png

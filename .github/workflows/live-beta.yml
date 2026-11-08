@@ -27,16 +27,25 @@ jobs:
       - name: Install the tested headless browser
         timeout-minutes: 5
         run: npx playwright install --with-deps --only-shell chromium
+      - name: Identify the published workspace generation
+        id: generation
+        run: |
+          node --input-type=module -e 'import fs from "node:fs"; const m=JSON.parse(fs.readFileSync("public-release.json")); const [major,minor]=m.version.split(".").map(Number); fs.appendFileSync(process.env.GITHUB_OUTPUT, "direction_d="+(major > 0 || minor >= 18)+"\n");'
       - id: live_tests
-        run: npx playwright test --config live-tests/playwright.config.mjs
+        run: |
+          if [[ "${{ steps.generation.outputs.direction_d }}" == 'true' ]]; then
+            npx playwright test --config live-tests/playwright.config.mjs live-tests/published-d.spec.mjs
+          else
+            npx playwright test --config live-tests/playwright.config.mjs
+          fi
       - name: Preserve published-domain test provenance
-        if: always()
+        if: always() && steps.generation.outputs.direction_d != 'true'
         env:
           SOURCE_SHA: ${{ github.sha }}
           TEST_OUTCOME: ${{ steps.live_tests.outcome }}
         run: python3 ci/emit-evidence.py emit --kind browser --root test-results/live-beta --source "$SOURCE_SHA" --outcome "$TEST_OUTCOME"
       - uses: actions/upload-artifact@v4
-        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
+        if: ${{ always() && steps.generation.outputs.direction_d != 'true' && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: published-beta-proof-${{ github.sha }}
           path: |
@@ -45,7 +54,7 @@ jobs:
           retention-days: 14
           if-no-files-found: error
       - uses: actions/upload-artifact@v4
-        if: ${{ always() && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
+        if: ${{ always() && steps.generation.outputs.direction_d != 'true' && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:
           name: published-beta-views-${{ github.sha }}
           path: test-results/live-beta/**/*.png

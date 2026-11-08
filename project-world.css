@@ -44,7 +44,7 @@
 }
 .world-heading h1 em {
   font-style: normal;
-  color: #4d3fc4;
+  color: var(--d-action, #4d3fc4);
 }
 .world-heading .eyebrow {
   margin-bottom: 22px;
@@ -105,7 +105,7 @@
   cursor: pointer;
 }
 .world-selector button:hover {
-  background: #e2ddef;
+  background: var(--d-line, #e2ddef);
 }
 .world-selector button[aria-pressed="true"] {
   background: var(--world-ink);
@@ -145,7 +145,7 @@
   font:
     10px / 1.6 ui-monospace,
     monospace;
-  color: #655e73;
+  color: var(--d-muted, #655e73);
 }
 .world-model-label::before {
   content: "";
@@ -162,7 +162,7 @@
 }
 .world-context .eyebrow {
   color: var(--world-ink);
-  border-left: 3px solid #4d3fc4;
+  border-left: 3px solid var(--d-action, #4d3fc4);
   padding-left: 8px;
   font-size: 11px;
 }
@@ -196,14 +196,14 @@
   font-size: 12px;
   min-height: 44px;
   padding: 9px 13px;
-  background: #faf9fc;
+  background: var(--d-surface, #faf9fc);
   border: 1px solid var(--world-line);
   color: var(--world-ink);
   cursor: pointer;
 }
 .world-tools button:hover,
 .sector-scene-controls button:hover {
-  background: #e2ddef;
+  background: var(--d-line, #e2ddef);
 }
 .world-tools button[aria-pressed="true"],
 .sector-scene-controls button[aria-pressed="true"] {
@@ -219,7 +219,7 @@
   justify-content: space-between;
   gap: 20px;
   font-size: 11px;
-  color: #655e73;
+  color: var(--d-muted, #655e73);
   padding: 14px 0;
   border-bottom: 1px solid var(--world-line);
 }
@@ -295,7 +295,12 @@
   width: 0;
   height: 0;
   margin-top: 0;
-  background: linear-gradient(90deg, #4d3fc4 0 60%, #bfb3db 60% 80%, #a65c35 80%);
+  background: linear-gradient(
+    90deg,
+    var(--d-action, #4d3fc4) 0 60%,
+    #bfb3db 60% 80%,
+    var(--d-warning, #a65c35) 80%
+  );
 }
 .sector-catalog,
 .sector-detail {
@@ -382,7 +387,7 @@
 .sector-scene-caption {
   font-size: 12px;
   line-height: 1.8;
-  color: #655e73;
+  color: var(--d-muted, #655e73);
 }
 .sector-challenge {
   display: grid;
@@ -408,8 +413,8 @@
 }
 .sector-questions article {
   padding: 22px;
-  border-top: 3px solid #4d3fc4;
-  background: #f5f3fa;
+  border-top: 3px solid var(--d-action, #4d3fc4);
+  background: var(--d-canvas, #f5f3fa);
 }
 .sector-questions h3 {
   font-size: 18px;
@@ -434,12 +439,12 @@
   max-width: 860px;
 }
 .sector-documents details[open] {
-  background: #efedf6;
+  background: var(--d-soft, #efedf6);
 }
 .sector-detail :where(.sector-limits, .sector-boundary, .sector-cta) {
   padding: 26px;
-  background: #efedf6;
-  border-left: 3px solid #4d3fc4;
+  background: var(--d-soft, #efedf6);
+  border-left: 3px solid var(--d-action, #4d3fc4);
   line-height: 1.8;
   margin: 35px 0;
 }
@@ -632,7 +637,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
     10px / 1.6 ui-monospace,
     monospace;
   letter-spacing: 0.04em;
-  color: #655e73;
+  color: var(--d-muted, #655e73);
 }
 .sector-model-controls {
   display: flex;
@@ -651,7 +656,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
 .sector-model-caption {
   line-height: 1.8;
   font-size: 12px;
-  color: #655e73;
+  color: var(--d-muted, #655e73);
 }
 .sector-model-caption p {
   margin: 6px 0;
@@ -666,7 +671,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
   font:
     11px / 1.8 ui-monospace,
     monospace;
-  color: #655e73;
+  color: var(--d-muted, #655e73);
   letter-spacing: 0.055em;
 }
 .sector-card-action {
@@ -691,10 +696,10 @@ html[data-motion="reduced"] .sector-card .sector-scene {
 .sector-questions li {
   padding: 22px;
   border-top: 2px solid var(--sector-accent);
-  background: #efedf6;
+  background: var(--d-soft, #efedf6);
 }
 .sector-questions li > span {
-  color: #655e73;
+  color: var(--d-muted, #655e73);
   font:
     12px ui-monospace,
     monospace;
@@ -716,7 +721,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
   display: block;
 }
 .sector-document small {
-  color: #655e73;
+  color: var(--d-muted, #655e73);
   font-size: 11px;
   font-weight: 400;
 }
@@ -762,14 +767,14 @@ html[data-motion="reduced"] .sector-card .sector-scene {
   align-items: center;
   min-height: 50px;
   color: #302943;
-  background: #efedf6;
+  background: var(--d-soft, #efedf6);
   text-decoration: none;
   padding: 14px 18px;
   font-size: 14px;
   font-weight: 700;
 }
 .sector-workshop-link:hover {
-  background: #e1d9f0;
+  background: var(--d-soft, #e1d9f0);
 }
 .sector-next {
   display: flex;
@@ -782,7 +787,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
   color: #f6f3fc;
 }
 .product-shell .sector-transfer p {
-  color: #e1d9f0;
+  color: var(--d-soft, #e1d9f0);
 }
 .sector-next a {
   min-height: 44px;
@@ -877,7 +882,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
   font-weight: 700;
 }
 .world-coverage {
-  border-left: 3px solid #4d3fc4;
+  border-left: 3px solid var(--d-action, #4d3fc4);
   padding-left: 10px;
   font-size: 12px;
   font-weight: 700;
@@ -945,7 +950,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
   background: var(--scene-light);
   color: var(--world-ink);
   text-decoration: none;
-  border-left: 3px solid #4d3fc4;
+  border-left: 3px solid var(--d-action, #4d3fc4);
 }
 .project-domain-grid a:hover {
   background: var(--world-paper);
@@ -1079,7 +1084,7 @@ html[data-motion="reduced"] .sector-card .sector-scene {
 .context-map .sector-model-caption {
   padding: 24px;
   background: var(--scene-light);
-  border-left: 3px solid #4d3fc4;
+  border-left: 3px solid var(--d-action, #4d3fc4);
 }
 .context-map .sector-model-caption strong {
   font-family: var(--font-project-display);
