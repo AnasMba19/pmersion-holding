@@ -32,10 +32,31 @@ test("the public Studio connects Hôtel simulation and comparison and preserves 
   await expect(page.getByRole("status")).toContainText("ouverture J68");
   await page.reload();
   await expect(page.getByRole("status")).toContainText("ouverture J68");
+  await page.getByRole("button", { name: "Poser une question à P-Mero" }).click();
+  await expect(page).toHaveURL(/#\/p-mero\?contexte=simulate$/);
+  await page.reload();
+  await expect(page.getByText("Contexte de l’écran · Simulate")).toBeVisible();
+  await navigation.getByRole("link", { name: "P-Mero", exact: true }).click();
+  await expect(page.getByText("Contexte de l’écran · Accueil")).toBeVisible();
   await page.goto("/hotel?vue=planning");
   await expect(page).toHaveURL(/\/#\/hotel\?vue=planning$/);
   await expect(navigation).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test("the public Projects dashboard can be scrolled with the keyboard", async ({ page, request }) => {
+  await exactSource(request);
+  await page.goto("/#/projects/atelier");
+  const planning = page.getByRole("region", { name: "Planning des tâches" });
+  await planning.focus();
+  await expect(planning).toBeFocused();
+  if (await planning.evaluate((element) => element.scrollWidth > element.clientWidth)) {
+    await page.keyboard.press("ArrowRight");
+    await expect.poll(() => planning.evaluate((element) => element.scrollLeft)).toBeGreaterThan(0);
+  }
+  const risks = page.getByRole("region", { name: "Risques et décision" });
+  await risks.focus();
+  await expect(risks).toBeFocused();
 });
 
 test("the exact Hôtel model is served and the public P-Mero composer is ready", async ({ page, request, baseURL }) => {
