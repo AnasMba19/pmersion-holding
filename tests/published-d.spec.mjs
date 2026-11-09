@@ -75,3 +75,17 @@ test("the exact Hôtel model is served and the public P-Mero composer is ready",
   await expect(panel.getByText(/Gardez les données personnelles et les sauvegardes dans le navigateur/)).toBeVisible();
   await expect(panel.getByRole("button", { name: "Comment construire un planning fiable ?" })).toBeVisible();
 });
+
+test("discovery has an available LinkedIn preview and an accessible demo entrance", async ({ page, request }) => {
+  await exactSource(request);
+  await page.goto("/");
+  await expect(page.locator('meta[property="og:image"]')).toHaveAttribute("content", "https://pmersion.com/beta/share-card.png");
+  const image = await request.get("/beta/share-card.png");
+  expect(image.status()).toBe(200);
+  expect(image.headers()["content-type"]).toContain("image/png");
+  const bytes = await image.body();
+  expect([bytes.readUInt32BE(16), bytes.readUInt32BE(20)]).toEqual([1200, 630]);
+  await page.getByRole("link", { name: "Essayer la démo gratuite" }).click();
+  await expect(page.getByRole("button", { name: "Créer mon accès" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Me connecter" })).toBeVisible();
+});
