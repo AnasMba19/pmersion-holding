@@ -1,7 +1,7 @@
 {
   "schema": "pmersion-public-bundle.1",
   "version": "0.19.0",
-  "sourceCommit": "962c115795e75214e9bde04977390ff3f96973f5",
+  "sourceCommit": "5aaafd3749a46e56cb9fc13534288a2785732498",
   "builtAt": "2026-11-09",
   "legacy": {
     "repository": "AnasMba19/pmersion-holding",
@@ -148,7 +148,7 @@
     "beta/models/README.md": "7d198db9de2b32104f7c285c128e22496d97ae8c383d7658e28a6bc723542a01",
     "beta/models/hotel120.glb": "565892a33911a0dba98ae79d68457b41a1b452f84bdd27641d4916db98132173",
     "beta/models/manifest.json": "45edd934990ec3dff8a092de282ee0ba0988c07d1d7aa77912ff104c1f5e87c3",
-    "beta/release.json": "749f0f0698f6d57f524f6b9ffae15e11b7cd419673ad55d6591260b1f7fc233d",
+    "beta/release.json": "a583de8bbbd68b2469ea992ede57bcc2b49d85d3c202fe47362f92cdca8ab551",
     "classique.html": "0ed21a594c87f2840771832d7373769e1b9abe6f56b9410836ea2d34d5980a7d",
     "decision-data.3765b110e6cc3f9f.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",
     "decision-data.js": "3765b110e6cc3f9f3435422f1568fb687d24b45a222942aea603892a0c33afa3",

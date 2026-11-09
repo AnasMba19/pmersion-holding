@@ -104,7 +104,7 @@
       "construction/hotel/realisation"
     ]
   },
-  "sourceCommit": "962c115795e75214e9bde04977390ff3f96973f5",
+  "sourceCommit": "5aaafd3749a46e56cb9fc13534288a2785732498",
   "builtAt": "2026-11-09",
   "generator": "scripts/build-public-release.mjs",
   "provenance": "Compiled from a clean checkout whose Git HEAD equals sourceCommit; legacy inputs are pinned and checksummed.",
