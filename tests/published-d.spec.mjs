@@ -5,6 +5,22 @@ import { expect, test } from "@playwright/test";
 const manifest = JSON.parse(readFileSync(new URL("../public-release.json", import.meta.url), "utf8"));
 const api = "https://pmersion-pmero-public.pmersion-lab.workers.dev/api/p-mero";
 
+async function guardReadOnlyPmero(page, baseURL) {
+  const local = new URL(baseURL).hostname === "127.0.0.1";
+  const methods = [];
+  await page.route(api, (route) => {
+    const method = route.request().method();
+    methods.push(method);
+    if (method === "POST") return route.abort();
+    if (!local) return route.continue();
+    return route.fulfill({
+      json: { enabled: true, access: "visitor", data_scope: "fictional-demo" },
+      headers: { "Access-Control-Allow-Origin": baseURL },
+    });
+  });
+  return () => expect(methods).not.toContain("POST");
+}
+
 export async function exactSource(request) {
   await expect.poll(async () => {
     try {
@@ -16,8 +32,9 @@ export async function exactSource(request) {
   }, { timeout: 120_000 }).toBe(manifest.sourceCommit);
 }
 
-test("the public Studio connects Hôtel simulation and comparison and preserves the historical link", async ({ page, request }) => {
+test("the public Studio connects Hôtel simulation and comparison and preserves the historical link", async ({ page, request, baseURL }) => {
   await exactSource(request);
+  const assertReadOnly = await guardReadOnlyPmero(page, baseURL);
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await page.goto("/");
@@ -42,6 +59,7 @@ test("the public Studio connects Hôtel simulation and comparison and preserves 
   await expect(page).toHaveURL(/\/#\/hotel\?vue=planning$/);
   await expect(navigation).toBeVisible();
   expect(errors).toEqual([]);
+  assertReadOnly();
 });
 
 test("the public Projects dashboard can be scrolled with the keyboard", async ({ page, request }) => {
@@ -61,19 +79,24 @@ test("the public Projects dashboard can be scrolled with the keyboard", async ({
 
 test("the exact Hôtel model is served and the public P-Mero composer is ready", async ({ page, request, baseURL }) => {
   await exactSource(request);
+  const assertReadOnly = await guardReadOnlyPmero(page, baseURL);
   const modelPath = "beta/models/hotel120.glb";
   const model = await request.get(`/${modelPath}`);
   expect(model.ok()).toBe(true);
   expect(createHash("sha256").update(await model.body()).digest("hex")).toBe(manifest.files[modelPath]);
-  if (baseURL.startsWith("http://127.0.0.1")) {
-    await page.route(api, (route) => route.fulfill({ json: { enabled: true, access: "visitor" }, headers: { "Access-Control-Allow-Origin": baseURL } }));
-  }
   await page.goto("/");
   await page.getByRole("navigation", { name: "Outils PMersion" }).getByRole("link", { name: "P-Mero", exact: true }).click();
   const panel = page.getByRole("region", { name: "Assistant P-Mero", exact: true });
-  await expect(panel.getByRole("textbox", { name: "Question à P-Mero" })).toBeEnabled();
-  await expect(panel.getByText(/Gardez les données personnelles et les sauvegardes dans le navigateur/)).toBeVisible();
+  const question = panel.getByRole("textbox", { name: "Question à P-Mero" });
+  await expect(question).toBeEnabled();
+  await expect(question).toHaveAccessibleDescription(/Utilise des données fictives.*transmis\./);
+  await expect(panel.getByRole("log", { name: "Conversation P-Mero" })).toBeEmpty();
+  await expect(panel.getByRole("button", { name: "Envoyer", exact: true })).toBeDisabled();
   await expect(panel.getByRole("button", { name: "Comment construire un planning fiable ?" })).toBeVisible();
+  await page.getByRole("link", { name: "Données et sauvegardes", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Données et sauvegardes", exact: true })).toBeVisible();
+  await expect(page.getByText(/son service reçoit le message et le contexte de l’échange/)).toBeVisible();
+  assertReadOnly();
 });
 
 test("discovery has an available LinkedIn preview and an accessible demo entrance", async ({ page, request }) => {
@@ -86,6 +109,10 @@ test("discovery has an available LinkedIn preview and an accessible demo entranc
   const bytes = await image.body();
   expect([bytes.readUInt32BE(16), bytes.readUInt32BE(20)]).toEqual([1200, 630]);
   await page.getByRole("link", { name: "Essayer la démo gratuite" }).click();
+  await expect(page.getByRole("heading", { name: "Démo Hôtel gratuite" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Créer mon accès" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Me connecter" })).toBeVisible();
+  await expect(page.getByText(/Sur invitation, scénarios supplémentaires et outils de pilotage/)).toBeVisible();
+  await page.getByRole("link", { name: "Explorer le projet Hôtel sans compte" }).click();
+  await expect(page.getByRole("heading", { name: "Hôtel · 120 chambres" })).toBeVisible();
 });
