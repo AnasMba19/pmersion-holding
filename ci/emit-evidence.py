@@ -21,6 +21,11 @@ VIEWS = {
     "hotel-episode-readiness.png",
     "hotel-episode-milestones.png",
 }
+PUBLISHED_WORKSPACE_VIEWS = {
+    f"direction-d-{view}-{width}.jpg"
+    for view in ("accueil", "learn", "simulate", "projects", "decision-lab")
+    for width in (320, 390, 768, 1280)
+}
 
 
 def emit(args):
@@ -43,6 +48,14 @@ def emit(args):
                            part.endswith(("phone-390", "desktop-1280")) for part in p.parts))
         if args.outcome == "success" and len(names) != len(VIEWS) * 2:
             raise ValueError(f"Successful workshop must provide all {len(VIEWS) * 2} exact viewport images")
+    elif args.kind == "published-workspace":
+        views = sorted(p for p in root.rglob("*.jpg") if p.name in PUBLISHED_WORKSPACE_VIEWS)
+        names = [str(p.relative_to(root)) for p in views]
+        unique = {p.name for p in views}
+        if len(unique) != len(views):
+            raise ValueError("Duplicate published workspace viewport image")
+        if args.outcome == "success" and unique != PUBLISHED_WORKSPACE_VIEWS:
+            raise ValueError("Successful published workspace must provide all 20 exact viewport images")
     elif args.kind == "unit":
         names = ["report.json", "report.md"]
     if len(names) > 100:
@@ -120,7 +133,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     commands = parser.add_subparsers(dest="command", required=True)
     writer = commands.add_parser("emit")
-    writer.add_argument("--kind", required=True, choices=["release", "workshop", "unit", "browser"])
+    writer.add_argument("--kind", required=True, choices=[
+        "release", "workshop", "unit", "browser", "published-workspace",
+    ])
     writer.add_argument("--root", required=True)
     writer.add_argument("--checkout", default=".")
     writer.add_argument("--source", required=True)
