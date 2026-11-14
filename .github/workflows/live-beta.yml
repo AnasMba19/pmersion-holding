@@ -44,6 +44,13 @@ jobs:
           SOURCE_SHA: ${{ github.sha }}
           TEST_OUTCOME: ${{ steps.live_tests.outcome }}
         run: python3 ci/emit-evidence.py emit --kind browser --root test-results/live-beta --source "$SOURCE_SHA" --outcome "$TEST_OUTCOME"
+      - name: Preserve the published workspace at the four verified widths
+        if: always() && steps.generation.outputs.direction_d == 'true'
+        env:
+          TEST_OUTCOME: ${{ steps.live_tests.outcome }}
+        run: |
+          source_sha=$(node -p 'require("./public-release.json").sourceCommit')
+          python3 ci/emit-evidence.py emit --kind published-workspace --root test-results/live-beta --source "$source_sha" --outcome "$TEST_OUTCOME"
       - uses: actions/upload-artifact@v4
         if: ${{ always() && steps.generation.outputs.direction_d != 'true' && vars.PMERSION_ARCHIVE_FULL_EVIDENCE == 'true' }}
         with:

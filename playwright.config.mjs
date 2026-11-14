@@ -17,6 +17,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
   projects: [
+    { name: "phone-320", use: { viewport: { width: 320, height: 740 } } },
     { name: "phone-390", use: { viewport: { width: 390, height: 844 } } },
     { name: "phone-430", use: { viewport: { width: 430, height: 932 } } },
     { name: "tablet-768", use: { viewport: { width: 768, height: 1024 } } },
