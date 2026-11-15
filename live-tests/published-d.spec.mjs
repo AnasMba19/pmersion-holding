@@ -51,8 +51,9 @@ test("production P-Mero verifies a real reply or the explicit exhausted-quota fa
   expect(reply.status()).toBe(200);
   const conversation = panel.getByRole("log", { name: "Conversation P-Mero" });
   await expect(conversation.locator(".d-pmero-answer")).toContainText(/J58.*J68|J68.*J58/s, { timeout: 30_000 });
-  await conversation.getByText("Calculs et sources", { exact: true }).click();
-  await expect(conversation.getByText(/10 jours ouvrés avant le plan de référence/)).toBeVisible();
+  const evidence = conversation.locator(".d-pmero-evidence");
+  await evidence.getByText("Calculs et sources", { exact: true }).click();
+  await expect(evidence.getByText(/10 jours ouvrés avant le plan de référence/)).toBeVisible();
 });
 
 test("the public Worker refuses a visitor on the advanced demo endpoint", async ({ request }, info) => {
